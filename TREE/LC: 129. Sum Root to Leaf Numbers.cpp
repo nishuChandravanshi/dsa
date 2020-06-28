@@ -28,16 +28,14 @@ public:
             //curr is leaf node=>traverse for path from                                                 curr to root through parent 
             if(!curr->left and !curr->right) 
             {
-                int a=1,onePathSum=0;
+                string onePathSum="";
                 TreeNode* temp= curr;
                 while(temp){
-                    onePathSum=onePathSum+temp->val*a;
-                    a*=10;
-                    
+                    onePathSum= to_string(temp->val) + onePathSum;
                     temp=parent[temp];
                 }
                 
-                totalPathSum+=onePathSum;
+                totalPathSum+=stoi(onePathSum);
             }
             
             //right first in stack(so it'll be processed later) as we want                                  to process left before right
