@@ -51,7 +51,7 @@ int main() {
 	int nodes, edges;
 	cin>>nodes>>edges;
 	
-	vector<int>adjList[nodes+1]; //to store edges
+	vector<int>adjList[nodes+1];
 	bool visited[nodes+1];
 	
 	int u,v;
