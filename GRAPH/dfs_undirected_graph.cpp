@@ -30,6 +30,22 @@ void dfs(int root, vector<int>adjList[], int n, bool visited[]){
 	
 }
 
+void dfsRecursive(int node, vector<int>adjList[], int n, bool visited[]){
+	
+	if(visited[node])
+		return;
+	
+	visited[node]=true;
+	cout<<node<<" ";
+	
+	for(auto it=adjList[node].begin();it<adjList[node].end();it++)
+	{
+		if(!visited[*it])
+			dfsRecursive(*it,adjList, n, visited);
+	}
+}
+
+
 int main() {
 	
 	int nodes, edges;
@@ -49,8 +65,10 @@ int main() {
 	memset(visited,false, sizeof(bool)*(nodes+1));
 
 	int root= 1;
-	dfs(root,adjList,nodes, visited);
+	//dfs(root,adjList,nodes, visited);
 	
+	dfsRecursive(root,adjList,nodes, visited);	
+
 	return 0;
 }
 
