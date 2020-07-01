@@ -21,7 +21,7 @@ public:             //BFS:
         int i,j;
         while(!q.empty()){
             
-            vector<int>curr= q.front(); //(curr[0],curr[1])=(i,j)
+            vector<int>curr= q.front();
             q.pop();
             
             
@@ -33,29 +33,29 @@ public:             //BFS:
             //visitng neighbours ie (+1,0),(-1,0),(0,+1),(0,-1)
             // if out of bound or already smaller distance dont do anything, go for next neighbour
             
-            if( i+1>=m or matrix[i+1][j] <= matrix[i][j]+1);               
-            else{
+            if( i+1<m and matrix[i+1][j] > matrix[i][j]+1)               
+            {
                 q.push({i+1,j}); //updating new smaller distance value
                 matrix[i+1][j]= matrix[i][j]+1;
             }
             
   
-            if(  i-1<0 or matrix[i-1][j] <= matrix[i][j]+1);
-            else{
+            if(  i-1>=0 and matrix[i-1][j] > matrix[i][j]+1)
+            {
                 q.push({i-1,j});
-                matrix[i-1][j]= matrix[curr[0]][curr[1]]+1;
+                matrix[i-1][j]= matrix[i][j]+1;
             }
             
             
-            if( j+1>=n or matrix[i][j+1] <= matrix[i][j]+1);
-            else{
+            if( j+1<n and matrix[i][j+1] > matrix[i][j]+1)
+            {
                 q.push({i,j+1});
                 matrix[i][j+1]= matrix[i][j]+1;
             }
             
             
-            if( j-1<0 or matrix[i][j-1] <= matrix[i][j]+1);
-            else{
+            if( j-1>=0 and matrix[i][j-1] > matrix[i][j]+1)
+            {
                 q.push({i,j-1});
                 matrix[i][j-1]= matrix[i][j]+1;
             }
