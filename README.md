@@ -1,1 +1,5 @@
-Important Medium level and conceptual DSA questions on various DSs.
+-Important and Conceptual topicwise DSA Problems 
+-Leetcode Companywise Questions PDF
+-amazon question pdf
+ 
+*LC-leetcode
