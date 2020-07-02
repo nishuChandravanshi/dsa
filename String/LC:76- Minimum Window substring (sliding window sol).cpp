@@ -51,4 +51,16 @@ public:
 };
 /*T:O(n), S:O(n)
 1- if count == 0, means we found an answer, now try to trim that window by sliding begin to right.
-2- if char at begin of prev window is not part of T then simply move to next char by moving begin right side, else update the table for char which will be required to form valid substr but is now being trimmed from begin of the prev window inorder to search for the new window */
+2- if char at begin of prev window is not part of T then simply move to next char by moving begin right side, else update the table for char which will be required to form valid substr but is now being trimmed from begin of the prev window inorder to search for the new window
+
+-->OTHER PROBLEMS THAT CAN BE SOLVED WITH SAME APPROACH-
+(LC:)
+438. Find All Anagrams in a String
+30. Substring with Concatenation of All Words
+3. Longest Substring Without Repeating Characters
+159. Longest Substring with At Most Two Distinct Characters
+567. Permutation in String
+340. Longest Substring with At Most K Distinct Characters which is 
+424. Longest Repeating Character Replacement
+Reference- medium@csgator
+ */
