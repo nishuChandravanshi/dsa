@@ -11,8 +11,6 @@ public:
             maxSum = max(maxSum, nums[i]);
         }
         
-        
-        
         return maxSum;        
     }
 };
@@ -20,4 +18,6 @@ public:
 /* Kadane's algorithm - T: O(n), S:O(1)
 The main ideas are:
 Use the input vector nums to store the candidate subarrays sum (i.e. the greatest contiguous sum so far).
-Ignore cumulative negatives, as they don't contribute positively to the sum.*/
+Ignore cumulative negatives, as they don't contribute positively to the sum.
+* to do- Divide and conquer method
+*/
