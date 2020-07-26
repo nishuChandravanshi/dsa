@@ -32,7 +32,15 @@ Node * bToDLL(Node *root)
 }
 
 /*
-	T: O(n)
+						T: O(n), S: O(1)
+
+ip-    			10
+                       /  \
+                      20  30
+                     /     \
+                   40      60
+op- head->40<=>20<=>60<=>10<=>30
+(dll represents inorder traversal)
 idea- 
 traverse inorder, 
 keep track of prev node
@@ -40,6 +48,7 @@ curr->left = prev
 prev->right = curr
 
 */
+
 
 /*
 #include <bits/stdc++.h>
@@ -64,7 +73,7 @@ Node* newNode(int val)
     return temp;
 }
 
-// Function to Build Tree
+	// Function to Build Tree
 Node* buildTree(string str)
 {   
     // Corner Case
@@ -132,7 +141,7 @@ Node* buildTree(string str)
 Node* bToDLL(Node *root);
 
 
-/* Function to print nodes in a given doubly linked list */
+	/* Function to print nodes in a given doubly linked list */
 void printList(Node *node)
 {
     Node *prev = NULL;
@@ -161,7 +170,7 @@ void inorder(Node *root)
    }
 }
 
-/* Driver program to test size function*/
+	/* Driver program to test size function*/
 int main()
 {
   int t;
