@@ -67,7 +67,10 @@ public:
 };
 
 /*
-    T: O(mxn), S: O(mxn)
+    T: O(mxn), S: O(mxn) + O(n){as stack for columns}
+	NOTE: here S(m*n) because initially char matrix was given and we needed to convert it into int and store it in new int matrix(matrix1)
+
+problem: LC:85
 Input:
 [
   ["1","0","1","0","0"],
