@@ -15,6 +15,12 @@ bool dfs(int src, int par) {  //returns true if cycle is present
 
 //cycle in directed graph
 
+//if above algo is used for directed graph then false loop may be detected, to 
+//-avoid this condition we use below algo for detecting cycle in dag,
+
+//col[node]: 0-> unprocessed, 1->in process(in stack), 2->processed(out of stack)
+//if in recursion col[child] = 1 => cycle
+//init col with 0
 //initially set col[i] = 0 for all nodes  //run this dfs for all nodes whise col[i]=0;
 bool dfs(int src) { //returns true if cycle is present
     bool cycle = 1;
@@ -31,6 +37,7 @@ bool dfs(int src) { //returns true if cycle is present
     col[src] = 2;
     return cycle;
 }
+
 
 //topological sort 1 using dfs
 vector<int>order;
