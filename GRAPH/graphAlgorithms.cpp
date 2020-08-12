@@ -23,7 +23,8 @@ bool dfs(int src, int par) {  //returns true if cycle is present
 //init col with 0
 //initially set col[i] = 0 for all nodes  //run this dfs for all nodes whise col[i]=0;
 bool dfs(int src) { //returns true if cycle is present
-    bool cycle = 1;
+    
+    bool cycle = 1; //?? should be 0?
     col[src] = 1;
     for(auto to:adj[src]) {
         if(col[to]==1) {
@@ -69,7 +70,7 @@ for(int i=0;i<n;i++) {
 while(!q.empty()) {
     int curr = q.pop();
     vis[curr] = true;
-    order.push_back(curr);
+    order.push_back(curr); //push node with indegree 0, and remove it from the graph => indegree[child]--
 
     for(auto to: adj[curr]) {
         indegree[to]-=1;
@@ -77,13 +78,18 @@ while(!q.empty()) {
             q.push(to);
     }
 }
+//if(order.size()<n) //cycle present
 return order;  //this stores in correct order
-//if all nodes are not visited in vis[n] then the graph has a cycle
+//if all nodes are not visited in vis[n] then the graph has a cycle 
 
 
 #################################################################################
 
 //bipartite checking
+
+//https://leetcode.com/problems/is-graph-bipartite/
+// its possible to have independent vertex as-
+// eg- <vector<vector<int>>graph -> [[4],[],[4],[4],[0,2,3]] {independent node - 1} {ans: true}
 bool dfs(int src, int col) {
     colour[src] = col;
     vis[src] = true;
@@ -102,7 +108,7 @@ bool dfs(int src, int col) {
 
 ###################################################################################
 
-//dijkstra -> shortest distance to all nodes from single source
+//dijkstra ->Single source shortest path (shortest distance to all nodes from single source) 
 //does not necessarily work if graph has negative edges
 //can work with cycle if no negative edge is there
 //O((E+V)*log(V))  max size of heap is v so logV, E+V comes from bfs
@@ -117,25 +123,25 @@ vector<int , vector<pair<int, int>>> adj; //adj[0] = [(2,15),(3,100),....]   (no
 priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq; //min heap 
 pq.push(make_pair(0,src)) //distance, node
 
-while(!q.empty) {  
+while(!pq.empty) {  
 
     pair<int, int> cp = pq.front();
     pq.pop();
 
-    int d = cp.first;
-    int curr = cp.second;
+    int currNode = cp.second;
+    int currDis = cp.first;
 
-    if(d>dis[curr])
+    if(currDis>dis[currNode])
         continue;
 
-    if(d==INT_MAX) {
+    if(currDis==INT_MAX) {
         return;  //all nodes after this wil have infinity ditance, so all are unreachable
     }
 
-    for(auto to: adj[curr]) {
-        if(d+to.second<dis[to.first]){
-            dis[to.first] = d+to.second;
-            pq.push(make_pair(d+dis[to.first],to.first));
+    for(auto to: adj[currNode]) {
+        if(currDis+to.second<dis[to.first]){
+            dis[to.first] = currDis+to.second;
+            pq.push(make_pair(currDis+dis[to.first],to.first));
         }
     }
 
@@ -143,6 +149,9 @@ while(!q.empty) {
 
 
 ##############################################################################
+//Minimum Spanning Tree
+//Prim's algorithm && Kruskal
+
 
 Prim’s algorithm assumes that all vertices are connected. 
 But in a directed graph, every node is not reachable from every other node.
