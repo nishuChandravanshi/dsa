@@ -22,7 +22,8 @@ int lcs(int i, int j) {
     }
     return dp[i][j];
 }
-
+//shortest common supersequence-> length of string which has both a,b as its sub-sequence
+//=> (a.length() + b.length() - LCS)
 
 
 //LIS
@@ -523,3 +524,55 @@ int main() {
     }
 	return 0;
 }
+
+//coin change -->>?? wrong ans
+#include <bits/stdc++.h>
+https://practice.geeksforgeeks.org/problems/coin-change/0
+using namespace std;
+vector<vector<int>> dp(302);
+int makeChange(int i, int nc, vector<int> &v)
+{
+    if(nc == 0)
+        return 1;
+    if(nc < 0)
+        return 0;
+    
+    if(i >= v.size() or v[i] > nc) 
+        return 0;
+    
+    if(dp[i][nc] != -1)
+        return dp[i][nc];
+    
+    int res;
+    res  = makeChange(i, nc-v[i],v)+
+          makeChange(i+1, nc,v);
+    
+    dp[i][nc] = res;
+    
+    return dp[i][nc];
+}
+
+int main() {
+	int t; cin>>t;
+	while(t--)
+	{
+	    int n; cin>>n;
+	    
+	    vector<int> v(n);
+	    for(int i = 0; i < n; i++ )
+	        cin>>v[i];
+	    
+	    int nCents; cin>>nCents;
+	    
+	    for(int i = 0; i < n; i++)
+	        for(int j =0; j <= nCents; j++)
+	            dp[i].push_back(-1);
+	    
+	    cout<<makeChange(0,nCents, v)<<endl;
+	    
+	}
+	return 0;
+}
+
+// Word Break problem
+//s.substr(required_starting_pos, required_length)
