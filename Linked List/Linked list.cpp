@@ -494,8 +494,105 @@ Node* mergeSort(Node* head) {
     
     return mergeSorted(c, d);
 }
+//Quick sort LL
 
+//target -> to place pivot in its right place!
+//idea-> to take last elem as pivot, start from beginniing of list->add the node greater than pivot at the end of the list
 
+class Solution {    //LC: TLE!
+public:
+    ListNode* getTail(ListNode* node)
+    {
+        if(node == NULL or node->next == NULL)
+            return node;
+        
+        while(node != NULL && node->next != NULL)
+            node = node->next;
+        
+        return node;        
+    }
+    
+    ListNode* partition(ListNode* head, ListNode* tail, ListNode* &newHead, ListNode* &newTail, ListNode* &prevPiv)
+    {
+        if(head == NULL or head == tail)
+            return head;
+        
+        ListNode* curr = head;
+        ListNode* pivot = tail;
+        
+        
+        while(curr!= NULL && curr != pivot)
+        {
+            if(curr->val < pivot->val)
+            {
+                if(newHead == NULL)
+                    newHead = curr;
+                
+                prevPiv = curr; //as curr can be the prev of piv in this case
+                curr = curr->next;
+            }
+            else
+            {
+                //ie theres list in left of curr which contains elements smaller than pivot
+                if(prevPiv)
+                {
+                    prevPiv->next = pivot;
+                }
+                ListNode* temp = curr->next;
+                curr->next = NULL;        
+                tail->next = curr;
+                tail = curr;
+                curr = temp;
+            }
+        }
+        if(newHead == NULL)
+            newHead = pivot;
+        
+        newTail = tail;
+        
+        return pivot;
+        
+    }
+    
+    ListNode* quickSort(ListNode* head, ListNode* tail)
+    {
+        if(head == NULL or head == tail)
+            return head;
+        
+        ListNode* newHead = NULL;
+        ListNode* newTail = NULL;
+        ListNode* prevPiv = NULL;
+        
+        //partition will return pivot after placing it in its correct position
+        ListNode* pivot = partition(head, tail, newHead, newTail, prevPiv);
+        
+        //if pivot==newHead=> pivot is smallest : no need to recur for left of list
+        if(pivot != newHead) 
+        {
+            if(prevPiv)
+                prevPiv->next = NULL; //breaking connection of list on left of pivot
+            
+            newHead = quickSort(newHead, prevPiv); 
+            
+            if(getTail(newHead) != NULL)
+                getTail(newHead)->next = pivot; //connecting left sorted list to pivot
+        }
+        
+        pivot->next = quickSort(pivot->next, newTail);
+        
+        return newHead;       
+        
+    }
+    
+    ListNode* sortList(ListNode* head) {
+        if(head == NULL or head->next == NULL)
+            return head;
+        
+        ListNode* tail = getTail(head);
+    
+        return quickSort(head, tail);
+    }
+};
 
 
 
