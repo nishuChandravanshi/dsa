@@ -438,6 +438,66 @@ public:
 
 //11. merge sort in ll
 
+void divideList(Node* head, Node* &a, Node* &b)
+{
+    if(head == NULL)
+        return;
+    Node* slow = head;
+    Node* fast = head;
+    
+    Node* prev = NULL;
+    while(fast != NULL && fast->next != NULL)
+    {
+        prev = slow;
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    
+    a = head;
+    b = slow;
+    prev->next = NULL; //cut connection
+}
+
+Node* mergeSorted(Node* a, Node* b)
+{
+    if(a == NULL)
+        return b;
+    else if(b == NULL)
+        return a;
+    
+    Node* res = NULL;
+    if(a->data < b->data)
+    {
+        res = a;
+        res->next = mergeSorted(a->next,b);
+    }
+    else{
+        res = b;
+        res->next = mergeSorted(a, b->next);
+    }
+    
+    return res;
+}
+
+
+Node* mergeSort(Node* head) {
+    if(head == NULL or head->next == NULL)
+        return head;
+    
+    Node* a = NULL;
+    Node* b = NULL;
+    
+    divideList(head, a, b);
+    
+    Node* c = mergeSort(a);
+    Node* d = mergeSort(b);
+    
+    return mergeSorted(c, d);
+}
+
+
+
+
 
 //12. flatten a LL {recursive merge}
 /*ip-  5 -> 10 -> 19 -> 28

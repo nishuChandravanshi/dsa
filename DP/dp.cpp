@@ -525,54 +525,57 @@ int main() {
 	return 0;
 }
 
-//coin change -->>?? wrong ans
-#include <bits/stdc++.h>
+//coin change {infinite supply}
+
 https://practice.geeksforgeeks.org/problems/coin-change/0
-using namespace std;
-vector<vector<int>> dp(302);
+
+// LC:
+class Solution {   
+public:
+    
+vector<vector<int>> dp;
 int makeChange(int i, int nc, vector<int> &v)
 {
+    // cout<<"i1 "<<i<<"  nc1 "<<nc<<endl;
+    
     if(nc == 0)
         return 1;
     if(nc < 0)
         return 0;
     
-    if(i >= v.size() or v[i] > nc) 
+    if(i >= v.size()) 
         return 0;
     
     if(dp[i][nc] != -1)
         return dp[i][nc];
     
-    int res;
-    res  = makeChange(i, nc-v[i],v)+
-          makeChange(i+1, nc,v);
+    // cout<<"i "<<i<<"  nc "<<nc<<endl;
+    
+    int res = 0;
+    if(v[i] <= nc)
+        res = makeChange(i, nc-v[i],v);
+        
+    res  += makeChange(i+1, nc,v);
     
     dp[i][nc] = res;
     
     return dp[i][nc];
 }
 
-int main() {
-	int t; cin>>t;
-	while(t--)
-	{
-	    int n; cin>>n;
-	    
-	    vector<int> v(n);
-	    for(int i = 0; i < n; i++ )
-	        cin>>v[i];
-	    
-	    int nCents; cin>>nCents;
-	    
-	    for(int i = 0; i < n; i++)
-	        for(int j =0; j <= nCents; j++)
-	            dp[i].push_back(-1);
-	    
-	    cout<<makeChange(0,nCents, v)<<endl;
-	    
-	}
-	return 0;
-}
+    int change(int amount, vector<int>& coins) {
+        
+        dp.clear(); 
+        for(int i = 0; i < coins.size(); i++)
+        {
+            vector<int> temp;
+            for(int j = 0; j <= amount; j++)
+                temp.push_back(-1);
+            dp.push_back(temp);
+        }
+        return makeChange(0,amount, coins);
+    }
+};
+
 
 // Word Break problem
 //s.substr(required_starting_pos, required_length)
