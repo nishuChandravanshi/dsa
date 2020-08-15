@@ -438,6 +438,8 @@ public:
 
 //11. merge sort in ll
 
+// Input: 4->2->1->3
+// Output: 1->2->3->4
 void divideList(Node* head, Node* &a, Node* &b)
 {
     if(head == NULL)
