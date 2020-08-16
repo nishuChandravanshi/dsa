@@ -190,7 +190,8 @@ idea-
 */
 
 
-//6.Detect loop, //-->removal do.       //??slow fast reason??
+//6.Detect loop, //-->do removal
+//slow fast => if both ptr(x and 2x speed) start revolving in a circle from a pt then they'll meet again at the starting point.
 //https://www.geeksforgeeks.org/detect-and-remove-loop-in-a-linked-list/
 
 ListNode *detectCycle(ListNode *head) {
@@ -496,7 +497,9 @@ Node* mergeSort(Node* head) {
     
     return mergeSorted(c, d);
 }
-//Quick sort LL
+
+
+//17.Quick sort LL
 
 //target -> to place pivot in its right place!
 //idea-> to take last elem as pivot, start from beginniing of list->add the node greater than pivot at the end of the list
@@ -794,7 +797,7 @@ ListNode* reverse(ListNode* head){
 
 //15. Rearrange in zigzag order
 //16. Rearrange in alternate first and last node
-//17. QuickSort on Singly Linked List
+
 
 
 
