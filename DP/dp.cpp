@@ -1,6 +1,6 @@
 //todo--> 11,12,14-20
-//sort(quick, merge), heap implementation, 
-//doc list question ->think soln-> note those with not confidence
+// heap implementation, 
+//doc list question ->think soln
 
 //LCS
 // S : ahirsjbj
@@ -525,7 +525,7 @@ int main() {
 	return 0;
 }
 
-//coin change {infinite supply}
+//coin change II {infinite supply} - No. of ways
 
 https://practice.geeksforgeeks.org/problems/coin-change/0
 
@@ -577,5 +577,185 @@ int makeChange(int i, int nc, vector<int> &v)
 };
 
 
+//Coin Change I - Min no. of coins reqd to get the reqd amount
+
+class Solution {
+public:
+    int minCoins(vector<int>& coins, int amount, vector<int>&res)
+    {
+        if(amount == 0)
+            return 0;
+        if(amount < 0)
+            return -1;
+        
+        if(res[amount])
+            return res[amount];
+        
+        int temp = INT_MAX;
+        for(int i = 0; i < coins.size(); i++)
+        {
+            int k = minCoins(coins, amount-coins[i],res);
+            if(k == -1)
+                continue;
+            temp = min(temp, 1+k);
+        }
+        res[amount] = (temp == INT_MAX) ? -1 : temp;
+
+        return res[amount];        
+    }
+
+    int coinChange(vector<int>& coins, int amount) {
+        
+        if(amount == 0)
+            return 0;
+         vector<int> res(amount + 1, 0);
+         return minCoins(coins, amount,res);
+        
+    }
+};
+
+//Rod Cutting -max val obtainable by cutting up the rod
+//https://www.geeksforgeeks.org/cutting-a-rod-dp-13/
+
+// ip -
+//length(8): 1   2   3   4   5   6   7   8  
+// price     1   5   8   9  10  17  17  20
+// op - 22( length of 2 + length of 6 (5+17))
+
+vector<int>dp(n+1);//init with -1
+int cutRod(int price[], int n) 
+{ 
+	if (n <= 0) 
+		return 0; 
+
+	if(dp[n] != -1)
+	return dp[n];
+	
+	int maxVal = INT_MIN; 
+	for (int i = 0; i<n; i++) 
+		maxVal = max(maxVal, price[i] + cutRod(price, n-i-1)); 
+
+	dp[n] = maxVal;
+	
+	return dp[n]; 
+}
+
+//Rope Cutting - maximize product of lengths of all parts
+//https://www.geeksforgeeks.org/maximum-product-cutting-dp-36/
+
+// Input: n = 5
+// Output: 6 (2*3)
+// Input: n = 10
+// Output: 36 (3*3*4)
+vector<int>dp; //dp(n+1,-1)
+int maxProd(int n) 
+{ 
+	if (n == 0 || n == 1) return 0; 
+ 
+	if(dp[n] != -1)
+		return dp[n];
+	
+	int maxVal = 0; 
+	for (int i = 1; i < n; i++) 
+		maxVal = max(maxVal, max(i*(n-i), maxProd(n-i)*i)); 
+
+	dp[n] = maxVal;
+	return dp[n]; 
+} 
+// or--->
+//trick:: cut into lengths of 3 as many times as possible before reaching 2 or 3 or 4
+int maxProd(int n) 
+{ 
+   if (n == 2 || n == 3) return (n-1); 
+  
+   int res = 1; 
+   while (n > 4) 
+   { 
+       n -= 3; 
+       res *= 3; 
+   } 
+   return (n * res);  
+} 
+
+
+//Dice Throw O(m*n*x)- using dp of size n*x
+
+int findWays(int m, int n, int x) 
+{ 
+	if(x == 0 && n == 0)
+	return 1;
+	
+	if(x <= 0)
+		return 0;
+	
+	
+	int sum =0;
+	for(int i = 1; i <= m; i++)
+	{
+		sum += findWays(m, n -1, x - i);
+	}
+	return sum;
+	
+} 
+
+
+
 // Word Break problem
 //s.substr(required_starting_pos, required_length)
+
+
+
+
+//DBOI Coding round //??discuss
+//initially at 0 to reach nth floor
+//Find total no. of ways to reach nth floor with following possible moves-
+//1. in a single move u can move from i -> i+1th flr : can use this move any no. of time
+//2. in a single move u can move from i -> i+2th flr : can use this move any no. of time
+//*3. in a single move u can move from i -> i+3rd flr : can use this move atmost k times;
+//ip-> t(testcases), n,k
+//constrts-> 1<=t<=5*10^5,1<=n<=5*10^5,0<=k<=50
+//ip            op
+// 5
+// 7 3          44
+// 4 2          7
+// 3 3          4    
+// 7 1          41
+// 2 3          2
+
+int main() 
+{ 
+  
+  ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+  
+  int n = 500004;
+  int k = 51;
+  
+  
+  long long int dp[500005][52];
+
+  for(int i=0; i<=k; i++)
+    dp[0][i] = 1;
+    
+  long long int mod = 1e9+7;
+  for(int i=1; i<=n; i++) {
+    for(int j=0; j<=k; j++) {
+      dp[i][j] = 0;
+      if(i-1>=0)
+        dp[i][j] = (dp[i][j]%mod + dp[i-1][j]%mod)%mod;
+      if(i-2>=0)
+        dp[i][j] = (dp[i][j]%mod + dp[i-2][j]%mod)%mod;
+      if(i-3>=0 && j-1>=0)
+        dp[i][j] = (dp[i][j]%mod + dp[i-3][j-1]%mod)%mod;
+    }
+  }
+
+    int t;
+    cin>>t;
+    while(t--) {
+    cin>>n>>k;
+    cout<<dp[n][k]<<"\n";
+  }
+    
+  return 0; 
+}
