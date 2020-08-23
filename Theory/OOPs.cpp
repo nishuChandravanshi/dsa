@@ -34,7 +34,7 @@ but oo lang gives imp on states and behaviors of the objects
 ## runtime entities- ??discuss-
 -things that exist only during prog execution somewhere in mem. they have
 no life outside prog exec
--structures, basic types etc in c 
+-structures,objects basic types etc in c 
 
 *******
 

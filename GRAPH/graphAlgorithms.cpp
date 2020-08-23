@@ -1,3 +1,24 @@
+//directed
+void dfs(int node) {
+    //process
+
+    for(auto child: graph[node]) {
+        if(!vis[child])
+            dfs(child)
+    } 
+}
+
+//undirected
+void dfs(int node, int par) {
+    //process
+
+    for(auto child: graph[node]) {
+        if(child!=par)
+            dfs(child, node)
+    } 
+}
+
+
 //cycle in undirected graph 
 bool dfs(int src, int par) {  //returns true if cycle is present
     vis[src] = true;

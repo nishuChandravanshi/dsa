@@ -395,38 +395,48 @@ void leftView(Node *root)
 
 //RIGHT VIEW - same as above except print last node of level instead of first;
 
-//BOTTOM VIEW - ???WAs
+//BOTTOM VIEW -s
 // https://practice.geeksforgeeks.org/problems/bottom-view-of-binary-tree/1
-void findBV(Node* root, int hd, map<int,Node*> &mp)
+
+void findBV(Node* root, int hd, map<int, pair<Node*,int>> &mp, int depth)
 {
     if(root == NULL)
         return;
     
-    mp[hd] = root;
+    if(mp.find(hd) != mp.end())
+    {
+        if(depth >= mp[hd].second) //(>)to ensure if same hd appears then depth most will be visible,(=)to ensure if same depth then the node which comes right most(ie node which comes later will be visible)
+            mp[hd] = {root, depth};
+    }
+    else{
+        mp[hd] = {root, depth};
+    }
     
-    findBV(root->left, hd-1, mp);
-    findBV(root->right, hd+1, mp);
+    findBV(root->left, hd-1, mp,depth+1);
+    findBV(root->right, hd+1, mp,depth+1);
 }
 vector <int> bottomView(Node *root)
 {
-    map<int, Node*> mp;
+    map<int, pair<Node*,int>> mp; //{hd,{root, depth}}
     vector<int> res;
     
-    findBV(root, 0, mp);
+    findBV(root, 0, mp,0);
     
     for(auto it = mp.begin(); it != mp.end(); it++)
     {
-        res.push_back(it->second->data);
+        res.push_back((it->second).first->data);
     }
     
     return res;
 }
+
+
 //VERTICAL VIEW - ??WA
 void traverse(Node* root, int hd, map<int, vector<int>> &mp)
 {
     if(root == NULL)
         return;
-    mp[hd].push_back(root->data);
+    mp[hd].push_back(root->data); //for top view only one element will be reqd for each hd  
     
     traverse(root->left, hd-1, mp);
     traverse(root->right, hd+1, mp);
@@ -488,7 +498,7 @@ int diameter(Node* node) {
     return ans;
 }
 // M2->
-//TLE --discuss??
+//TLE may occur. suggested to do with above approach
 map<Node*, int> mp;
 int height(Node* &root, map<Node*, int>& mp)
 {
@@ -750,8 +760,7 @@ int findDist(Node* root, int a, int b) {
 
 ******************************************************
 
-
-//15.Tree Construction using INORDER and PREORDER traversal
+//15.BT Construction using INORDER and PREORDER traversal
 
     
     Node* buildTree(int in[], int pre[], int& preInd, int inS, int inE, map<int, int>& inorderPos)
@@ -792,7 +801,7 @@ int findDist(Node* root, int a, int b) {
 -hashmap used to store the indexes of inorder traversal values
 */
 
-//Tree Construction using INORDER and POSTORDER traversal
+//BT Construction using INORDER and POSTORDER traversal
 
     TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder, int inS, int inE, int &       postInd, map<int, int>& inorder_map){
         
@@ -830,9 +839,93 @@ int findDist(Node* root, int a, int b) {
 
 
 
+//Construct BST from given PREORDER - {T&S: O(n)} :(n in building tree and n for nextgreater)
+// https://www.geeksforgeeks.org/construct-bst-from-given-preorder-traversa/
+
+    map<int, int> ngInd;   
+    void nextGreater(vector<int> arr)
+    {
+        stack<int> st;
+        int i =0, n = arr.size()-1;
+        
+        while(i <= n)
+        {
+            if(st.empty() || arr[st.top()] > arr[i])
+                st.push(i++);
+            else{
+                while(!st.empty() && arr[st.top()] < arr[i])
+                {
+                    ngInd[st.top()] = i;
+                    st.pop();
+                }
+            }
+        }
+        while(!st.empty())
+        {
+            //n+1 so even if all elements are in descend order then this will ensure to make skew tree( by placing the elements lets say in left subtree only)
+            ngInd[st.top()] = n+1; 
+            st.pop();
+        }
+    }
+    
+    TreeNode* buildTree(vector<int> &preorder,int l, int h)
+    {
+        if(l > h)
+            return NULL;
+        
+        int nextInd = ngInd[l]; // first is root in preorder traversal
+        TreeNode* root = new TreeNode(preorder[l]);
+        
+        if(l == h)
+            return root;
+        
+        //if nextInd == n+1 => if(no next greater then left subtree will contain all the elements from l+1 to the end of the array)
+        root->left = buildTree(preorder, l+1, nextInd - 1);  
+        root->right = buildTree(preorder, nextInd, h);
+        
+        return root;   
+    }
+
+    TreeNode* bstFromPreorder(vector<int>& preorder) {
+        
+        int n = preorder.size();
+        
+        //this is to map every index with their next greater index
+        nextGreater(preorder);
+        for(auto it = ngInd.begin(); it != ngInd.end(); it++)
+                cout<<it->first<<" "<<it->second<<endl;
+        
+        return buildTree(preorder, 0, n-1);
+            
+    }
 
 
-*******************************************************
+
+//FIND POSTORDER TRAVERSAL OF TREE FROM GIVEN PREORDERS
+// https://www.geeksforgeeks.org/find-postorder-traversal-of-bst-from-preorder-traversal/
+// M1-> construct bst from preorder as done above then find postorder traversal
+// M2-> without constructing tree-> setting range and finding
+//postorder- L->R->root : order of execution
+vector<int>postorder;
+void findPostOrder(vector<int> pre, int& preInd, int l, int h)
+{
+    
+    if(pre[preInd] >= h or pre[preInd] <= l) //ie if not in range
+        return;
+    
+    int val = pre[preInd++];
+    
+    //left subtree
+    findPostOrder(pre, preInd, l, val);
+    //right subtree
+    findPostOrder(pre, preInd, val, h);
+    
+    postorder.push_back(val); 
+}
+// findPostOrder(pre, preInd, INT_MIN, INT_MAX); //preInd = 0: during first func call
+
+
+***********************************************************
 //23. ALL NODES AT A DISTANCE K FROM TARGET NODE
 // https://leetcode.com/problems/all-nodes-distance-k-in-binary-tree/solution/
 
@@ -1198,9 +1291,11 @@ Node* toBST(vector<int>sortedArray, int l, int h)
 }
 // toBST(a,0,n-1);
 
-
+// TO BUILD BALANCED BST FROM NORMAL BST
+// get inorder of given bst(which will be sorted), convert it into balanced bst as done above
 
 ****************************************************************************************************************
+
 // @paytm:
 
 //Find all duplicate subtrees (duplicate wrt structure of tree)
@@ -1259,3 +1354,14 @@ op- 2 4
 */
 
 
+//Rotate Matrix-> by 90 degree ##Do ROTATION METHOD 
+// https://www.geeksforgeeks.org/inplace-rotate-square-matrix-by-90-degrees/
+//anticlockwise -> reverse each row, then find transpose of mat(ie for(i=0;n){for(j=i,n) swap(mat[i][j],mat[j][i])});
+//clockwise--> find transpose then swap first column with last column: for(i=0;n)for(j=0;n){a[i][j],a[i][n-j-1]} 
+
+
+// INVERSION COUNT
+//https://practice.geeksforgeeks.org/problems/inversion-of-array/0/
+
+
+//https://www.geeksforgeeks.org/trapping-rain-water/
