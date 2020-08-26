@@ -1,0 +1,205 @@
+
+USER -> USER PROGRAM -> COMMAND INTERPRETER(eg shell) -> OS <-> HW (hardware)
+    
+    -user does not directly interact with os, there's an interface called COMMAND INTERPRETER
+    -COMMAND INTERPRETER is a program that interprets the cmd of user.
+    there are 2 types of cmd interpreter based OS
+        1. text based os - DOS, UNIX
+        2. GUI based os - windows, MAC
+ 
+*main goal of os is user's CONVINIENCE. secondary is efficiency
+*windows os is more convinient but unix os is more efficient
+
+throughput 
+    -no. of instructions performed per unit time
+
+************
+PROCESS
+#http://courses.cs.vt.edu/csonline/OS/Lessons/Processes/index.html
+
+program- 
+    static set of directions
+process - 
+    the dynamic activity whose properties change as time progresses
+
+-A process is an instance of program in execution
+For example a Web Browser is a process, a shell (or command prompt) is a process.
+-A process encompasses(keeps) the current status of the activity, called the process state.
+-process state includes
+    -the current position in the program being executed (the value of the program counter)
+    -other CPU registers and the associated memory cells
+    - process state is a snapshot of the machine at that time. At different times during the execution of a program(at different times in a process) different snapshots (different process states) will be observed
+
+process table-
+    -To keep track of the state of all the processes, the operating system maintains a table known as the process table. 
+    -Inside this table, every process is listed along with the resources the processes is using and the current state of the process.
+
+PROCESS CONTROL BLOCK(PCB)
+    -ds which stores the info about a particular process. this info is reqd by the cpu while executing the process
+    -each process is identified by its own pcb, is also known as CONTEXT OF THE PROCESS
+    -pcb of all process are present in the LINKED LIST
+    -info stored in pcb are-
+        -process id (pid)
+        -program counter(pc): contains address of the next instruction to be executed
+        -process state 
+        -priority
+        -general purpose registers (GPR): what registers are used by the process, this info is given by gpr.
+            each process has its own set of registers which is maintained by its pcb
+        -list of open files: list of files used by process
+        -list of open device: list of device used by process
+        -protections
+
+
+STATES OF PROCESS
+    running state-
+        the process has all the resources it need for execution and it has been given permission by the operating system to use the processor.
+        Only one process can be in the running state at any given time
+
+    ready state-
+        -waiting for permission to use the processor
+
+    waiting state-
+        -waiting for some external event to occur such as user input or a disk access
+
+    *the waiting and ready states are implemented as QUEUES which hold the processes in these states
+
+degree of multiprogramming 
+    -the no. of processes present in main memory at any point of time
+
+scheduler in os (long term scheduler, short term, mid term)
+        1                   2                  3                4 
+    - new state -(LTS)-> ready state -(STS)->running -(MTS)-> waiting {or waiting -(MTS)->running}
+    -ie  1->2:lts,
+         2->3: sts, (also kns as DISPATCHER) 
+         3->4(or 4->2): mts - performs swapping (main memory <-> secondary memory)
+    
+    *DISPATCHER : responsible for saving the context of one process and loading the context of other process
+
+SCHEDULING
+    -The responsibility of determining how to allocate processor time among all the ready processes is known as scheduling
+
+    PREEMPTIVE (running state <-> ready state)
+    context switching    
+        -one approach to scheduling known as preemptive scheduling: "this task is accomplished by dividing time into short segments, each called a time slice or quantum (typically about 50 milliseconds), 
+        and then switching the CPU's attention among the processes as each is allowed to execute for no longer than one time slice
+            -This procedure of swapping processes is called a process switch or a context switch.
+
+    NON PREEMPTIVE (ready state -> running state)
+        - processes are give control of the processor until they complete execution or voluntarily move themselves to a different state
+
+    strategies for scheduling-
+
+    First Come First Serve Scheduling (FCFS)
+        This non-preemptive scheduling algorithm follows the first-in, first-out (FIFO) policy.
+        As each process becomes ready, it joins the ready queue. When the current running process finishes execution, 
+        the oldest process in the ready queue is selected to run next.
+        ADV-
+            -simple to use
+            -easy to implement, can be implemented using QUEUE
+            -does not lead to starvation
+        DISADVANTAGE
+            -doesnt consider priority or burst time (BT: time reqd by process for running on CPU,execution time)
+            -suffers from CONVOY EFFECT (avg waiting time increases if job taking place first has large BT)
+
+    Round Robin Scheduling
+        This scheduling policy gives each process a slice of time (i.e., one quantum) before being preempted.
+        As each process becomes ready, it joins the ready queue.
+        A clock interrupt is generated at periodic intervals.
+        When the interrupt occurs, the currently running process is preempted,
+        and the oldest process in the ready queue is selected to run next. The time interval between each interrupt may vary.
+
+    SHORTEST JOB FIRST 
+        -preemptive 
+            adv - gurantees MINIMUM AVG WAITING TIME
+            disadv - not practical, as BT of process cant be knows before hand
+        -non preemptive
+        Shortest Process Next(srtf shortest remainig time first)
+            This non-preemptive scheduling algorithm favors processes with the shortest expected execution time.
+            As each process becomes ready, it joins the ready queue. When the current running process finishes execution,
+            the process in the ready queue with the shortest expected execution time is selected to run next.
+
+
+
+PURPOSE OF SCHEDULING
+    -to increase CPU utilization
+    -decrease turn around time (TAT =  CT - AT (completion time - arrival time))
+    -minimize response time
+
+
+
+THREADS VS PROCESS
+
+THREADS
+    -A thread is a single sequence stream within in a process
+    -popular way to improve application through parallelism.
+    - The CPU switches rapidly back and forth among the threads giving illusion that the threads are running in parallel.
+    -Each thread has its own program counter (PC), a register set, and a stack space.
+    -Threads are not independent of one other like processes
+        as a result threads shares with other threads their code section, data section, OS resources  also known as task, 
+        such as open files and signals.
+
+    ADV - threads can share common data, they do not need to use interprocess communication.
+        - context switching
+        -sharing
+
+Similarities
+    -Like processes threads share CPU and only one thread active (running) at a time.
+    -threads within a processes, threads within a processes execute sequentially.
+    -Like processes, thread can create children.
+    -And like process, if one thread is blocked, another thread can run.(???DISCUSS)
+Differences
+    -Unlike processes, threads are not independent of one another.
+    -Unlike processes, all threads can access every address in the task .
+    -Unlike processes, thread are design to assist one other. 
+    Note that processes might or might not assist one another because processes may originate from different users
+
+
+*benefits of multithreaded programming
+    -It makes the system more responsive and enables resource sharing.
+    It leads to the use of multiprocess architecture.
+    It is more economical and preferred
+
+
+
+*********************************************************************
+DEADLOCK
+    -a situation in operating systems when there are two or more processes
+    hold some resources and wait for resources held by other(s).
+
+conditions
+    -MUTUAL EXCLUSION:  there are resources that cannot be shared
+    -HOLD AND WAIT: A process is holding at least one resource and waiting for another resource which is with some other process.
+    -NO PREEMPTION: The operating system is not allowed to take a resource back from a process until process gives it back
+    -CIRCULAR WAIT:A set of processes are waiting for each other in circular form
+
+
+*********************************************
+
+MEMORY MANAGEMENT
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+***********************************************
+VIRTUAL MEMORY
+
+
+
+**********************************************
+THRASHING
+
+BELADY'S ANOMALY
+
+
+
+
