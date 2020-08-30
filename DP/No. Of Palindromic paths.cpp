@@ -37,14 +37,14 @@ int main() {
                 matrix[i].push_back(a);
             }
         }
-        
+        //mp.clear(); //for dp
         string str(1,matrix[0][0]); //to convert char to string: using string class constructor str(size, char)
         cout<<palindromicPath(0,0,str,matrix,r,c)<<"\n";
     }
 	return 0;
 }
 
-//dp O(r*c) : WA?? discuss
+//dp O(r*c) : 
 
 map<pair<pair<int,int>,string>, int>mp; // i,j,str->count
 
