@@ -299,3 +299,35 @@ int main() {
         cout<<endl;
 
 // https://practice.geeksforgeeks.org/problems/largest-number-formed-from-an-array/0
+
+
+
+
+
+************************************************************
+//COLUMN NAME - EXCEL FORMAT
+// https://practice.geeksforgeeks.org/problems/column-name-from-a-given-column-number/0/
+//recursive
+    string title(ll n) {
+        return n==0?"":title((n-1)/26)+(char)((n-1)%26+'A');
+    }
+//iterative
+    vector<char> res;
+        
+    while(n>0)
+    {
+        int rem = n%26;
+            
+        if(rem == 0)
+        {
+            res.push_back('Z');
+            n=(n/26) -1;
+        }
+        else{
+            res.push_back(rem-1+'A');
+            n = n/26;
+        }    
+    }
+reverse(res.begin(),res.end());
+        
+        
