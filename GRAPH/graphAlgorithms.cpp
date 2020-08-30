@@ -33,6 +33,15 @@ bool dfs(int src, int par) {  //returns true if cycle is present
     }
     return cycle;
 }
+bool isCyclic(vector<int> g[], int V)
+{
+    vector<bool>visited(V,0);
+    for(int i = 0; i < V; i++)  //gotta dfs for each node as there can be disconnected graphs
+        if(!visited[i] and dfs(i,-1 ,g, visited))
+            return true;
+            
+    return false;
+}
 
 //cycle in directed graph
 
@@ -77,32 +86,42 @@ void dfs(int src) {
 reverse(order.begin(), order.end());
 return order;
 
-//topological sort 2 using bfs and indegree
-int indegree[n] -> stores indegree of all nodes
-bool vis[n] -> bool
-vector<int>order;
 
+//topological sort 2 using bfs and indegree
+
+int indegree[n] // stores indegree of all nodes
+bool vis[n]  //not really necessary if we dont have to worry about cycle
+vector<int>order;
 queue<int>q;
+
 for(int i=0;i<n;i++) {
     if(indegree[i]==0)
         q.push(i); //push nodes having 0 indegree  
 }
 
 while(!q.empty()) {
-    int curr = q.pop();
+    int curr = q.front();
     vis[curr] = true;
-    order.push_back(curr); //push node with indegree 0, and remove it from the graph => indegree[child]--
+    q.pop();
 
+    order.push_back(curr); //push node with indegree 0, and remove it from the graph => indegree[child]--
     for(auto to: adj[curr]) {
-        indegree[to]-=1;
+        indegree[to]-;
         if(indegree[to]==0)
             q.push(to);
     }
 }
-//if(order.size()<n) //cycle present
 return order;  //this stores in correct order
+//if(order.size()<n) //cycle present
 //if all nodes are not visited in vis[n] then the graph has a cycle 
 
+//indegree calculations
+vector<int> indegree(V,0);  //indegree[node]
+for(int u = 0; u < V; u++)  //u->v => indegree[u] = 0, indegree[v] = 1
+{
+    for(auto v: adj[u])
+        indegree[v]++;
+}
 
 #################################################################################
 
@@ -140,19 +159,19 @@ for(int i=0;i<n;i++) {
     dis[i] = INT_MAX;
 }
 dis[src] = 0;
-vector<int , vector<pair<int, int>>> adj; //adj[0] = [(2,15),(3,100),....]   (node,distance)
+vector<int , vector<pair<int, int>>> adj; //adj[0] = [(2,15),(3,100),....]   (node,distance) //or vector<pair<int,int>> adj[]
 priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq; //min heap 
 pq.push(make_pair(0,src)) //distance, node
 
 while(!pq.empty) {  
 
-    pair<int, int> cp = pq.front();
+    pair<int, int> cp = pq.top();
     pq.pop();
 
     int currNode = cp.second;
     int currDis = cp.first;
 
-    if(currDis>dis[currNode])
+    if(currDis>dis[currNode]) //this is not reqd ig as currDist is itself the dis[currNode], we set while adding it in pq previously
         continue;
 
     if(currDis==INT_MAX) {
@@ -168,6 +187,50 @@ while(!pq.empty) {
 
 }
 
+//dijkstra gfg implementation
+// https://practice.geeksforgeeks.org/problems/implementing-dijkstra-set-1-adjacency-matrix/1
+// input g is a matrix => where g[i][j] = distance(weight) of i to j
+// g[i][j] = 0 => there's no path from i to j (eg [0][0] = 0 to 0 (same node dist obv 0 lol))
+vector <int> dijkstra(vector<vector<int>> g, int src, int V)
+{
+    vector<pair<int,int>> adj[V];  //node, dist
+    for(int i =0; i<V; i++)
+    {
+        for(int j =0; j<V; j++)
+        {
+            if(g[i][j] != 0)
+                adj[i].push_back({j,g[i][j]});
+        }
+    }
+    
+    vector<int> dist(V, INT_MAX);
+    dist[src] = 0;
+    
+    priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq; //dist,node
+    pq.push({dist[src], src});
+    
+    while(!pq.empty())
+    {
+        pair<int,int> cp = pq.top();
+        pq.pop();
+        
+        int currNode = cp.second;
+        int currDist = cp.first;
+        
+        if(currDist == INT_MAX)
+            break;
+        
+        for(auto to : adj[currNode])
+        {
+            if(currDist+to.second < dist[to.first])
+            {
+                dist[to.first] = currDist+to.second;
+                pq.push({dist[to.first], to.first});
+            }
+        }
+    }
+    return dist;
+}
 
 ##############################################################################
 //Minimum Spanning Tree
@@ -461,7 +524,7 @@ void dfs(int v, int p=-1) {
 
 
 ######################################################################################
-SCC -> Tarjan's algorithm : O(E+V)
+SCC -> Tarjans algorithm : O(E+V)
 
 int id[n]; //initialize to -1; will also be used as visited
 bool onStack[n]; //initialize to false
@@ -559,3 +622,46 @@ for (int k = 0; k < n; ++k) {
         }
     }
 }
+
+
+
+
+
+***********************************************************************************
+// MINIMUM SWAPS TO SORT AN ARRAY
+// https://www.geeksforgeeks.org/minimum-number-swaps-required-sort-array/
+// ans += for all cycles(cycle Size -1)
+// {4, 5, 2, 1, 3} ans 3 (cycle-> (5->3,3->2,2->5) :(3-1 = 2) + (4->1,1->4) : (2-1 =1) })
+//edge from i->j => correct pos of i index is j. so connections are made acgly and cycle size is found
+int minSwaps(vector<int> arr)
+{
+    int n = arr.size();
+    
+    pair<int,int> pos[n];
+    for(int i=0;i<n;i++)
+        pos.push_back({arr[i], i}); //val,index 
+
+    sort(pos.begin(), pos.end()); //now pos[i] = {val, its original posn} => original pos -> i(correct pos)
+
+    int ans = 0;
+    vector<bool> vis(n,0);
+    for(int i =0;i<n;i++)
+    {   
+        if(visited[i]) continue;
+        
+        int j = i;
+        int cycleSize =0;
+
+        while(!visited[j])
+        {
+            visited[j] = true;
+            j = pos[j].second;
+            cycleSize++;
+        }
+
+        if(cycleSize >0)
+        ans += cycleSize -1;
+    }
+    return ans;
+}
+
