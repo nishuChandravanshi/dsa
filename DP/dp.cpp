@@ -759,3 +759,26 @@ int main()
     
   return 0; 
 }
+
+
+
+*******************************************************************************
+// MISC
+
+// CATALAN NUMBER
+// https://www.geeksforgeeks.org/program-nth-catalan-number/
+//1 1 2 5... (c0,c1,c2,c3....)
+vector<int>dp;
+int catalan(int n)
+{
+    if(n<=1)
+        return 1;
+    if(dp[n]!=-1)
+        return dp[n];
+    
+    int res = 0;
+    for(int i=0;i<n;i++)
+        res += catalan(i)*catalan(n-i-1);
+    dp[n] = res;
+    return res;
+}

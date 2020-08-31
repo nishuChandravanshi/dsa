@@ -472,7 +472,7 @@ vector<int> verticalOrder(Node *root)
 
 ************************************************************
 
-//5. DIAMETER OF BT --> ?? TLE on M2--(discuss)
+//5. DIAMETER OF BT
 // https://practice.geeksforgeeks.org/problems/diameter-of-binary-tree/1
 // T: O(N)
 int height(Node* root, int &ans)
@@ -617,6 +617,41 @@ bool isIdentical(Node *r1, Node *r2)
     isIdentical(r1->right, r2->right);
     
 }
+
+//* Transform to Sum Tree (node=(node->lefttree+righttree), leafnode=0)
+//https://practice.geeksforgeeks.org/problems/transform-to-sum-tree/1
+//ip-           10                          
+//           /      \                   
+//         -2        6                  
+//        /   \     /  \                    
+//      8     -4   7    5                       
+// op-         20
+//           /    \
+//         4        12
+//        /  \     /  \
+//      0     0   0    0
+
+int sumTree(Node* node)
+{
+    if(node==NULL)
+        return 0;
+    int prev = node->data;
+    
+    node->data = sumTree(node->left)+sumTree(node->right);
+    
+    return prev + node->data; 
+}
+
+void toSumTree(Node *node)
+{
+    if(node==NULL)
+        return;
+    
+    sumTree(node);
+}
+
+
+
 
 //10. Is Symmetric (check if  tree is mirror image of itself)
 // O(n)
