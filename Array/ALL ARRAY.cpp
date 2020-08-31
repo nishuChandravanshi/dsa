@@ -136,6 +136,27 @@ vector<int>v(n);
             
         }
 
+//Find Missing And Repeating (range 1 to n, one no missing and one reapiting)
+//https://practice.geeksforgeeks.org/problems/find-missing-and-repeating/0
+//ip-1 3 3 : op-3,2(repeating,missing)
+int i=0;
+while(i<n)
+{
+    if(a[i] != i+1 && a[a[i]-1]!= a[i])
+        swap(a[i], a[a[i]-1]);
+    else{
+        i++;    
+    }
+}
+for(int i=0;i<n;i++)
+{
+    if(a[i]!=i+1)
+   {
+        cout<<a[i]<<" "<<i+1<<endl;
+        break;
+    }
+}
+
 
 //EQUILLIBRIUM POINT
 //https://www.geeksforgeeks.org/equilibrium-index-of-an-array/
