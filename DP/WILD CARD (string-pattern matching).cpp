@@ -11,7 +11,7 @@
 class Solution {
 public:
     vector<vector<int>> dp;
-    bool isValid(int i, int j, string pat, string str)
+    bool isValid(int i, int j, string &pat, string &str) //pass string by reference. Call by value->TLE.(as everytime entire val will be copied which leads O(n) time in every pass)
     {
         if(j == str.length() && i==pat.length())
             return true;
