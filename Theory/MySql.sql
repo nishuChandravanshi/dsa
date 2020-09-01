@@ -52,6 +52,18 @@ select a from tc where creditLimit in (12232,1213,323) {in () refers as list of 
 
 */
 
+-- ORDER OF EXECUTION
+    SELECT DISTINCT column, AGG_FUNC(column_or_expression), …
+    FROM mytable
+    JOIN another_table
+      ON mytable.column = another_table.column
+    WHERE constraint_expression
+    GROUP BY column
+    HAVING constraint_expression
+    ORDER BY column ASC/DESC
+    LIMIT count OFFSET COUNT;
+
+
 *************************************
 -- Statments- to query data
 --https://www.mysqltutorial.org/basic-mysql-tutorial.aspx
@@ -380,10 +392,11 @@ HAVING
     HAVING 
         group_condition;
 
+--The HAVING clause constraints are written the same way as the WHERE clause constraints, and are applied to the grouped rows
+--If you aren't using the `GROUP BY` clause, a simple `WHERE` clause will suffice.
 --HAVING clause is only useful when you use it with the GROUP BY clause-
 -- to generate the output of the high-level reports. for eg, you can use the HAVING clause to answer questions like finding the number orders this month, this quarter, 
 --or this year that have total sales greater than 10K.
-
 
 
 
@@ -443,16 +456,38 @@ Insert Multiple Rows
 INSERT INTO SELECT
 Insert On Duplicate Key Update
 INSERT IGNORE
+
 UPDATE
+
+
 UPDATE JOIN
+
 DELETE
+    DELETE FROM mytable
+    WHERE condition;          
+
 DELETE JOIN
 ON DELETE CASCADE
 REPLACE
 Report Ad
 MYSQL DATA DEFINITION
 Selecting Database
+
 CREATE DATABASE
+    CREATE TABLE IF NOT EXISTS mytable (
+    column DataType TableConstraint DEFAULT default_value,
+    another_column DataType TableConstraint DEFAULT default_value,
+    …
+    );
+--eg     Movies table schema
+    CREATE TABLE movies (
+        id INTEGER PRIMARY KEY,
+        title TEXT,
+        director TEXT,
+        year INTEGER, 
+        length_minutes INTEGER
+    );
+
 DROP DATABASE
 Managing Databases
 Storage Engines
@@ -464,11 +499,31 @@ UNIQUE Constraint
 CHECK Constraint
 NOT NULL
 Sequence
+
 ALTER TABLE
+--Altering table to add new column(s)
+    ALTER TABLE mytable
+        ADD column DataType OptionalTableConstraint 
+        DEFAULT default_value;
+        
+--Altering table name
+    ALTER TABLE mytable
+        RENAME TO new_table_name;
+--Altering table to remove column(s)
+    ALTER TABLE mytable
+        DROP column_to_be_deleted;
+
+
 ADD COLUMN
 DROP COLUMN
 RENAME TABLE
+
 DROP TABLE
+    --o remove an entire table including all of its data and metadata, 
+    --and to do so, you can use the DROP TABLE statement, 
+    --which differs from the DELETE statement in that it also removes the table schema from the database entirely.
+    DROP TABLE IF EXISTS mytable;
+
 Temporary Tables
 TRUNCATE TABLE
 

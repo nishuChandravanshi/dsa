@@ -145,6 +145,15 @@ bool dfs(int src, int col) {
 
     return is_bip;
 }
+//to keep track of disconnected components
+for(int i=0;i<V;i++)
+{
+    if(color[i]==-1)
+    {
+        ans &= dfs(i,0,g,color);
+    }
+}
+return ans; //correct ans for whole graph
 
 ###################################################################################
 

@@ -700,8 +700,31 @@ int findWays(int m, int n, int x)
 
 
 
-// Word Break problem
+// WORD BREAK PROBLEM
+// https://practice.geeksforgeeks.org/problems/word-break/0
+
+// dictionary: { i, like, sam, sung, samsung, mobile, ice,
+//   cream, icecream, man, go, mango}
+// Input:  ilike
+// Output: Yes
 //s.substr(required_starting_pos, required_length)
+//recursion: checking for all possible prefix length
+unordered_set<string>dict; //contain dictionary words
+bool wordBreak(string str)
+{
+    int l = str.size();
+    if(l==0) return true;
+    
+    for(int i=1;i<=l;i++)
+    {   //substr(i,l)=> substring from i'th index till l length
+        if(( dict.find(str.substr(0,i)) != dict.end()) && wordBreak(str.substr(i,l-i)))
+            return true;
+    }
+    return false;
+}
+
+//WORD BREAK 2
+//https://practice.geeksforgeeks.org/problems/word-break-part-2/0/
 
 
 
