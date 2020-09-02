@@ -462,10 +462,65 @@ vector<int> verticalOrder(Node *root)
     return res;
 }
 
-//BOUNDARY TRAVERSAL -- discuss--> if leftmost node is leaf node then, wont it be repeated in below apprch? similrly for right ones
+//BOUNDARY TRAVERSAL 
 //https://www.geeksforgeeks.org/boundary-traversal-of-binary-tree/
+//printLeftBoundary(top-down)->printLeaves(left to right)->printRightBoundary(bottom-up)
 
+vector<int>res;
+void leftBoundary(Node* root)
+{
+    if(root == NULL) return;
+    if(root->left) //ie to esure we dont add leaf node(ie root->data is being added only when it has either left or right child.(so as to avoid repition of leaf nodes when pritLeaves() fun will be called))
+    {
+        res.push_back(root->data); //storing root before calling again as to maintain top-down order
+        leftBoundary(root->left);
+    }
+    else if(root->right) //if no left subtree
+    {
+        res.push_back(root->data);
+        leftBoundary(root->right);
+    }
+}
+void printLeaves(Node* root)
+{
+    if(root==NULL)
+        return;
+    printLeaves(root->left); //to print leaves from left to right
+    
+    if(root->left == NULL && root->right == NULL)
+        res.push_back(root->data);
+    
+    printLeaves(root->right);
+}
 
+void rightBoundary(Node* root)
+{
+    if(root==NULL)  return;
+    
+    if(root->right)
+    {
+        rightBoundary(root->right);//calling again before storing root as to maintain bottom-up order
+        res.push_back(root->data);
+    }
+    else if(root->left) //if no right subtree => if left child is present it'll be visible in right boundary
+    {
+        rightBoundary(root->left);
+        res.push_back(root->data);
+    }
+}
+
+vector <int> printBoundary(Node *root)
+{
+    res.clear();   
+    if(root==NULL)  return res;
+    
+    res.push_back(root->data);
+    leftBoundary(root->left);//top->down
+    printLeaves(root);
+    rightBoundary(root->right);//bottom->up
+    
+    return res;
+}
 
 
 
