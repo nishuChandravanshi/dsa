@@ -10,6 +10,8 @@ and methods.
 -in oops programming programs are organized around objects and data
 rather than actions and logics.
 
+## C, PASCAL- STRUCTURED PROGRAMMING LANG.
+## FORTRAN,COBOL - PROCEDURAL PROGRAMMING LANG
 //
 advantages-
 -simplicity : as obj model real world objs,complexity reduced and clear prog structure
@@ -146,6 +148,10 @@ no life outside prog exec
 //constructor-
 -special method(name same as class ) which is invoked automatically at the time of obj creation
 -generally used to initialize data members of new object
+-malloc doesnt call contructor, while new does!
+*shallow copy :obj1=obj2 => obj2 will point to location of obj1
+*deep copy :obj1=obj2 => obj2 will point to other memory location with obj1's values copied.
+
 
 //1.Default constructor
 -has no arguments, invoked at the time of creating obj
@@ -171,7 +177,6 @@ no life outside prog exec
 // 2. Parameterized constructor
 -constructors which has parameters
 -param passed when obj is created- generally to initialize the data members of obj
-
     class Employee
     {
         public:
@@ -203,6 +208,57 @@ no life outside prog exec
     // op- 1,"nish",5000000
     //     2,"roos",5000000
 
+//3.copy constructor
+// imp--> 'const and &(ie arg passed by constant reference)' used while defining copy constructor.
+ --ClassName (const ClassName &old_obj);
+
+--# default contructor is by default called(by constructor) if no other costructor is declared exclusively in class,
+else if any of the constructor is declared(either parameterized or copy) then default constructor is not called by the compiler.
+--#copy constructor is by default created, even when we've exclusively  declared any other contructor
+//eg 1
+class Point
+{
+    int x, y;
+public:
+   Point(const Point &p) { x = p.x; y = p.y; } //copy constructor:exclusively declared
+   int getX() { return x; }
+   int getY() { return y; }
+};
+ 
+int main()
+{
+    Point p1; //error
+    Point p2 = p1; //copy constructor called
+    cout << "x = " << p2.getX() << " y = " << p2.getY();
+    return 0;
+}
+// op: compiler error
+// -There is compiler error in line "Point p1;".
+// The class Point doesn't have a constructor without any parameter. 
+// If we write any constructor, then compiler doesn't create the default constructor. 
+// It is not true other way, i.e., if we write a default or parameterized constructor, then compiler creates a copy constructor. see below eg
+
+//eg 2
+class Point
+{
+    int x, y;
+public:
+   Point(int i = 0, int j = 0) { x = i; y = j; } //here we've default arguments(i==0,j==0)=> if no args passed(then will act similar to default contr) then obj will be initialized by default i=0,j=0 
+   int getX() { return x; }
+   int getY() { return y; }
+};
+ 
+int main()
+{
+    Point p1;
+    Point p2 = p1;
+    cout << "x = " << p2.getX() << " y = " << p2.getY();
+    return 0;
+}
+//op: x=0,y=0
+// --Compiler creates a copy constructor if we don't write our own.
+// Compiler writes it even if we have written other constructors in class. 
+// So the above program works fine. Since we have default arguments, the values assigned to x and y are 0 and 0.
 
 
 //Destructor

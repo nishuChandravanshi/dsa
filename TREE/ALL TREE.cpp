@@ -69,7 +69,7 @@ Node* getNext(Node* root)
         if(!root) return;
         
         if(root->next != NULL)
-            connectNext(root->next);
+            connectNext(root->next); //ensuring to connect next of parent before going to its child
         
         if(root->left)
         {
@@ -215,43 +215,45 @@ vector<int> inOrder(Node* root)
     -only one such point => two adjacent nodes are swapped-->first will point to prev and middle will point to curr and these two will be the required nodes (in this case last will remain NULLs)
 
 */
-void inorderTraversal(TreeNode* root, TreeNode **first, TreeNode **mid, TreeNode **last, TreeNode  **prev) //**-> for keeping address of the pointer type var (as these are already pointers)
+void inorder(Node* root, Node* &prev, Node* &first, Node* &last, Node* &mid)
+{
+    if(root == NULL)    
+        return;
+    
+    inorder(root->left,prev, first,last,mid); //prev not updated here
+    
+    if(prev && prev->data > root->data)
     {
-        if(root == NULL) return;
-        
-        inorderTraversal(root->left, first, mid, last, prev);
-       
-        if( *prev and root->val < (*prev)->val)
+        if(!first)
         {
-           if(! *first)
-           {
-               *first = *prev;
-               *mid = root;
-           }
-            else
-                *last = root; 
+            first = prev;
+            mid = root;    
         }
-        *prev = root;
-        
-        if(*first and *last) return;
-        
-        inorderTraversal(root->right, first, mid, last, prev);
-        
+        else
+            last = root;
     }
-    void recoverTree(TreeNode* root) {
-
-        if(root == NULL or (root->left == NULL and root->right == NULL)) return;
+    prev = root; //prev updated, (after we encounter first node in inorder traversal ie sorted order)
+    
+    if(first && last)
+        return;
+    
+    inorder(root->right, prev, first,last, mid);
+}
+Node *correctBST(Node* root )
+{
+    if(root == NULL or (!root->left && !root->right)) return root;
+    
+    Node *prev = NULL, *first = NULL, *last = NULL, *mid = NULL;
+    
+    inorder(root, prev, first, last, mid);
+    
+    if(first && last)
+        swap(first->data, last->data);
+    else if(first && mid )
+        swap(first->data, mid->data);
         
-        TreeNode *prev, *first, *mid, *last;
-        prev = first = mid = last = NULL;
-        
-        inorderTraversal(root, &first, &mid, &last, &prev); //passing addr of pointer so as the changes made by the func must be reflected in the original pointers as well
-        
-        if(first and last)
-            swap(first->val, last->val);
-        else if(first and mid)
-            swap(first->val, mid->val);
-    }
+  return root;    
+}
 
 
 
@@ -307,17 +309,17 @@ While current is not NULL
 
 
 
-//27. CHECK IF GIVEN ARRAY CAN REPRESENT PRE-ORDER TRAVERSAL OF BT OR NOT
+//27. CHECK IF GIVEN ARRAY CAN REPRESENT PRE-ORDER TRAVERSAL OF BST OR NOT
 //https://www.geeksforgeeks.org/check-if-a-given-array-can-represent-preorder-traversal-of-binary-search-tree/
 //approach - next greater element(using stack)
 
 
 
-//30. FIND POSTORDER FROM PREORDER TRAVERSAL
+//30.BST- FIND POSTORDER FROM PREORDER TRAVERSAL
 // https://www.geeksforgeeks.org/find-postorder-traversal-of-bst-from-preorder-traversal/
 
 
-//35. INORDER SUCCESSOR
+//35.BST- INORDER SUCCESSOR
 //https://www.geeksforgeeks.org/find-postorder-traversal-of-bst-from-preorder-traversal/
 
 
