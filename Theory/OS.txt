@@ -1,4 +1,9 @@
-
+FIRST MAKE THE DOTS, THEN START PLOTTING THE MAP!
+-1.last page of the book->quiz/question
+-2. bolds
+-3. beginning -> first para->last para.
+-4.start now.
+****
 USER -> USER PROGRAM -> COMMAND INTERPRETER(eg shell) -> OS <-> HW (hardware)
     
     -user does not directly interact with os, there's an interface called COMMAND INTERPRETER
