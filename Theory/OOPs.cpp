@@ -38,6 +38,13 @@ but oo lang gives imp on states and behaviors of the objects
 no life outside prog exec
 -structures,objects basic types etc in c 
 
+//In C++ all the uninitialized global variables are initialized to 0.
+int x[100];
+int main()
+{
+    cout << x[99] << endl;
+}
+// op- 0
 *******
 
 //object-
@@ -291,34 +298,49 @@ int main()
     //     destructor invoked
     
 
-//this pointer
--this is a keyword that refers to the current instance of the class
-- used to 
-    pass current object as a parameter to another method.
-    refer current class instance variable.
-    declare indexers.
+//REFERENCES
 
-    class Employee
-    {
-        public:
-            int id;
-            string name; 
-            float salary;
-        
-        Employee(int id, string name, float salary)   //paramzd constrctr
-        {
-            this->id = i;
-            this->name = s;
-            this->salary = sal;
-        }
+// eg 1
+int &fun()
+{
+    static int x = 10; //observe #static used. 
+    return x;
+}
+int main()
+{
+    fun() = 30; //here fun()->returned the reference of x. (ie fun is basically refering to a memory location and (=30) is the value assigned at that location)
+    cout << fun();
+    return 0;
+}
+// op - 30
+// When a function returns by reference, it can be used as lvalue. Since x is a static variable,
+//  it is shared among function calls and the initialization line "static int x = 10;" is executed only once. 
+//  The function call fun() = 30, modifies x to 30.
+//  The next call "cout << fun()" returns the modified value.
+// ##L-value: l-value "refers to memory location" which identifies an object. l-value may appear as either left hand or right hand side of an assignment operator(=)
+//  l-value often represents as identifier
 
-        void display()
-        {
-            cout<<i<<" "<<name<<" "<<salary<<endl;
-        }
-    };
+//eg 2
+int &fun()
+{
+    int x = 10; //## static not used => x is local variable ie x is pointing to local (func scoped) memo => as soon as func terminates there aint any existence of x=> so refering it (=30) will lead to runtime error
+    return x;
+}
+int main()
+{
+    fun() = 30;
+    cout << fun();
+    return 0;
+}
+//op - runtime error
+// Since we return reference to a local variable, 
+// the memory location becomes invalid after function call is over. 
+// Hence it may result in segmentation fault runtime error.
 
-//static  ?? discuss
+
+
+
+//STATIC 
 -static is a keyword or modifier that belongs to the type(ie class) not instance(ie obj)
 -instance(obj) not required to access the static members
 -static can be field, method, constructor, class, properties, operator and event.
@@ -371,6 +393,55 @@ int main()
     // 101 bc
     // 102 cd
     // Total Objects are: 3
+
+
+
+
+//this pointer
+-this is a keyword that refers to the current instance of the class
+- used to 
+    pass current object as a parameter to another method.
+    refer current class instance variable.
+    declare indexers.
+
+    class Employee
+    {
+        public:
+            int id;
+            string name; 
+            float salary;
+        
+        Employee(int id, string name, float salary)   //paramzd constrctr
+        {
+            this->id = i;
+            this->name = s;
+            this->salary = sal;
+        }
+
+        void display()
+        {
+            cout<<i<<" "<<name<<" "<<salary<<endl;
+        }
+    };
+
+
+//UNION
+union A {
+  int a;
+  int b;
+  A() { a = 10; }
+  int getb() {return b;}
+};
+int main()
+{
+    A obj;
+    cout << obj.getb();
+    return 0;
+}
+// op- 10
+// Like struct and class, union can have methods.
+// Like struct and unlike class, members of union are public by default. 
+// Since data members of union share memory, the value of b becomes same as a.
 
 
 //Structs ??
@@ -577,7 +648,7 @@ class D : visibility B-1, visibility B-2, ?
 }   
 
 
-//Aggregation -> has  arelation ship
+//Aggregation -> has  a relation ship
 //one class has objects of other class as its members
 
 class Employee    
@@ -694,18 +765,9 @@ int main()
 6.Association
 7.Aggregation -
 
-1.Abstraction -
-
-2.Encapsulation -
-3.Polymorphism -
-
-
-5.Composition
-6.Association
-7.Aggregation
 -
 
-
+****************************************************************************************************************
 
 Normalization
 
