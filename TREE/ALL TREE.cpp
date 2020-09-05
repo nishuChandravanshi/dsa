@@ -688,15 +688,15 @@ bool isIdentical(Node *r1, Node *r2)
 //        /  \     /  \
 //      0     0   0    0
 
-int sumTree(Node* node)
+int sumTree(Node* node) // returns the sum of all nodes of tree 
 {
     if(node==NULL)
         return 0;
     int prev = node->data;
     
-    node->data = sumTree(node->left)+sumTree(node->right);
+    node->data = sumTree(node->left)+sumTree(node->right); // here node data is updated with sum of its left subtree and right subtree
     
-    return prev + node->data; 
+    return prev + node->data;  //since we've to return sum of all nodes of tree(and node->data now contains leftSubtree+rightSubtree-> so we need to add node's value (which is stored previously) then itll become the sum of all nodes)
 }
 
 void toSumTree(Node *node)
@@ -704,7 +704,7 @@ void toSumTree(Node *node)
     if(node==NULL)
         return;
     
-    sumTree(node);
+    sumTree(node); //this func transformed tree into required form
 }
 
 
@@ -824,7 +824,7 @@ Node* Lca(Node* root, int a, int b)
 }
 int distFromLca(Node* source, int destination, int& dis)
 {
-    if(source == NULL) rturn INT_MIN;
+    if(source == NULL) return INT_MAX;
     
     if(source->data == destination)
         return dis;
@@ -854,10 +854,13 @@ int findDist(Node* root, int a, int b) {
 
 //15.BT Construction using INORDER and PREORDER traversal
 
-    
+// 1. in =  {3 1 4 0 5 2}
+//    pre = {0 1 3 4 2 5}
+// 2. in:  1 6 8 7
+//    pre: 1 6 7 8    
     Node* buildTree(int in[], int pre[], int& preInd, int inS, int inE, map<int, int>& inorderPos)
     {
-        if(inS > inE)   //ins, inE=>starting and ending indices of inorder for respective roots   
+        if(inS > inE)   //consider tc 2  
             return NULL;
         
         Node *root = new Node(pre[preInd++]);
