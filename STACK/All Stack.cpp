@@ -60,17 +60,21 @@ int getMin()
 class MinStack {
 public:
     stack<int> st;
-    int currMin = INT_MAX;
+    int currMin;
     MinStack() {
         
     }
     // 8 10 6 3 7 -> after push st: 8 10 4 0 7 (res min-> 8, 8, 6, 3, 3)
     //8 10 6 ->push then pop-> run;
     void push(int x) {
-        if(st.empty() or x >= currMin)
+        if(st.empty())
+        {
+            currMin = x;
+            st.push(x);
+        }
+        else if(x >= currMin)
         {
             st.push(x);
-            if(x<currMin) currMin  = x;
         }
         else{ // x < currMin:(eg currMin 8, x=6 => push 2*6-8(ie <6 in st top) & set currMin = 6)
             
