@@ -6,5 +6,6 @@
         "array": "cpp",
         "string_view": "cpp",
         "regex": "cpp"
+        "workbench.editor.enablePreview": false
     }
 }

@@ -13,10 +13,12 @@ public:
     	int j=0;
     	int prev=0;
     	int current=0;
-  
-
+        //1 2
+        //3 4
     	for (int k=0; k<1+(n+m)/2; k++) {
-			prev = current;
+			
+            prev = current; //@fOc
+
     		if (i<n && (j>=m || m==0 || nums1[i] <= nums2[j])) {
     			current = nums1[i];
     			i++;
@@ -56,6 +58,9 @@ public:
  * https://leetcode.com/problems/median-of-two-sorted-arrays/
  * https://discuss.leetcode.com/topic/4996/share-my-o-log-min-m-n-solution-with-explanation/4
  */
+
+// 1 2 4
+//-1 2 3 4 5
 public class MedianOfTwoSortedArrayOfDifferentLength {
 
     public double findMedianSortedArrays(int input1[], int input2[]) {
@@ -69,12 +74,12 @@ public class MedianOfTwoSortedArrayOfDifferentLength {
         int low = 0;
         int high = x;
         while (low <= high) {
-            int partitionX = (low + high)/2;
-            int partitionY = (x + y + 1)/2 - partitionX;
+            int partitionX = (low + high)/2; //starting partitioning from mid of nums1
+            int partitionY = (x + y + 1)/2 - partitionX; //as partX+partY must sum up to mid(ie x+y+1)/2
 
             //if partitionX is 0 it means nothing is there on left side. Use -INF for maxLeftX
             //if partitionX is length of input then there is nothing on right side. Use +INF for minRightX
-            int maxLeftX = (partitionX == 0) ? Integer.MIN_VALUE : input1[partitionX - 1];
+            int maxLeftX = (partitionX == 0) ? Integer.MIN_VALUE : input1[partitionX - 1]; //as comp b/w maxLeftY and minRightY will be done. => if there's ntg in left of x(nums1) then it maxLeftX < minRightY should return true;
             int minRightX = (partitionX == x) ? Integer.MAX_VALUE : input1[partitionX];
 
             int maxLeftY = (partitionY == 0) ? Integer.MIN_VALUE : input2[partitionY - 1];
@@ -108,3 +113,75 @@ public class MedianOfTwoSortedArrayOfDifferentLength {
         mm.findMedianSortedArrays(x, y);
     }
 }
+
+
+//// check***dry run: WA {3 fkng HOURS!!}
+class Solution {
+public:
+    // wa
+    // [1,2,3,4,6]
+    // [5]      
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        
+        int x = nums1.size();  //3
+        int  y = nums2.size(); //4
+        int total = x+y;
+        if(x>y)
+            findMedianSortedArrays(nums2,nums1);
+        
+        int n1=x,n2=y,midInd = (total-1)/2;
+        if(n1==0 && n2==0)
+            return 0;
+        if(n1==0)
+        {
+            
+            if(n2%2)
+                return (double)(nums2[midInd]);
+            else 
+                return (((double)(nums2[midInd])+(double)(nums2[midInd+1]))/2);
+        }
+        else if(n2==0)
+        {
+            
+            if(n1%2)
+                return (double)(nums1[midInd]);
+            else 
+                return (((double)(nums1[midInd])+(double)(nums1[midInd+1]))/2);
+        }        
+        
+        
+        //as x possible partitions
+        int low = 0, high = x;//(0,3)
+        
+        while(low<=high)
+        {
+            int partX = (low+high)/2; //(0+5),(3+5)
+            //leftPartition of nums1 belongs to->[0,partX)
+            int partY = (x+y+1)/2 - partX; //as partX+partY must == (x+y+1)/2: {+1 cuz there'll be extra element on left side if total lenght is odd}
+            
+            int maxLeftX = (partX <= 0) ? INT_MIN : nums1[partX-1]; //2
+            int minRightX = (partX >= x) ? INT_MAX : nums1[partX]; //3
+            
+            int maxLeftY = (partY<=0)? INT_MIN: nums2[partY-1]; //4
+            if(partY == -1)
+                partY++;
+            int minRightY = (partY>=y)?INT_MAX: nums2[partY]; //max
+            
+            if(maxLeftX<= minRightY && maxLeftY<= minRightX)
+            {
+                if(total%2) //if odd length => last element of left half is median
+                    return max(maxLeftY,maxLeftX)/1.0;
+                else{
+                   return ((max(maxLeftY,maxLeftX))+min(minRightX,minRightY))/2.0;
+                }
+            }
+            else if(maxLeftY > minRightX)
+                low = partX+1; //2+1
+            else 
+                high= partX -1;;
+                
+        }
+        
+        return -1;
+    }
+};

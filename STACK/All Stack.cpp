@@ -1,4 +1,4 @@
-//SPECIAL STACK- 5 OPERATIONS IN O(1)
+//SPECIAL STACK- 5 OPERATIONS IN T: O(1), S: O(n)
 // https://practice.geeksforgeeks.org/problems/special-stack/1
 stack<int> actual, aux;
 
@@ -55,6 +55,50 @@ int getMin()
     return t; 
     
 }
+
+// T & S:O(1)
+class MinStack {
+public:
+    stack<int> st;
+    int currMin = INT_MAX;
+    MinStack() {
+        
+    }
+    // 8 10 6 3 7 -> after push st: 8 10 4 0 7 (res min-> 8, 8, 6, 3, 3)
+    //8 10 6 ->push then pop-> run;
+    void push(int x) {
+        if(st.empty() or x >= currMin)
+        {
+            st.push(x);
+            if(x<currMin) currMin  = x;
+        }
+        else{ // x < currMin:(eg currMin 8, x=6 => push 2*6-8(ie <6 in st top) & set currMin = 6)
+            
+            st.push(2*x - currMin); //2*6 - 8 //subtracting more than half of x from 2*x=> element < x (minimum ele) is beign pushed
+            currMin = x;  //6          
+        }
+    }
+    
+    void pop() {
+        if(!st.empty() && st.top()>=currMin) //ie ele to be popped is not minimum
+            st.pop();
+        else{
+            currMin =  2*currMin-st.top(); //2*3-0 //to recover min(say 6) from modified-> 
+            st.pop();
+        }
+    }
+    
+    int top() {
+        if(!st.empty())
+            return st.top();
+        return INT_MIN;
+    }
+    
+    int getMin() {
+        return currMin;
+    }
+};
+
 
 //IMPLEMENTATION
 
