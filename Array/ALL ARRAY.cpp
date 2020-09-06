@@ -136,7 +136,7 @@ vector<int>v(n);
             
         }
 
-//Find Missing And Repeating (range 1 to n, one no missing and one reapiting)
+//Find Missing And Repeating (range 1 to n, one no missing and one repeating)
 //https://practice.geeksforgeeks.org/problems/find-missing-and-repeating/0
 //ip-1 3 3 : op-3,2(repeating,missing)
 int i=0;
