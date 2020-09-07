@@ -769,6 +769,70 @@ int main()
 
 ****************************************************************************************************************
 
+// 4 5 palindorme even length ->nth return
+
+// 1st->44
+// 2->55
+// 3->4444
+// 4->4554
+// 5->5445
+// 5->5555
+// 6->444444
+// 445, 454, 455, 544, 545, 555
+
+2, 4, 8, 16, 
+2, 6, 7th 14, 30, ....
+1
+
+_ _ _|_ _ _
+
+vector<string>s;
+void generate(string s1, int n) {
+    if(n==0)
+        s.push_back(s1);
+    
+    generate(s1+'4', n-1);
+    generate(s1+'5', n-1);
+}
+
+generate('', n);
+sort(s.begin(), s.end());
+return s[diff]+reverse 
+
+
+//PROJECT
+#model -> database schema
+#views-> we write the api or fucn
+#url wwhere map urlpattern wrt views
+
+sms api->msg91
+
+class Person(models.model):
+    name = models.charfield(max_lenght=30)
+    contact = models.charField...
+
+def getPerson(request):
+    persons = Person.objects.all()
+    return JsonResponse({'success':True, 'data':persons})
+
+urlpatterns = [
+    url('getPerson/', views.getPerson)
+]
+
+cyberbullying-> tweets from twitter for a given subject 
+tweepy with twitter api ->messages
+
+ml model run -> 5 classes ->good, bad, threat
+
+web dashboard->threat, abusive % of tweets bad
+
+model-> some classifier
+
+every 5 min me update
+
+
+******************************
+// DBMS
 Normalization
 
 1Nf,2Nf, 3Nf, BCNF
@@ -803,62 +867,71 @@ acid prop
 page replacement 
 burst time , turnaround time,...
 
-// 4 5 palindorme even length ->nth return
+//SCHEMA
+    -logical representation of db.
 
-// 1st->44
-// 2->55
-// 3->4444
-// 4->4554
-// 5->5445
-// 5->5555
-// 6->444444
-// 445, 454, 455, 544, 545, 555
+//ER- Diagram
+// https://www.tutorialspoint.com/dbms/er_model_basic_concepts.htm
+entity-(table name)
+    An entity can be a real-world object, either animate or inanimate, that can be easily identifiable.
+    For example, in a school database, students, teachers, classes, and courses offered can be considered as entities. 
+    All these entities have some attributes or properties that give them their identity
 
-2, 4, 8, 16, 
-2, 6, 7th 14, 30, ....
-1
-
-_ _ _|_ _ _
-
-vector<string>s;
-void generate(string s1, int n) {
-    if(n==0)
-        s.push_back(s1);
+attributes-(column name)
+    -properties of entities
+    - All attributes have values. 
+    For example, a student entity may have name, class, and age as attributes.
     
-    generate(s1+'4', n-1);
-    generate(s1+'5', n-1);
-}
+    types-
+    -simple- atomic (eg student's phone number is an atomic value of 10 digits.)
+    -composite- eg name(firstName,midName,lastName)
+    -derived- (eg avg salary,age)
+    -single valued - (eg social_security_no)
+    -multivalued- (eg emailId, phnNo : one person can have more than one phn no or emailId)
+    
+Entity set & keys
+    - entity set is  collection of similar types of entities
 
-generate('', n);
-sort(s.begin(), s.end());
-return s[diff]+reverse 
+key -
+    Key is an attribute or collection of attributes that uniquely identifies an entity among entity set.
+
+    For example, the roll_number of a student makes him/her identifiable among students.
+    Super Key − A set of attributes (one or more) that collectively identifies an entity in an entity set.
+    Candidate Key − A minimal super key is called a candidate key. An entity set may have more than one candidate key.
+    Primary Key − A primary key is one of the candidate keys chosen by the database designer to uniquely identify the entity set.
 
 
-#model -> database schema
-#views-> we write the api or fucn
-#url wwhere map urlpattern wrt views
+Relationship
+    The association among entities is called a relationship. 
+    For example, an employee works_at a department, a student enrolls in a course. Here, Works_at and Enrolls are called relationships.
 
-sms api->msg91
+Relationship Set
+    A set of relationships of similar type is called a relationship set. Like entities, a relationship too can have attributes. These attributes are called descriptive attributes.
 
-class Person(models.model):
-    name = models.charfield(max_lenght=30)
-    contact = models.charField...
+Degree of Relationship
+    The "number of participating entities" in a relationship.
+    -Binary = degree 2
+    -Ternary = degree 3
+    -n-ary = degree
 
-def getPerson(request):
-    persons = Person.objects.all()
-    return JsonResponse({'success':True, 'data':persons})
+Mapping Cardinalities
+    -Cardinality defines the number of entities in one entity set, 
+    which can be associated with the number of entities of other set via relationship set.
+    types-
+    -One to One(1:1)
+    -one to many(1:N)
+    -many to one (N:1)
+    -many to many(N:N)
 
-urlpatterns = [
-    url('getPerson/', views.getPerson)
-]
+Participation Constraints
+    Total Participation − Each entity is involved in the relationship. 
+    Total participation is represented by double lines(=).
 
-cyberbullying-> tweets from twitter for a given subject 
-tweepy with twitter api ->messages
+    Partial participation − Not all entities are involved in the relationship. 
+    Partial participation is represented by single lines.
 
-ml model run -> 5 classes ->good, bad, threat
 
-web dashboard->threat, abusive % of tweets bad
 
-model-> some classifier
 
-every 5 min me update
+
+

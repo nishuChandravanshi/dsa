@@ -3,10 +3,10 @@ DJANGO PREP-> https://medium.com/edureka/django-interview-questions-a4df7bfeb7e8
 **
 Day1: (Arrays)
 
-Find the duplicate in an array of N integers.  **
+Find the duplicate in an array of N integers.  
 Sort an array of 0’s 1’s 2’s without using extra space or sorting algo 
 Repeat and Missing Number 
-Merge two sorted Arrays without extra space 
+Merge two sorted Arrays without extra space -->R
 Kadane’s Algorithm 
 Merge Overlapping Subintervals 
 
