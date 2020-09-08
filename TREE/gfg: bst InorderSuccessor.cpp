@@ -1,4 +1,14 @@
+// https://practice.geeksforgeeks.org/problems/inorder-successor-in-bst/1
 
+        //      20
+        //     /   \
+        //    8     22
+        //   / \
+        //  4   12
+        //     /  \
+        //    10   14                   
+//inorderSuccesor of x is y =>(x,y) :(8,10), (20,22) ->{left most in right subtre} 
+//(14,20){inorderSucc of 14 is 20(ie the ancestor whose left child or grand..chid is 14)}
 Node *inOrderSuccessor(Node *root, Node *x)
 {
     if(root == NULL or x == NULL) return NULL;
