@@ -23,7 +23,7 @@ PROCESS
 #http://courses.cs.vt.edu/csonline/OS/Lessons/Processes/index.html
 
 program- 
-    static set of directions
+    static set of directions or instructions
 process - 
     the dynamic activity whose properties change as time progresses
 
@@ -44,16 +44,17 @@ PROCESS CONTROL BLOCK(PCB)
     -each process is identified by its own pcb, is also known as CONTEXT OF THE PROCESS
     -pcb of all process are present in the LINKED LIST
     -info stored in pcb are-
-        -process id (pid)
-        -program counter(pc): contains address of the next instruction to be executed
-        -process state 
-        -priority
-        -general purpose registers (GPR): what registers are used by the process, this info is given by gpr.
-            each process has its own set of registers which is maintained by its pcb
-        -list of open files: list of files used by process
-        -list of open device: list of device used by process
-        -protections
-
+        1. process id (pid) :When a process is created, a unique id is assigned to the process which is used for unique identification of the process in the system.
+        2. program counter(pc): contains address of the next instruction to be executed
+        3. process state : new/ready/running/waiting
+        4. priority :
+        5. general purpose registers (GPR): Every process has its own set of registers,
+           which are used to hold the data which is generated during the execution of the process.
+        6. list of open files: During the Execution, Every process uses some files which need to be present in the main memory. 
+           OS also maintains a list of open files in the PCB
+        7. list of open device: OS also maintain the list of all open devices which are used during the execution of the process
+        8. protections:
+        *first 7 are important
 
 STATES OF PROCESS
     running state-
@@ -66,7 +67,7 @@ STATES OF PROCESS
     waiting state-
         -waiting for some external event to occur such as user input or a disk access
 
-    *the waiting and ready states are implemented as QUEUES which hold the processes in these states
+    #the waiting and ready states are implemented as QUEUES which hold the processes in these states
 
 degree of multiprogramming 
     -the no. of processes present in main memory at any point of time
@@ -78,15 +79,15 @@ scheduler in os (long term scheduler, short term, mid term)
          2->3: sts, (also kns as DISPATCHER) 
          3->4(or 4->2): mts - performs swapping (main memory <-> secondary memory)
     
-    *DISPATCHER : responsible for saving the context of one process and loading the context of other process
+    #DISPATCHER : responsible for saving the context of one process and loading the context of other process
 
 SCHEDULING
     -The responsibility of determining how to allocate processor time among all the ready processes is known as scheduling
 
-    PREEMPTIVE (running state <-> ready state)
-    context switching    
+    PREEMPTIVE (running state <-> ready state)    
         -one approach to scheduling known as preemptive scheduling: "this task is accomplished by dividing time into short segments, each called a time slice or quantum (typically about 50 milliseconds), 
         and then switching the CPU's attention among the processes as each is allowed to execute for no longer than one time slice
+        -context switching
             -This procedure of swapping processes is called a process switch or a context switch.
 
     NON PREEMPTIVE (ready state -> running state)
@@ -102,6 +103,16 @@ SCHEDULING
             -simple to use
             -easy to implement, can be implemented using QUEUE
             -does not lead to starvation
+            #starvation
+                -Starvation or indefinite blocking is phenomenon associated with the Priority scheduling algorithms, 
+                in which a process ready to run for CPU can wait indefinitely because of low priority.
+                
+                *solution to starvation : AGING
+                    -a technique of gradually increasing the priority of processes that wait in the system for a long time.
+                *diff b/w deadlock and starvation
+                    -When deadlock occurs no process can make progress, while in starvation apart from the victim process other processes can progress or proceed.
+                
+
         DISADVANTAGE
             -doesnt consider priority or burst time (BT: time reqd by process for running on CPU,execution time)
             -suffers from CONVOY EFFECT (avg waiting time increases if job taking place first has large BT)
@@ -111,7 +122,7 @@ SCHEDULING
         As each process becomes ready, it joins the ready queue.
         A clock interrupt is generated at periodic intervals.
         When the interrupt occurs, the currently running process is preempted,
-        and the oldest process in the ready queue is selected to run next. The time interval between each interrupt may vary.
+        and the *oldest process in the ready queue is selected to run next. The time interval between each interrupt may vary.
 
     SHORTEST JOB FIRST 
         -preemptive 
@@ -123,7 +134,38 @@ SCHEDULING
             As each process becomes ready, it joins the ready queue. When the current running process finishes execution,
             the process in the ready queue with the shortest expected execution time is selected to run next.
 
+    HRRN (Highest Response Ratio Next) Scheduling
+        -the scheduling is done on the basis of an extra parameter called Response Ratio. A Response Ratio is calculated for each of the available jobs and 
+        the Job with the highest response ratio is given priority over the others.
+        - non-preemptive algorithm
+        -one of the most optimal scheduling algorithms
+        -its mode is non preemptive hence context switching is minimal in this algorithm
 
+        #calculation of Response Ratio
+        
+            Response Ratio = (W+S)/S   
+        where, W = waiting time, S = Service time or BT (burst time)
+        eg. of HRRN: javatpoint.com/os-hrrn-example
+
+        *can notice that: job with the shortest BT will be given priority but it is also including an extra factor which is W (ie waiting time)
+        
+
+    PRIORITY SCHEDULING
+        -there is a priority number assigned to each process
+        -The priority number assigned to each of the process may or may not vary
+        -Process with the higher priority among the available processes is given the CPU
+        TYPES of priority scheduling
+            1. PREEMPTIVE
+            2. NON-PREEMPTIVE
+            *The difference between preemptive priority scheduling and non preemptive priority scheduling is that, 
+            in the preemptive priority scheduling, the job which is being executed can be stopped at the arrival of a higher priority job.
+            *Once all the jobs get available in the ready queue, the algorithm will behave as non-preemptive priority scheduling, 
+            which means the job scheduled will run till the completion and no preemption will be done.
+        
+        TYPES OF PRIORITY
+            1. static - priority number doesn't change itself throughout the process, it is called static priority
+            2. dynamic- priority no. keeps changing itself at the regular intervals
+        
 
 PURPOSE OF SCHEDULING
     -to increase CPU utilization
@@ -177,6 +219,13 @@ conditions
     -NO PREEMPTION: The operating system is not allowed to take a resource back from a process until process gives it back
     -CIRCULAR WAIT:A set of processes are waiting for each other in circular form
 
+
+DIFF B/W STARVATION & DEADLOCK
+1	Deadlock is a situation where no process got blocked and no process proceeds :	Starvation is a situation where the low priority process got blocked and the high priority processes proceed.
+2	Deadlock is an infinite waiting :	Starvation is a long waiting but not infinite.
+3	Every Deadlock is always a starvation :	Every starvation need not be deadlock.
+4	The requested resource is blocked by the other process :	The requested resource is continuously be used by the higher priority processes.
+5	Deadlock happens when Mutual exclusion, hold and wait : No preemption and circular wait occurs simultaneously.	It occurs due to the uncontrolled priority and resource management
 
 *********************************************
 

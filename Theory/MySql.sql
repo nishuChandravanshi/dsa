@@ -81,9 +81,9 @@ ORDER BY
         column1 [ASC|DESC], 
         column2 [ASC|DESC],
 
-    -specify the one or more columns which you want to sort 
-    after the ORDER BY clause   ...;
-    -by default order by sorts in ascending order
+    --specify the one or more columns which you want to sort 
+    --after the ORDER BY clause   ...;
+    --by default order by sorts in ascending order
     
     --eg
     --1. ORDER BY clause to sort values in one column

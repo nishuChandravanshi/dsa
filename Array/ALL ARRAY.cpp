@@ -112,29 +112,38 @@ int main() {
 
 
 //SORTING 0,1,2s
-vector<int>v(n);
-    int f =0,l=n-1;    
-        for(int i=0;i<n;i++)
+// https://practice.geeksforgeeks.org/problems/sort-an-array-of-0s-1s-and-2s/0
+void sort012(vector<int>&a)
+{
+    int first =0,l = a.size()-1;
+    int i=0;
+    while(i<=l)
+    {   //0 0 1 2 1 1 2 0 1 2 1 2
+        while(a[l]==2)
+            l--;
+        if(a[i] == 1)
         {
-            if(v[i] == 0)
-            {
-                swap(v[i],v[f]);
-                f++;
-            }
-            while(v[l] == 2) //to ensure l points to the index where next 2 can be placed
-                l--;
-            if(i <= l && v[i] == 2)
-            {
-                swap(v[i],v[l]);
-                l--;
-                if(v[i] == 0)
-                {
-                    swap(v[i],v[f]); //to ensure if v[l] was 0 then it must be at v[f] and next 0s place must be updated by f++
-                    f++;
-                }
-            }
-            
+            i++;
+            continue;
         }
+        else if(a[i] == 0)
+        {
+            swap(a[i],a[first]);
+            first++;
+            if(a[i] == 2)
+            {
+                swap(a[i],a[l]);
+                l--;
+            }
+            i++;
+        }
+        else if(a[i] == 2 && i<l)
+        {
+            swap(a[i],a[l]);
+            l--;
+        }
+    }
+}
 
 //Find Missing And Repeating (range 1 to n, one no missing and one repeating)
 //https://practice.geeksforgeeks.org/problems/find-missing-and-repeating/0
@@ -328,6 +337,16 @@ int main() {
 ************************************************************
 //COLUMN NAME - EXCEL FORMAT
 // https://practice.geeksforgeeks.org/problems/column-name-from-a-given-column-number/0/
+
+// MS Excel columns has a pattern like A, B, C, … ,Z, AA, AB, AC,…. ,AZ, BA, BB, … ZZ, AAA, AAB ….. etc. 
+// In other words, column 1 is named as “A”, column 2 as “B”, column 27 as “AA
+// input:
+// 28
+// 13
+// Output:
+// AB
+// M
+
 //recursive
     string title(ll n) {
         return n==0?"":title((n-1)/26)+(char)((n-1)%26+'A');
