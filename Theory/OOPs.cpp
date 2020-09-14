@@ -849,7 +849,7 @@ prime->non prime partial dep
 np->prime  transitive dep
 
 branch student hod
-a->B->c    a->c
+a->b->c    a->c
 ac
 ab 
 
@@ -866,70 +866,6 @@ file indexing->b+ tree
 acid prop 
 page replacement 
 burst time , turnaround time,...
-
-//SCHEMA
-    -logical representation of db.
-
-//ER- Diagram
-// https://www.tutorialspoint.com/dbms/er_model_basic_concepts.htm
-entity-(table name)
-    An entity can be a real-world object, either animate or inanimate, that can be easily identifiable.
-    For example, in a school database, students, teachers, classes, and courses offered can be considered as entities. 
-    All these entities have some attributes or properties that give them their identity
-
-attributes-(column name)
-    -properties of entities
-    - All attributes have values. 
-    For example, a student entity may have name, class, and age as attributes.
-    
-    types-
-    -simple- atomic (eg student's phone number is an atomic value of 10 digits.)
-    -composite- eg name(firstName,midName,lastName)
-    -derived- (eg avg salary,age)
-    -single valued - (eg social_security_no)
-    -multivalued- (eg emailId, phnNo : one person can have more than one phn no or emailId)
-    
-Entity set & keys
-    - entity set is  collection of similar types of entities
-
-key -
-    Key is an attribute or collection of attributes that uniquely identifies an entity among entity set.
-
-    For example, the roll_number of a student makes him/her identifiable among students.
-    Super Key − A set of attributes (one or more) that collectively identifies an entity in an entity set.
-    Candidate Key − A minimal super key is called a candidate key. An entity set may have more than one candidate key.
-    Primary Key − A primary key is one of the candidate keys chosen by the database designer to uniquely identify the entity set.
-
-
-Relationship
-    The association among entities is called a relationship. 
-    For example, an employee works_at a department, a student enrolls in a course. Here, Works_at and Enrolls are called relationships.
-
-Relationship Set
-    A set of relationships of similar type is called a relationship set. Like entities, a relationship too can have attributes. These attributes are called descriptive attributes.
-
-Degree of Relationship
-    The "number of participating entities" in a relationship.
-    -Binary = degree 2
-    -Ternary = degree 3
-    -n-ary = degree
-
-Mapping Cardinalities
-    -Cardinality defines the number of entities in one entity set, 
-    which can be associated with the number of entities of other set via relationship set.
-    types-
-    -One to One(1:1)
-    -one to many(1:N)
-    -many to one (N:1)
-    -many to many(N:N)
-
-Participation Constraints
-    Total Participation − Each entity is involved in the relationship. 
-    Total participation is represented by double lines(=).
-
-    Partial participation − Not all entities are involved in the relationship. 
-    Partial participation is represented by single lines.
-
 
 
 

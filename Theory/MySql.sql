@@ -397,6 +397,9 @@ HAVING
 --HAVING clause is only useful when you use it with the GROUP BY clause-
 -- to generate the output of the high-level reports. for eg, you can use the HAVING clause to answer questions like finding the number orders this month, this quarter, 
 --or this year that have total sales greater than 10K.
+--*but having clause can be used without group by clause as wee=ll, as with aggregate functions
+--If we use a HAVING clause without a GROUP BY clause, the HAVING condition applies to all rows that satisfy the search condition
+-- In other words, all rows that satisfy the search condition make up a single group.
 
 
 
@@ -444,6 +447,37 @@ Subquery
     WHERE
         customerNumber IN (SELECT customerNumber FROM payments WHERE amount > AVG(amount)); -- avg cant be used with comperator?
 
+
+***********************************
+ALL & ANY
+--The ANY operator returns true if any of the subquery values meet the condition.
+--The ALL operator returns true if all of the subquery values meet the condition.
+
+--eg
+    Table A
+    Id   Name    Age
+    ----------------
+    12   Arun    60
+    15   Shreya  24
+    99   Rohit   11
+
+    Table B
+    Id   Name   Age
+    ----------------
+    15   Shreya  24
+    25   Hari    40
+    98   Rohit   20
+    99   Rohit   11
+
+
+    SELECT A.id 
+    FROM   A 
+    WHERE  A.age > ALL (SELECT B.age 
+                        FROM   B 
+                        WHERE  B. name = "arun") 
+-- return all id's in A
+--The meaning of “ALL” is the A.Age should be greater than all the values returned by the subquery. 
+--There is no entry with name “arun” in table B. So the subquery will return NULL. If a subquery returns NULL, then the condition becomes true for all rows of A (See this for details). So all rows of table A are selected
 
 ******************************
 Derived Tables
