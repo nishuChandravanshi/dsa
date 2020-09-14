@@ -71,7 +71,7 @@ select a from tc where creditLimit in (12232,1213,323) {in () refers as list of 
 SELECT
     -stmt to query data from single table
 
-*******
+*************************************
 ORDER BY
     SELECT 
         select_list
@@ -131,7 +131,19 @@ ORDER BY
     --returns the index of the status in the list 'In Process', 'On Hold', 'Cancelled', 'Resolved', 'Disputed', 'Shipped'.
     --For example, if the status is In Process, the function will return 1. If the status is On Hold, the function will return 2, and so on.
 
-******************
+--eg with group by clause
+-- List the number of customers in each country, ordered by the country with the most customers first.
+    SELECT 
+        COUNT
+        (CustomerID),
+        Country
+    FROM Customers
+    GROUP BY Country
+    ORDER BY 
+        COUNT(CustomerID) DESC; --ordering by highest number of customers first
+
+
+***********************
 
 WHERE
 --WHERE clause in the SELECT statement to filter rows from the result set
@@ -179,7 +191,10 @@ WHERE
     WHERE
         lastName LIKE '%son' --return lastname ending with son
     ORDER BY firstName;
+    
+***********************************
 
+LIKE
     --LIKE: operator used in a WHERE clause to search for a specific pattern in a column
     % (percent sign) is a wildcard character that represents zero, one, or multiple characters
     _ (underscore) is a wildcard character that represents a single character
@@ -190,7 +205,30 @@ WHERE
     LIKE ‘_r%’ (find any values that have “r” in the second position)
     LIKE ‘a_%_%’ (find any values that start with “a” and are at least 3 characters in length)
     LIKE ‘[a-c]%’ (find any values starting with “a”, “b”, or “c”
+    NOT LIKE 'a%' (find those values which are not starting with 'a')
+    --goodOne!!->s
+    LIKE '[^acf]%' (first is NOT an "a" or a "c" or an "f")
+        
+        --eg Select all records where the first letter of the City is NOT an "a" or a "c" or an "f".
+        SELECT * FROM Customers
+        WHERE City LIKE '[^acf]%';
 
+
+
+-- Select all records where the value of the City column does NOT start with the letter "a".
+    SELECT * FROM Customers
+    WHERE City NOT LIKE 'a%';
+
+--Select all records where the first letter of the City is an "a" or a "c" or an "s".
+
+    SELECT * FROM Customers
+    WHERE City LIKE '[acs]%'; --(cities with 'a' or 'c' or 's' as starting char)
+
+
+NOT 
+    SELECT * FROM Customers
+    WHERE NOT City= 'Berlin'; --> observe pos of NOT
+-- this will return all details from customers table whose city is not berlin
 
 *************
 
@@ -259,8 +297,18 @@ SELECT DISTINCT
 AND
 OR
 IN
+
 BETWEEN
-LIKE
+-- select all the records where the value of the Price column is between 10 and 20
+    SELECT * FROM Products
+    WHERE Price 
+    BETWEEN 10 AND 20;
+
+-- to select all the records where the value of the Price column is NOT between 10 and 20.
+    SELECT * FROM Products
+    WHERE Price 
+    NOT BETWEEN 10 AND 20; --NOT is used
+
 LIMIT
 IS NULL
 *************************
@@ -485,28 +533,91 @@ EXISTS
 UNION
 MINUS
 INTERSECT
+********************************
 INSERT
+    
+    INSERT INTO -->
+        Customers -- table name
+        (           --attributes
+        CustomerName, 
+        Address, 
+        City, 
+        PostalCode,
+        Country
+        )
+    VALUES --> values to be inserted
+        (
+        'Hekkan Burger',
+        'Gateveien 15',
+        'Sandnes',
+        '4306',
+        'Norway'
+        )
+        ;
+
+Insert Data Only in Specified Columns
+-- It is also possible to only insert data in specific columns.
+-- The following SQL statement will insert a new record, but only insert data in the "CustomerName", "City", and "Country" columns (CustomerID will be updated automatically):
+    INSERT INTO Customers (CustomerName, City, Country)
+    VALUES ('Cardinal', 'Stavanger', 'Norway');
+
+-- after this the columns in which ntg has been inserted will be null, but customer id will be autmatically updated
+--as customerID ==> auto increment field
+
 Insert Multiple Rows
 INSERT INTO SELECT
 Insert On Duplicate Key Update
 INSERT IGNORE
 
+*******************************
+--Be careful when updating records. If you omit the WHERE clause, ALL records will be updated!
 UPDATE
+    UPDATE table_name
+    SET column1 = value1, column2 = value2, ...
+    WHERE condition;
 
+--eg
+-- Set the value of the City columns to 'Oslo', but only the ones where the Country column has the value "Norway".
+    UPDATE
+        Customers
+    SET
+        City = 'Oslo'
+    WHERE               --without where all the cities will be changed to oslo
+        Country = 'Norway';
 
 UPDATE JOIN
+
+
+********************************
+--The DELETE statement is used to delete existing records in a table
+-- DROP and TRUNCATE : DDL commands,(data definition command)
+--whereas DELETE : DML command (data manipulation command)
+-- DELETE operations can be rolled back (undone), while DROP and TRUNCATE operations cannot be rolled back
 
 DELETE
     DELETE FROM mytable
     WHERE condition;          
 
+--Delete All Records
+-- It is possible to delete all rows in a table without deleting the table. 
+-- This means that the table structure, attributes, and indexes will be intact(undamaged):
+
+    DELETE FROM table_name;
+--eg
+    DELETE FROM Customers;
+--this deletes all all rows in the customers tables without deleting the table
+
 DELETE JOIN
 ON DELETE CASCADE
+
+
+********************************
 REPLACE
 Report Ad
 MYSQL DATA DEFINITION
 Selecting Database
 
+*******************************
 CREATE DATABASE
     CREATE TABLE IF NOT EXISTS mytable (
     column DataType TableConstraint DEFAULT default_value,
@@ -522,7 +633,15 @@ CREATE DATABASE
         length_minutes INTEGER
     );
 
+***********************
 DROP DATABASE
+--sql statement to create a db named testDB
+    CREATE DATABASE testDB
+-- Write the correct SQL statement to delete a database named testDB.
+    DROP DATABASE testDB;
+
+
+***********************
 Managing Databases
 Storage Engines
 Data Types
@@ -534,30 +653,48 @@ CHECK Constraint
 NOT NULL
 Sequence
 
+****************************
 ALTER TABLE
 --Altering table to add new column(s)
     ALTER TABLE mytable
         ADD column DataType OptionalTableConstraint 
         DEFAULT default_value;
-        
+
+
+RENAME TABLE    
 --Altering table name
     ALTER TABLE mytable
         RENAME TO new_table_name;
+
 --Altering table to remove column(s)
     ALTER TABLE mytable
         DROP column_to_be_deleted;
 
 
 ADD COLUMN
-DROP COLUMN
-RENAME TABLE
+-- Add a column of type DATE called Birthday.
+    ALTER TABLE 
+        Persons --table name : Persons 
+    ADD 
+        Birthday DATE; --date: type, column created Birthday
 
-DROP TABLE
-    --o remove an entire table including all of its data and metadata, 
+
+DROP COLUMN
+    -- Delete the column Birthday from the Persons table
+    ALTER TABLE 
+        Persons
+    DROP COLUMN
+        Birthday;
+    
+
+*************************************
+DROP TABLE --ddl cmd, cant be rolled back ones deleted using drop cmd
+    --To remove an entire table including all of its data and metadata, 
     --and to do so, you can use the DROP TABLE statement, 
     --which differs from the DELETE statement in that it also removes the table schema from the database entirely.
     DROP TABLE IF EXISTS mytable;
 
+**************************************
 Temporary Tables
 TRUNCATE TABLE
 

@@ -126,11 +126,11 @@ different typs of Normal form->
 
 
 
-//SCHEMA
+SCHEMA
     -logical representation of db.
 
-//ER- Diagram
-// https://www.tutorialspoint.com/dbms/er_model_basic_concepts.htm
+ER- Diagram
+-- https://www.tutorialspoint.com/dbms/er_model_basic_concepts.htm
 entity-(table name)
     An entity can be a real-world object, either animate or inanimate, that can be easily identifiable.
     For example, in a school database, students, teachers, classes, and courses offered can be considered as entities. 
