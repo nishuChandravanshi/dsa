@@ -1,5 +1,8 @@
-// Quick Sort
 
+//1. Quick Sort 
+
+// best and average: O(nlogn), avg: O(n^2)
+// best-> when pivot is mid element, worst-> skewed tree
 int part(int a[], int l, int h)
 {
 	int pivot=a[h];
@@ -28,30 +31,11 @@ void quicksort(int a[], int l, int h)
 	}
 	
 }
+// quicksort(a,0,n-1);
 
 
 
-int main() {
-	// your code goes here
-	int n;
-	cin>>n;
-	int a[n];
-	for(int i=0;i<n;i++)
-	cin>>a[i];
-	
-	quicksort(a,0,n-1);
-	
-	for(int i=0;i<n;i++)
-	cout<<a[i]<<" ";
-	
-	return 0;
-}
-
-//
-// C++ program for implementation of Heap Sort 
-#include <iostream> 
-
-using namespace std; 
+//3. Heap Sort
 
 // To heapify a subtree rooted with node i which is 
 // an index in arr[]. n is size of heap 
@@ -79,7 +63,6 @@ void heapify(int arr[], int n, int i)
 	} 
 } 
 
-// main function to do heap sort 
 void heapSort(int arr[], int n) 
 { 
 	// Build heap (rearrange array) 
@@ -96,27 +79,7 @@ void heapSort(int arr[], int n)
 		heapify(arr, i, 0); 
 	} 
 } 
-
-/* A utility function to print array of size n */
-void printArray(int arr[], int n) 
-{ 
-	for (int i=0; i<n; ++i) 
-		cout << arr[i] << " "; 
-	cout << "\n"; 
-} 
-
-// Driver program 
-int main() 
-{ 
-	int arr[] = {12, 11, 13, 5, 6, 7}; 
-	int n = sizeof(arr)/sizeof(arr[0]); 
-
-	heapSort(arr, n); 
-
-	cout << "Sorted array is \n"; 
-	printArray(arr, n); 
-} 
-
+// heapSort(arr, n); //func call
 
 
 **********************************************************************

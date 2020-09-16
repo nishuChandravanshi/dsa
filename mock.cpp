@@ -98,6 +98,7 @@ vector<float> conversion(vector<pair<pair<char, char>, int>> &v, vector<pair<pai
 
 //merge,quick->ll
 
+//kth max in stream
 vector<int> kthMax(vector<int> v,int k)
 {
     if(k == 1)
@@ -105,7 +106,7 @@ vector<int> kthMax(vector<int> v,int k)
     
     vector<int>res;
     
-    priority_queue<pair<int,int>> pq;
+    priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
     for(int i = 0; i<k; i++)
         pq.push({v[i],i});
 
@@ -125,7 +126,7 @@ vector<int> kthMax(vector<int> v,int k)
 
 }
 
-//
+//max in every window of size k
 vector<int> kthMax(vector<int> v,int k)
 {
     if(k == 1) return v;
@@ -153,8 +154,9 @@ vector<int> kthMax(vector<int> v,int k)
     }     
 
 }
-//
 
+
+//
 
 node* first = NULL;
 node* lca(node* root, node* a, node* b)
@@ -209,3 +211,193 @@ node* deleteNode(node* root, node* a, node* b, node* c)
     }
 
 }
+
+
+
+//1.
+words -> ["abc", "abde", "umbrella", "tummy", "uml"]
+
+class PrefixSum
+
+insertKey: args->str, value(int)   returns->None
+
+prefixSum: args->str,  returns->(int) sum of values of all the strings with given prefix
+
+
+abc -> a, ab ,abc  
+a  
+
+abdefgh-> a,ab,abd,abde,
+
+//space: O(n*m^2) : n=no of words, m = length of str
+class PrefixSum{
+    unordered_map<string, int>mp; 
+
+    void insertKey(string str, int val)
+    {
+        string pref = "";
+        for(int i=0;i<str.length();i++)
+        {
+            pref += str[i]; //O(strlen)
+            if(mp.find(pref) != mp.end())
+                mp[pref] += val;
+            else mp[pref] = val;
+        }
+    }
+
+    int preSum(string pre)
+    {
+        if(mp.find(pre)!= mp.end()) //letter by letter check to find in map=> O(len(pre))
+            return mp[pre];
+        
+        return -1;
+    }
+
+};
+
+
+//string - immutable object->modification of string => creation of new string
+//concatenation -> O(length of string)
+
+
+words -> ["abc", "abde", "umbrella", "tummy", "uml"]
+
+class PrefixSum
+
+insertKey: args->str, value(int)   returns->None
+prefixSum: args->str,  returns->(int) sum of values of all the strings with given prefix
+
+
+class Trie {
+    public:
+        int nodeVal;
+        unordered_map<char, Trie*>children;
+
+    Trie(int val) {
+        nodeVal = val;
+    }
+
+}
+
+void insertWord(Trie* root, string word, int val) {
+    for(auto letter: word) {
+        if(root->children.find(letter)==root->children.end()) { //create and insert
+            Trie newNode = new Trie(val); //create
+            root->children[letter] = newNode; //insert
+            root = newNode; //shift
+        }
+        else {
+            root->nodeVal += val; //update
+            root = root->children[letter]; //shift
+        }
+    }
+}
+
+int findByPrefix(Trie* root, string pref) {
+    int res;
+    for(auto letter: pref) {
+        if(root->children.find(letter)==root->children.end())
+            return -1;
+
+        root = root->children[letter];
+        res = root->val;  
+    }
+    return res;
+}
+
+Trie* root = new Trie(0);
+insertWord(root, "abc", 12);
+insertWord(root, "abc", 12);
+insertWord(root, "abc", 12);
+cout<<findByPrefix(root, "az");
+
+
+
+//3. rearrange string st no two adjacent characters are same
+// rearrange -> no adj char same
+
+aaabbbccddeee
+abacabade
+
+string solve(string str)
+{
+    vector<int>freq(26,0);
+
+    for(int i=0; i<str.length();i++)
+    {
+        freq[str[i] - 'a']++;
+    }
+    priority_queue<pair<int,char>> pq;
+
+    for(int i=0;i<26;i++)
+    {
+        if(freq[i]>=1)
+            pq.push({a + i, freq[i]});
+    }
+
+    string res = "";
+// aaaaabbcdde
+//aaz -> zaa (x) -->aza(crrct)  
+    pair<int,char>temp;
+    while(!pq.empty())
+    {
+        pair<char,int> curr = pq.top();
+        pq.pop();
+
+        if(temp.second >= 1)
+            pq.push(temp);
+    
+        res += curr.first;
+        curr.second -= 1;
+
+        temp = curr;
+    }
+    if(str.length()!= res.length())
+        return "";
+    
+    return res;
+}
+
+
+// todo
+//uordered map : adv/disadv
+
+
+//
+// radix,bucket,counting(code)
+
+
+//quick sort
+0 1 2 3 4 0 5 6
+1 1 1 3 4 5 6 1 2 -> 1 1 1 2 2 3 4   
+4 1 1 1 
+int partition(int l, int h, vector<int>&arr)
+{
+    int ind = l-1;
+    for(int i=l;i<=h-1;i++)
+    {
+        if(arr[i]<=arr[h])
+        {
+            ind++;
+            swap(arr[ind],arr[i]);
+        }
+    }
+    swap(arr[h],arr[ind+1]);
+    return ind+1;
+}
+
+void quickSort(int l, int h, vector<int>&arr)
+{
+    if(l>h)return;
+    int pivot = partition(l,h,arr);
+    quickSort(l,pivot-1,arr);
+    quickSort(pivot+1,h,arr);
+}
+
+void quicksort(vector<int>arr)
+{
+    int n = arr.size();
+    quickSort(0,n-1,arr);
+}
+
+// avg&best- nlogn, wrst- n^2
