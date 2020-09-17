@@ -277,12 +277,12 @@ class Trie {
         nodeVal = val;
     }
 
-}
+};
 
 void insertWord(Trie* root, string word, int val) {
     for(auto letter: word) {
         if(root->children.find(letter)==root->children.end()) { //create and insert
-            Trie newNode = new Trie(val); //create
+            Trie* newNode = new Trie(val); //create
             root->children[letter] = newNode; //insert
             root = newNode; //shift
         }
@@ -332,7 +332,7 @@ string solve(string str)
     for(int i=0;i<26;i++)
     {
         if(freq[i]>=1)
-            pq.push({a + i, freq[i]});
+            pq.push({freq[i],a + i});
     }
 
     string res = "";
@@ -401,3 +401,313 @@ void quicksort(vector<int>arr)
 }
 
 // avg&best- nlogn, wrst- n^2
+
+*********************************************************
+//NEXT GREATER NODE IN BST
+//l,r,parent
+Node* nextGreater(Node* node)
+{
+    if(node==NULL)  return NULL;
+
+    if(node->right != NULL)
+    {
+        Node* temp = node->right;
+        
+        while(temp->left != NULL)
+        {
+            temp = temp->left;
+        }
+        return temp;
+    }
+    else if(node->parent != NULL){
+        Node* parentNode = node->parent;
+        Node* temp = node;
+        while(parentNode!= NULL && parentNode->left != temp)
+        {
+            Node* p = parentNode;
+            parentNode = parentNode->parent;
+            temp = p;
+        }
+        return parentNode;
+    }
+    else{
+        return NULL;
+    }
+}
+
+
+//
+// maximum sum of any path
+// 
+        10
+        / \
+      -6   9
+           
+int maxSumPath(TreeNode* root, int &res)
+    {
+        if(root == NULL)
+            return 0;
+        //loop and find max two children pathSum of n-ary tree;
+        int left = maxSumPath(root->left, res);
+        int right = maxSumPath(root->right, res);
+
+        int temp = max(left,right)+root->val;
+        
+        res = max(res, max(temp, max(left+right+root->val,root->val)));
+        
+        return max(temp,root->val);
+    }
+
+
+    int maxPathSum(TreeNode* root) {
+        if(root == NULL) return INT_MIN;
+        int res = INT_MIN;
+        maxSumPath(root, res);
+     return res;
+    }
+
+
+//array of books
+// 1. fiction -> f, 2. non-fic-> n
+//todo-> seperate 1 & 2 : in min swaps
+// curr order given
+
+arr {f,f,n,f,n,f}
+int seperate(vector<char> arr)
+{
+    int n= arr.size();
+
+    int nf = 0, nn=0;
+    for(int i =0;<n;i++)
+    {
+        if(arr[i] == 'f')
+            nf++;
+        else nn++;
+    }
+    int steps1 =0,steps2=0;
+    for(int i=0;i<nf;i++)
+    {
+        if(arr[i] != 'f')
+            steps1++;
+    }
+    for(int i=0;i<nn;i++)
+    {
+        if(arr[i] != 'n')
+            steps2++;
+    }
+    return min(steps1,steps2);
+}
+
+
+//INVERSION COUNT
+int merge(int l, int mid, int r, vector<int>&arr)
+{
+    vector<int> temp(r-l+1);
+    int count =0;
+
+    int i = l, r = mid+1,t=0;
+
+    while(i<=mid && j<=r)
+    {
+        if(arr[i] <= arr[j])
+        {
+            temp[t++] = arr[i++];
+        }
+        else{
+            count += mid-i+1; //not mid-i+1 cuz-> we are considering pairs of a[i]>a[j] for i<j => from i to mid there'll be mid-i pairs {ie }
+            temp[t++] = arr[j++];
+        }
+    }
+    while(i<=mid)
+    {
+        temp[t++] = arr[i++];
+    }
+    while(j<=r)
+    {
+        temp[t++] = arr[j++];
+    }
+    t =0;
+    for(int i=l;i<=r;i++)
+    {
+        arr[i]= temp[t++];
+    }
+    return count;
+}
+
+int mergesort(int l, int r, vector<int>&arr)
+{
+    if(l>=r) return 0;
+
+    int mid = (l+r)/2;
+    int ans =0;
+    ans += mergesort(l, mid, arr);
+    ans += mergesort(mid+1, r, arr);
+
+    return ans + merge(l,mid,r,arr);
+}
+
+int inc(vector<int> arr)
+{
+    int r = arr.size()-1;
+    return mergesort(0,r,arr);
+}
+
+
+
+//
+//valid BST from preorder ->3:17
+
+
+//Preorder ->BST
+//Preorder ->validate BST
+//postOrder (above two)
+//levelorder + inorder ->binary tree
+//preorder+inorder
+//post + inorder
+
+
+//Preorder -> validate BST
+[8,4,3,5,10,9,12]
+
+int nextGreater[n] = {n};
+stack<pair<int, int>>s;
+for(int i=0; i<n; i++) {
+    while(!s.empty() && s.top().first<arr[i]) {
+        nextGreater[s.top().second] = i;
+        s.pop();
+    }
+    s.push({arr[i], i});
+}
+
+bool isValidBST(vector<int>&arr, int l, int h, int min, int max) {
+    if(l>h) //null node
+        return true;
+    
+    int root = arr[l];
+    if(root<min || root>max)
+        return false;
+
+    //left subtree
+    return isValidBST(arr, l+1, nextGreater[l]-1, min, root) && isValidBST(arr, nextGreater[l], h, root, max);
+}
+
+//create BST from preorder
+Node* createBST(vector<int>&arr, int l, int h) {
+    if(l>h)
+        return null;
+
+    Node* root = new Node(arr[l]);
+    root->left = createBST(arr, l+1, nextGreater[l]-1);
+    root->right = createBST(arr, nextGreater[l], h);
+}
+
+
+
+                1
+            2       7
+        9       
+    5       6   
+
+
+//BT FROM LEVEL ORDER AND INORDER
+
+#include <bits/stdc++.h>
+using namespace std;
+
+class Node{
+	public:
+		int val;
+		Node* left;
+		Node* right;
+	
+		Node(int x) {
+			val = x;
+		}
+};
+
+
+inorder [5,9,6,2,1,7]
+levelorder = [1,2,7,9,5,6]
+
+levelIndices = [4, 3, 5, 1, 0, 2]
+
+Node* createBTree(vector<int>&inorder, vector<int>&levelorder, vector<int>&levelIndices, int rootVal, int l, int h) {
+    if(l>h)
+        return NULL;
+
+    Node* root = new Node(rootVal);
+    
+    if(l==h)
+    	return root;
+    	
+    int rootIndex;
+    for(int i=l; i<h; i++) {
+        if(inorder[i]==rootVal) {
+            rootIndex = i;
+            break;
+        }
+    }
+
+    //left subtree -> [l, rootIndex-1]
+    int leftRootIndex;
+    int curr = INT_MAX;
+    for(int i=l; i<rootIndex; i++) {
+    	if(curr>levelIndices[i]) {
+    		leftRootIndex = i;
+            curr = levelIndices[i]
+    	}
+    }
+
+    root->left = createBTree(inorder, levelorder, levelIndices, inorder[leftRootIndex], l, rootIndex-1);
+
+    //right subtree -> [rootIndex+1, h]
+
+    int rightRootIndex;
+    curr = INT_MAX;
+    for(int i=rootIndex+1; i<=h; i++) {
+    	if(curr>levelIndices[i])
+    		rightRootIndex = i;
+        curr = min(rightRootIndex, levelIndices[i]);
+    }
+    root->right = createBTree(inorder, levelorder, levelIndices, inorder[rightRootIndex], rootIndex+1, h);
+    
+    return root;
+}
+
+void printTree(Node* root) {
+	if(root==NULL)
+		return;
+	
+	cout<<root->val<<" ";
+	printTree(root->left);
+	printTree(root->right);
+}
+
+int main() {
+	// your code goes here
+	int n;
+	cin>>n;
+	vector<int>levelorder(n);
+	vector<int>inorder(n);
+	
+	for(int i=0; i<n; i++)
+		cin>>inorder[i];
+	
+	for(int i=0; i<n; i++)
+		cin>>levelorder[i];
+	
+	vector<int>levelIndices(n);
+	for(int i=0; i<n; i++) {
+	    for(int j=0; i<n; i++) {
+	        if(inorder[i]==levelorder[j]) {
+	            levelIndices[i] = j;
+	        }
+	    }
+	}
+	
+	Node* root = createBTree(inorder, levelorder, levelIndices, levelorder[0], 0, n-1);
+	cout<<"print preorder\n";
+	printTree(root);
+	
+	return 0;
+}
