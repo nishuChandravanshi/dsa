@@ -379,13 +379,10 @@ void diagonalPrint(Node* root)
     diagonalPrint(root, 0, diagonalPrint); 
   
     cout << "Diagonal Traversal of binary tree : n"; 
-    for (auto it = diagonalPrint.begin(); 
-         it != diagonalPrint.end(); ++it) 
+    for (auto it = diagonalPrint.begin();it != diagonalPrint.end(); ++it) 
     { 
-        for (auto itr = it->second.begin(); 
-             itr != it->second.end(); ++itr) 
+        for (auto itr = it->second.begin();itr != it->second.end(); ++itr) 
             cout << *itr  << ' '; 
-  
         cout << 'n'; 
     } 
 }
@@ -426,7 +423,7 @@ void leftView(Node *root)
 
 //RIGHT VIEW - same as above except print last node of level instead of first;
 
-//BOTTOM VIEW -s
+//BOTTOM VIEW -
 // https://practice.geeksforgeeks.org/problems/bottom-view-of-binary-tree/1
 
 void findBV(Node* root, int hd, map<int, pair<Node*,int>> &mp, int depth)
@@ -460,6 +457,7 @@ vector <int> bottomView(Node *root)
     
     return res;
 }
+
 
 
 //VERTICAL VIEW - ??WA
@@ -958,54 +956,128 @@ int findDist(Node* root, int a, int b) {
         return buildTree(inorder, postorder, 0, len-1, postInd, inorder_map);
     }
 
-// Construction of BT using INORDERE & LEVEL ORDER TRAVERSAL
+// #beautiful!!
+//* Construction of BT using INORDERE & LEVEL ORDER TRAVERSAL : T:O(n^2)
 // https://www.geeksforgeeks.org/construct-tree-inorder-level-order-traversals/
+//practice- https://practice.geeksforgeeks.org/problems/construct-tree-from-inorder-and-levelorder/1
+
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Node{
+	int val; 
+	Node* left;
+	Node* right;
+	
+	Node(int x)
+	{
+		val =x;
+		left = NULL;
+		right = NULL;
+	}
+};
+map<int,int>inorderInd; //to store inorders index
+
+Node* createBTree(int rootVal, int l, int h, vector<int>&levelIndices, vector<int>&levelorder, vector<int>&inorder)
+{
+	if(l>h)	return NULL;
+	
+	Node* root = new Node(rootVal);	
+    if(l==h) return root;
+
+	int rootInd = inorderInd[rootVal];
+	
+	// root->left: l to rootInd-1 & root->right: rootInd+1 to h
+	//root->left node's val will be first node in level order of root->left's subtree ie the node with minimum levelIndices in root->left
+	
+	int curr = INT_MAX,leftRoot;
+	for(int i=l;i<rootInd;i++)
+	{	
+		if(curr>levelIndices[i])
+		{
+			curr = levelIndices[i]; //choosing minimum index of inorder's element in levelorder
+			leftRoot = levelorder[curr];
+		}
+	}
+	root->left = createBTree(leftRoot, l,rootInd-1,levelIndices, levelorder,inorder);
+	
+	curr=INT_MAX;
+	int rightRoot;
+	for(int i=rootInd+1;i<=h;i++)
+	{
+		if(curr>levelIndices[i])
+		{
+			curr = levelIndices[i]; 
+			rightRoot = levelorder[curr];
+		}
+	}
+	
+	root->right = createBTree(rightRoot, rootInd+1, h,levelIndices, levelorder,inorder);
+	
+	return root;
+
+}
+
+void printTree(Node* root) {
+	if(root==NULL)
+		return;
+	
+	cout<<root->val<<" ";
+	printTree(root->left);
+	printTree(root->right);
+}
+
+int main() {
+	// your code goes here
+	int n;
+	cin>>n;
+	vector<int>levelorder(n);
+	vector<int>inorder(n);
+	
+	for(int i=0; i<n; i++)
+		cin>>inorder[i];
+	
+	for(int i=0; i<n; i++)
+		cin>>levelorder[i];
+	
+	
+	vector<int>levelIndices(n);
+	for(int i=0; i<n; i++) {
+		inorderInd[inorder[i]] = i;
+	    for(int j=0; j<n; j++) {
+	        if(inorder[i]==levelorder[j]) {
+	            levelIndices[i] = j; //levelorder pos of inorder[i] is j
+	        }
+	    }
+	}
+	
+	Node* root = createBTree(levelorder[0], 0, n-1, levelIndices, levelorder,inorder);
+	cout<<"print preorder\n";
+	printTree(root);
+	
+	return 0;
+}
+
 
 
 
 //Construct BST from given PREORDER - {T&S: O(n)} :(n in building tree and n for nextgreater)
 // https://www.geeksforgeeks.org/construct-bst-from-given-preorder-traversa/
-
-    map<int, int> ngInd;   
-    void nextGreater(vector<int> arr)
-    {
-        stack<int> st;
-        int i =0, n = arr.size()-1;
-        
-        while(i <= n)
-        {
-            if(st.empty() || arr[st.top()] > arr[i])
-                st.push(i++);
-            else{
-                while(!st.empty() && arr[st.top()] < arr[i])
-                {
-                    ngInd[st.top()] = i;
-                    st.pop();
-                }
-            }
-        }
-        while(!st.empty())
-        {
-            //n+1 so even if all elements are in descend order then this will ensure to make skew tree( by placing the elements lets say in left subtree only)
-            ngInd[st.top()] = n+1; 
-            st.pop();
-        }
-    }
     
-    TreeNode* buildTree(vector<int> &preorder,int l, int h)
+    TreeNode* buildTree(int l, int h, vector<int> &preorder,vector<int>&nextGreater)
     {
         if(l > h)
             return NULL;
         
-        int nextInd = ngInd[l]; // first is root in preorder traversal
         TreeNode* root = new TreeNode(preorder[l]);
-        
         if(l == h)
             return root;
         
-        //if nextInd == n+1 => if(no next greater then left subtree will contain all the elements from l+1 to the end of the array)
-        root->left = buildTree(preorder, l+1, nextInd - 1);  
-        root->right = buildTree(preorder, nextInd, h);
+        int ind = nextGreater[l]; // first (l) is root in preorder traversal=> l+1 to ind-1 will be left subtree of l
+        
+        //if ind == n => if(no next greater then left subtree will contain all the elements from l+1 to the end of the array)
+        root->left = buildTree(l+1, ind-1, preorder, nextGreater);  
+        root->right = buildTree(ind, h, preorder, nextGreater);
         
         return root;   
     }
@@ -1014,18 +1086,63 @@ int findDist(Node* root, int a, int b) {
         
         int n = preorder.size();
         
-        //this is to map every index with their next greater index
-        nextGreater(preorder);
-        for(auto it = ngInd.begin(); it != ngInd.end(); it++)
-                cout<<it->first<<" "<<it->second<<endl;
+        vector<int>nextGreater(n,n); //initializing nextGreater of all with n(ie lastInd+1 (ie. n-1+1))
+        stack<int>st;
         
-        return buildTree(preorder, 0, n-1);
+        for(int i=0;i<n;i++)
+        {
+            while(!st.empty() && preorder[st.top()] < preorder[i])
+            {
+                nextGreater[st.top()] = i;
+                st.pop();
+            }
+            st.push(i);
+        }
+        
+        return buildTree(0, n-1,preorder, nextGreater);
             
     }
 
 
+// VALIDATE BST, WITH GIVEN PREORDER
+//similar as above problem
+bool validate(int l, int r, int mn, int mx, vector<int>&preorder, vector<int>&nextGreater)
+{
+    if(l>h) return true;
+    if(preorder[l] <= min or preorder[r] >= max)
+        return false;
+    
+    int root = preorder[l];
+    
+    //validating root->left and root->right
+            //left subtree-> range-> (mn,root)
+    return validate(l+1,nextGreater[l]-1, mn, root,preorder,nextGreater) &&
+            validate(nextGreater[l], r, root, mx, preorder, nextGreater);
+}
 
-//FIND POSTORDER TRAVERSAL OF TREE FROM GIVEN PREORDERS
+bool isBst(vector<int>preorder)
+{
+    int n= preorder.size();
+    vector<int>nextGreater(n,n); //initializing nextGreater of all with n(ie lastInd+1 (ie. n-1+1))
+    stack<int>st;  
+    for(int i=0;i<n;i++)
+    {
+        while(!st.empty() && preorder[st.top()] < preorder[i])
+        {
+            nextGreater[st.top()] = i;
+            st.pop();
+        }
+        st.push(i);
+    }
+
+    return validate(0,n-1,INT_MIN,INT_MAX,preorder,nextGreater);       
+}
+
+
+
+
+
+//FIND POSTORDER TRAVERSAL OF TREE FROM GIVEN PREORDER IN BST
 // https://www.geeksforgeeks.org/find-postorder-traversal-of-bst-from-preorder-traversal/
 // M1-> construct bst from preorder as done above then find postorder traversal
 // M2-> without constructing tree-> setting range and finding
@@ -1033,7 +1150,12 @@ int findDist(Node* root, int a, int b) {
 vector<int>postorder;
 void findPostOrder(vector<int> pre, int& preInd, int l, int h)
 {
-    
+    // If entire preorder array is traversed then 
+    // return as no more element is left to be 
+    // added to post order array. 
+    if (preIndex == n) 
+        return; 
+
     if(pre[preInd] >= h or pre[preInd] <= l) //ie if not in range
         return;
     
@@ -1047,6 +1169,8 @@ void findPostOrder(vector<int> pre, int& preInd, int l, int h)
     postorder.push_back(val); 
 }
 // findPostOrder(pre, preInd, INT_MIN, INT_MAX); //preInd = 0: during first func call
+
+
 
 
 ***********************************************************

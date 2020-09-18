@@ -626,10 +626,10 @@ class Node{
 };
 
 
-inorder [5,9,6,2,1,7]
-levelorder = [1,2,7,9,5,6]
-
-levelIndices = [4, 3, 5, 1, 0, 2]
+// inorder [5,9,6,2,1,7]
+// levelorder = [1,2,7,9,5,6]
+			   //0 1 2 3 4 5	
+// levelIndices = [4, 3, 5, 1, 0, 2] : pos of inorder's element in levelorder
 
 Node* createBTree(vector<int>&inorder, vector<int>&levelorder, vector<int>&levelIndices, int rootVal, int l, int h) {
     if(l>h)

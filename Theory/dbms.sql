@@ -1,6 +1,15 @@
 -- https://www.studytonight.com/dbms/overview-of-dbms.php
 --javatpoint->
 
+-- MySQL is a database management system
+-- -A database is a structured collection of data
+-- (from a simple shopping list to a picture gallery or the vast amounts of information in a corporate network)
+-- -To add, access, and process data stored in a computer database, 
+-- you need a database management system such as MySQL Server
+
+
+
+--entitity == table
 --attribute == column & tuples == rows
 --a+ => closure of (a)
 
@@ -26,9 +35,12 @@ REDUNDENCY
     This problem arises when a database is not normalized
 
 Problems caused due to redundancy are: 
-    Insertion anomaly: 
-    Deletion anomaly: 
-    Updation anomaly:
+    Insertion anomaly: This problem happens when the insertion of a data record is not possible without adding some additional unrelated data to the record
+    Deletion anomaly: This anomaly happens when deletion of a data record results in losing some unrelated information that was stored as part of the record that was deleted from a table
+    Updation anomaly: Suppose if the rank of the college changes then changes will have to be all over the database which will be time-consuming and computationally costly.
+                      If updation do not occur at all places then database will be in inconsistent state.
+
+
 
 KEYS
     -It is(that value of attribute(ie columns)) used to uniquely identify any record or row of data from the table. It is also used to establish and identify relationships between tables.
@@ -67,6 +79,19 @@ types
    
     
     FOREIGN KEY
+        -A Foreign Key creates a link between tables. It references the primary key in another table and links it.
+
+For example, the DeptID in the Employee table is a foreign key −
+<Employee>
+    EmpID       EmpName     EmpAge      DeptID
+
+<Department>
+    DeptID      DeptName    DeptZone
+
+The DeptID in the Department table is a Primary Key in the Department Table.
+The DeptID in the Employee table is a Foreign Key in the Employee Table.
+
+
 
 
 
@@ -188,5 +213,15 @@ Participation Constraints
 
     Partial participation − Not all entities are involved in the relationship. 
     Partial participation is represented by single lines.
+
+
+
+
+INDEXING
+    -Indexing is a way to optimize the performance of a database by minimizing the number of disk accesses required when a query is processed.
+    It is a data structure technique which is used to quickly locate and access the data in a database.
+
+
+
 
 
