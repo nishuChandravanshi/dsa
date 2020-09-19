@@ -803,35 +803,28 @@ bool isIsomorphic(Node *root1,Node *root2)
 
 //18. HEIGHT BALANCED BT (isBALANCED)
 
-    bool isBalanced(TreeNode* root, int &height)
-    {
-        if(root == NULL)
-            return true;
+int balanced(Node* root, bool &ans) //balanced func returns height of tree rooted with root
+{
+    if(root == NULL)
+        return true;
+    int l = balanced(root->left, ans);
+    int r = balanced(root->right, ans);
+    
+    if(abs(l-r)>1) //if any of the l & r subtree's height is unbalanced it'll set ans = false
+        ans = false;
         
-        int lh = 0, rh = 0; //ht of left and right subtrees resp
-        
-        int leftBalance = isBalanced(root->left, lh);
-        int rightBalance = isBalanced(root->right, rh);
-        
-        //ht of curr node
-        height = max(lh, rh) + 1;
-        
-        if(abs(lh - rh) >= 2)
-            return false;
-        
-        return leftBalance && rightBalance;
-        
-    }
-    bool isBalanced(TreeNode* root) {
-        
-        if(root == NULL or (root->left == NULL and root->right == NULL)) 
-            return true;
-        
-        int height = 0;
-        
-        return isBalanced(root, height);
-    }
+    return max(l,r)+1;
+    
+}
 
+bool isBalanced(Node *root)
+{
+    if(root == NULL or (root->left == NULL && root->right == NULL))
+        return true;
+    bool ans = true;
+    balanced(root,ans);
+    return ans;
+}
 
 //19. MIN DISTANCE BETWEEN TWO NODES IN A BT
 // https://www.geeksforgeeks.org/find-distance-between-two-nodes-of-a-binary-tree/
@@ -961,6 +954,10 @@ int findDist(Node* root, int a, int b) {
 // https://www.geeksforgeeks.org/construct-tree-inorder-level-order-traversals/
 //practice- https://practice.geeksforgeeks.org/problems/construct-tree-from-inorder-and-levelorder/1
 
+
+//in:  3 1 4 0 5 2 6 
+//lev: 0 1 2 3 4 5 6 
+//op: 0 1 3 4 2 5 6
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -995,7 +992,7 @@ Node* createBTree(int rootVal, int l, int h, vector<int>&levelIndices, vector<in
 	{	
 		if(curr>levelIndices[i])
 		{
-			curr = levelIndices[i]; //choosing minimum index of inorder's element in levelorder
+			curr = levelIndices[i]; //choosing the first levelorder element among levelorder of root->left's element(ie l to rootInd-1 elements in inorder)
 			leftRoot = levelorder[curr];
 		}
 	}

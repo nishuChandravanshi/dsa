@@ -105,8 +105,8 @@ NORMALIZATION
     -used to minimize the redundancy from a relation or set of relations. It is also used to eliminate the undesirable characteristics like Insertion, Update and Deletion Anomalies.
     -it divides the larger table into the smaller table and links them using relationship.
     -The normal form is used to reduce redundancy from the database table.
-
-
+-- eg
+--##imp- https://www.geeksforgeeks.org/normal-forms-in-dbms/#:~:text=Normalization%20is%20the%20process%20of,reduce%20redundancy%20in%20database%20tables.
 
 different typs of Normal form->
     1NF:	
@@ -135,13 +135,20 @@ different typs of Normal form->
                                         
     
     
-    3NF: np->prime, removes transitive dependencies(by making separate tables)
+    3NF: np->np, removes transitive dependencies(by making separate tables)
         A relation will be in 3NF if it is in 2NF and no transition dependency exists.
         a->b->c    a->c
         ac
         ab 
+
+        A relation is in 3NF if at least one of the following condition holds in every non-trivial function dependency X –> Y
+            1. X is a super key.
+            2. Y is a prime attribute (each element of Y is part of some candidate key).
+
 	
     BCNF: prime ->prime
+        -A relation R is in BCNF if R is in Third Normal Form and for every FD, LHS is super key
+        -A relation is in BCNF iff in every non-trivial functional dependency X –> Y, X is a super key.
 
     4NF:	A relation will be in 4NF if it is in Boyce Codd normal form and has no multi-valued dependency.
     
