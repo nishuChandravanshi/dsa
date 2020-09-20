@@ -23,11 +23,14 @@ Open source
 DDL : Data Definition Languagea
     Allows the specification of:
         -The schema for each relation, including attribute types.
-        -Integrity constraints (eg null, etc)
+        -Integrity constraints (ie not null,primary key)
         -Authorization information for each relation.
         -Non-standard SQL extensions also allow specification of
         -The set of indices to be maintained for each relations.
         -The physical storage structure of each relation on disk.
+
+#primary key declaration on an attribute automatically ensures not null in SQL-92 onwards, needs to be explicitly stated in SQL-89
+
 
 ************************************************************
 
@@ -59,6 +62,8 @@ select a from tc where creditLimit in (12232,1213,323) {in () refers as list of 
 
 */
 
+-- #relation = table
+
 -- ORDER OF EXECUTION
     SELECT DISTINCT column, AGG_FUNC(column_or_expression), …
     FROM mytable
@@ -69,6 +74,11 @@ select a from tc where creditLimit in (12232,1213,323) {in () refers as list of 
     HAVING constraint_expression
     ORDER BY column ASC/DESC
     LIMIT count OFFSET COUNT;
+
+
+-- The select clause list the attributes desired in the result of a query
+-- The where clause specifies conditions that the result must satisfy
+-- The from clause lists the relations involved in the query
 
 
 *************************************
@@ -200,6 +210,18 @@ WHERE
     ORDER BY firstName;
     
 ***********************************
+/*
+SQL includes a string-matching operator for comparisons on character strings.  
+The operator “like” uses patterns that are described using two special characters:
+    percent (%).  The % character matches any substring.
+    underscore (_).  The _ character matches any character.
+
+SQL supports a variety of string operations such as
+    concatenation (using “||”)
+    converting from upper to lower case (and vice versa)
+    finding string length, extracting substrings, etc.
+
+*/
 
 LIKE
     --LIKE: operator used in a WHERE clause to search for a specific pattern in a column
@@ -234,10 +256,45 @@ LIKE
 
 NOT 
     SELECT * FROM Customers
-    WHERE NOT City= 'Berlin'; --> observe pos of NOT
+    WHERE NOT City= 'Berlin'; --> observe pos of NOT --?? shouldnt it be -> where city NOT LIKE 'Berlin'
 -- this will return all details from customers table whose city is not berlin
 
-*************
+
+LENGTH 
+-- List the Enames those are having five characters in their Names.
+    select ename from emp where length (ename) = 5
+
+-- List the Enames those are starting with ‘S’ and with five characters.
+    select ename from emp where ename like ‘S%’ and length (ename) = 5;
+
+
+--#
+-- #refere sqlquerieswithanswers pdf for tables
+
+-- List the emps who are joined in the month of Aug 1980.
+    select * from emp where hiredate between ’01-aug-80’ and ’31-aug-80’; 
+    -- or->
+    select * from emp where to_char(hiredate,’mon-yyyy’) ='aug-1980';
+
+-- List the emps who joined in January.
+    select * from emp where to_char (hiredate,’mon’) = ‘jan’;
+
+--List all the emps who joined in the month of which second character is ‘a’.
+    select * from emp where to_char(hiredate,’mon’) like ‘_a_’;
+--or->
+    select * from emp where to_char(hiredate,’mon’) like ‘_a%’ --depends on the format on which date is mentioned in table
+
+-- List the emps whose Sal is four digit number ending with Zero.
+    select * from emp where length (sal) = 4 and sal like ‘%0’;
+
+-- List the emps who are working under ‘MGR’. #refere sqlquerieswithanswers pdf for tables
+    select e.ename || ‘ works for ‘ || m.ename from emp e ,emp m where e.mgr = m.empno ;
+--  or->
+    select e.ename || ‘ has an employee ‘|| m.ename from emp e , emp m where e.empno = m.mgr;
+-- || used for concatenation
+
+
+**************************
 
 SELECT DISTINCT
 --When querying data from a table, you may get duplicate rows
@@ -493,13 +550,13 @@ Subquery
                 AVG(amount)
             FROM
                 payments);
--- ????????? whats error in below code
+-- ?? whats error in below code --> AVG(amount) has no significance, amount must be described FROM which table it is belonging to, and select return the avg amount. so only avg(amt), has no significance
     SELECT 
         customerNumber, 
         amount
     FROM
         payments
-    WHERE
+    WHERE 
         customerNumber IN (SELECT customerNumber FROM payments WHERE amount > AVG(amount)); -- avg cant be used with comperator?
 
 
@@ -537,9 +594,78 @@ ALL & ANY
 ******************************
 Derived Tables
 EXISTS
+
+
+************************************
+/*
+SET OPERATIONS
+    The set operations union, intersect, and except operate on relations and correspond to the relational algebra operations 
+    #Each of the above operations automatically eliminates duplicates; 
+    to retain all duplicates use the corresponding multiset versions union all, intersect all and except all.
+        -suppose a tuple occurs m times in r and n times in s, then, it occurs:
+            m  + n times in r union all s
+            min(m,n) times in r intersect all s
+            max(0, m – n) times in r except all s
+*/
+
 UNION
-MINUS
+--on same type of data like -> same attributes
+
+-- Find all customers who have a loan, an account, or both:
+    (select customer_name from depositor)
+    union
+    (select customer_name from borrower)
+
 INTERSECT
+--   Find all customers who have both a loan and an account.
+    (select customer_name from depositor)
+    intersect
+    (select customer_name from borrower)
+
+EXCEPT
+--   Find all customers who have an account but no loan.	
+    (select customer_name from depositor)
+    except
+    (select customer_name from borrower)
+
+
+MINUS
+
+AGGREGATE FUNCTION
+-- These functions operate on the multiset of values of a column of a relation, and return a value
+	avg -- average value
+	min -- minimum value
+	max --  maximum value
+	sum -- sum of values
+	count --  number of values
+
+AVG
+--Find the average account balance at the Perryridge branch.
+    select avg (balance)
+	from account
+	where branch_name = 'Perryridge' 
+
+COUNT 
+--Find the number of tuples in the customer relation.
+    select count (*)
+	from customer
+
+-- Find the number of depositors in the bank.
+    select count (distinct customer_name)
+	from depositor
+
+
+-- Q. Find the names of all branches where the average account balance is more than $1,200.
+        select branch_name, avg (balance)
+        from account
+        group by branch_name
+        having avg (balance) > 1200
+
+-- Note:  predicates in the having clause are applied after the 
+--     formation of groups whereas predicates in the where 
+--     clause are applied before forming groups
+
+
 ********************************
 INSERT
     

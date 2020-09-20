@@ -52,7 +52,7 @@ IssuedBook{
 
 Student{
     rollNo charfield;
-    issuedBookId foreignKey issuedBook;
+    issuedBookId foreignKey issuedBook; --> ?-> to get list of students who issued books
     lateFees float;    
 }
 
@@ -81,16 +81,317 @@ WHERE I.bookId EXIST IN (
     WHERE L.name LIKE 'A';
 )
 
+//
+//SQL Queries
+
+Table -> Employees
+
+Bank: BNo, Name
+Branch: BrNo, Name, BNo
+Customer: CNo, Branch, Deposit, Name, Borrow
+
+Bank {
+    BNo : pK
+    Name: char
+}
+Branch {
+    BrNo: pK
+    Name: char
+    BankNo: fkey Bank
+}
+Customer {
+    CNo: pK
+    Branch: fkey Branch
+    Deposit: float
+    Borrow: float
+    name: char
+}
+i)Print name of all customers of "Axis Bank"
+
+T : Customer C join Branch Br on C.brno = Br.brno
+
+T1 : Customer C join Branch Br on C.brno = Br.brno join Bank B on Br.BankNo = B.BankNo
+
+Select C.Cname 
+from 
+    Customer C join Branch Br 
+    on C.brno = Br.brno 
+    join Bank B 
+    on Br.BankNo = B.BankNo
+    where B.BName like "Axis";
+
+Select C.name from Customer C join Branch B 
+on C.Branch = B.BrNo
+where B.BankNo in (
+    Select Bank.BNo from Branch join Bank 
+    on Bank.BankNo = Branch.BankNo
+    where Bank.name like "Axis Bank";
+);
+
+ii) Branch Names of all Axis Bank brnaches
+
+a) Identify jojn
+Table T -> Bank B inner join Branch Br on B.BankNo = Br.BankNo
+
+b) Right query considering we have a Table(T) with all details after join
+Select Brname from T
+where name like "Axis";
+
+c) Replace T:
+
+Select Br.Brname from Bank B join Branch Br
+on B.BankNo = Br.BankNo
+where B.name like "Axis";
+
+iii) 
+Select Distinct(Br.Brname)
+from
+    Customer C join Branch Br
+    on
+        C.brno = Br.brno
+    where c.Deposit =0;
+
+
+
+
+//Kisan Mitra basic db Design
+
+Farmer->register-> login-> grainEntry-> customerRequestCheck->sell
+Customer-> register->login-> listOfGrain ->order 
+
+#entities->User, Grain
+#transaction-> grainEntryDetail, orderDetails 
+
+/*
+User{
+    emaildId charfield;
+    pwd charfield;
+    userRole choiceField;
+}
+--> farmer and customer details stored in same User table->
+problems->
+    -in orderDetails Farmer & customer both are foreignKey if common table is maintaind for both then there'll be trouble differentiating customer and farmer
+sol-> specialization-> Farmer & User diff tables
+*/
+
+User{
+    emaildId charfield;
+    pwd charfield;
+}
+
+Farmer{
+    user oneToOne User;
+   // farm foreignKey Farm;    ->wrong as it=> many Farmer->1Farm 
+}
+
+Farm{
+    location charfield;  //locatin in itself can be entity
+    farmer foreignKey Farmer;
+}
+
+Customer{
+    user oneToOne User;
+}
+
+Grain{
+    name charfield;
+    //life span, avg-price;
+}
+
+grainEntryDetail{
+    grain foreignKey Grain;
+    farmer foreignKey User;
+    quantity float;
+    price float;
+    quality charfield;
+}
+
+orderDetails{
+    aprove bool;
+    customer foreignKey Customer;
+    farmer foreignKey Farmer;
+    grain foreignKey Grain;
+    quantity float;
+    price float;
+}
+
+
+
+//Kisan Mitra DB design
+
+Flow->
+    Farmer->register-> login-> grainEntry-> customerRequestCheck->sell  store in warehouse(opt)->list warehouse->storageTransaction
+    Customer-> register->login-> listOfGrain ->order 
+
+#entities->User, Grain, Farmer, Customer, Farm, Location(can be made), DeliveryService
+#transaction-> grainEntryDetail, orderDetails, storageTransaction
+
+/*
+User{
+    emaildId charfield;
+    pwd charfield;
+    userRole choiceField;
+}
+--> farmer and customer details stored in same User table->
+problems->
+    -in orderDetails Farmer & customer both are foreignKey if common table is maintaind for both then there'll be trouble differentiating customer and farmer
+sol-> specialization-> Farmer & User diff tables
+*/
+
+User{
+    emaildId charfield;
+    pwd charfield;
+}
+
+Farmer{
+    user oneToOne User;
+    location fkey Location;
+   // farm foreignKey Farm;    ->wrong as it=> many Farmer->1Farm 
+}
+
+Farm{
+    location  fkey Location;
+    farmer foreignKey Farmer;
+}
+
+Centre {
+    centreId integer,
+    admin fkey User,
+}
+
+Location {
+    latitude float,
+    longitude float
+    centreId fkey Centre,
+}
+
+Customer{
+    user oneToOne User;
+    location fkey Location;
+}
+
+Grain{
+    name charfield;
+    //life span, avg-price;
+}
+
+DeliveryService{
+    name char
+    basePrice (perKm) float
+    facilities (text) //cold container ....
+}
+
+Warehouse {
+    name char,
+    warehouseOwner fkey User(//can be linked to Warehouse Owner),
+    facilities (text),
+    grain fkey Grain //assumption one warehouse can store only one kind of grain
+    basePrice float (perkg approximate)
+    location fkey Location
+}
+ 
+storageTransaction { //amount of grain farmer has stored in warehouse
+    farmer foreignKey Farmer,
+    grain foreignKey Grain,
+    isdelivered bool,
+    deliveryPartner fkey DeliveryService,//nullable
+    quantity float, //quantity stored
+    warehouse fkey Warehouse
+    date DateTime
+}
+
+farmerStoredGrainDetail{ //amount of grain left with farmer
+    grain foreignKey Grain;
+    farmer foreignKey User;
+    quantity float;
+    price float;
+    quality charfield;
+    date DateTime
+}
+
+orderDetails{
+    aprove bool;
+    isdelivered bool; //if customer needs DeliveryService
+    deliveryPartner fkey DeliveryService;
+    customer foreignKey Customer;
+    farmer foreignKey Farmer;
+    grain foreignKey Grain;
+    quantity float;
+    price float;
+    date DateTime
+}
 
 
 
 
 
+//OOPS design:
+
+College, Branch, student(enroll), 
+
+Flow: student->login/signup ->College->Branch->Rollno
+Branch->Subjects, Faculty
+
+class College {
+    string name;
+    List<Department> depts;
+
+    College(name) {
+
+    }
+
+    addDepartment(Department department) {
+
+    }
+    
+}
+
+class Person {
+    string name, address, contactNO, DOB;
+
+    Person(all args) {
+
+    }
+}
+
+class Student inherit Person {
+    Rollno,
+    enroll no,
+    Department dept;
+
+    Student(string name, ...) {
+        Person(name,....);
+        this.Rollno.....
+    }
+
+    enrollStudentinDept(Department dept) {
+        this->dept = dept;
+        dept.enrollStudent(this);
+    }
 
 
+}
 
+class Faculty inherit Person { //same as Student
+}
 
+class Department inherit Stream{
+    Faculty HOD, 
+    list<Student> students; //init with empty
+    list<Faculty> faculties; //init with empty
 
+    Department(string name) {
+        Stream(name);
+    }
+
+    enrollStudent(Student student) {
+        students.append(student);
+    }
+}
+
+class Stream {
+    name, subjects
+}
 
 
 

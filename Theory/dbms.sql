@@ -110,7 +110,7 @@ NORMALIZATION
 
 different typs of Normal form->
     1NF:	
-        A relation is in 1NF if it contains an atomic value.
+        A relation is in 1NF if it contains an atomic value, and it must follow INTEGRITY Constraints(like if attribute is defined integer than all values in that attribute must be integer)
         It states that an attribute of a table cannot hold multiple values. It must hold only single-valued attribute.
         First normal form disallows the multi-valued attribute, composite attribute, and their combinations.
         Example: Relation EMPLOYEE is not in 1NF because of multi-valued attribute EMP_PHONE
@@ -137,9 +137,14 @@ different typs of Normal form->
     
     3NF: np->np, removes transitive dependencies(by making separate tables)
         A relation will be in 3NF if it is in 2NF and no transition dependency exists.
-        a->b->c    a->c
-        ac
-        ab 
+        a->b
+        b->c
+        c->d  
+        
+        tables -> abd, ac 
+        candidateKey- {a} 
+
+        here b->d transitive dependency : here b is not a prime key but still its determining d => violation
 
         A relation is in 3NF if at least one of the following condition holds in every non-trivial function dependency X –> Y
             1. X is a super key.
