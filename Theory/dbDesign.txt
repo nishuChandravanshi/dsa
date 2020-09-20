@@ -1,0 +1,96 @@
+
+many To One -> foreignKey
+************
+
+user->register->emaidId(username)->pwd
+login->check
+
+User{
+    emaildId charfield;
+    password charfield;(*hash stored)
+    //user details-->
+}
+
+User{
+    emaildId charfield;
+    password charfield;(*hash stored)
+    //user details-->
+
+    //multiple users (eg student, teachers,admin etc) 
+    userType choiceField;
+}
+//for multiple users -> can make different tables and pass User as a ONE TO ONE key
+
+Student{
+    User oneToOne; (1student<->1user)
+}
+
+
+//LIBRARY MANAGEMENT
+
+func-> 
+//library->listOfBooks, lateFeesPerDay, duration,  
+//for transaction-->
+//issuedBook->bookId,studentId, issuedDate
+
+// student->authentication, issuedBookId,lateFees: 
+//book->details (bookId, availableNoOfCopies, totalNoOfCopies), library(foreign key)
+
+Library{
+    name charfield;
+    //listOfBooks oneToMany; //oneToMany doesn't exist=> 1:n(-foreignKey)
+    //oneToMany not possible=> manyToOne --> foreignKey in other table
+    lateFeesPerDay float;
+    duration integer;
+}
+IssuedBook{
+    bookId foreignKey book;
+    studentId foreignKey student;
+    library foreignKey Library; //automatic id of Library table instance(row)
+    issuedDate dateTimeField;
+}
+
+Student{
+    rollNo charfield;
+    issuedBookId foreignKey issuedBook;
+    lateFees float;    
+}
+
+Book{
+    name charfield;
+    bookSerialNumber charfield;
+    availableNoOfCopies integer;
+    totalNoOfCopies integer;
+    library foreignKey Library;
+}
+       
+
+//return list of issuedDate of Books in library named A
+
+SELECT I.issuedDate FROM IssuedBook I
+JOIN Library L ON I.library = L.pk (primary key) 
+WHERE L.name LIKE 'A';
+
+//return list of bookNames of issuedBooks in library named A
+
+SELECT B.name FROM Books B
+JOIN IssuedBook I ON I.bookId = B.pk
+WHERE I.bookId EXIST IN (
+    SELECT I.bookId FROM IssuedBook I
+    JOIN Library L ON I.library = L.pk (primary key) 
+    WHERE L.name LIKE 'A';
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+

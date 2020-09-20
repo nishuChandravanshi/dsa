@@ -101,9 +101,9 @@ The DeptID in the Employee table is a Foreign Key in the Employee Table.
 --prime attribute - tose attributes which are part of any of the candidate keys
 --non prime attributes - other than prime
 NORMALIZATION
-    -the process of organizing the data in the database.
-    -used to minimize the redundancy from a relation or set of relations. It is also used to eliminate the undesirable characteristics like Insertion, Update and Deletion Anomalies.
-    -it divides the larger table into the smaller table and links them using relationship.
+    -Redundancy in relation may cause insertion, deletion and updation anomalies
+     Normalization is the process of minimizing redundancy from a relation or set of relation
+    -it is the process of organizing the data in the database by dividing the larger table into the smaller table and links them using relationship.
     -The normal form is used to reduce redundancy from the database table.
 -- eg
 --##imp- https://www.geeksforgeeks.org/normal-forms-in-dbms/#:~:text=Normalization%20is%20the%20process%20of,reduce%20redundancy%20in%20database%20tables.
@@ -228,7 +228,8 @@ INDEXING
     -Indexing is a way to optimize the performance of a database by minimizing the number of disk accesses required when a query is processed.
     It is a data structure technique which is used to quickly locate and access the data in a database.
 
-
-
+    -Indexing is a data structure technique to efficiently retrieve records from the database files 
+    based on some attributes on which the indexing has been done.
+    -Indexing in database systems is similar to what we see in books.
 
 

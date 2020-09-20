@@ -18,9 +18,16 @@ MySQL databases are relational
  and “pointers” between different tables. The database enforces these rules, 
  so that with a well-designed database, your application 
  never sees inconsistent, duplicate, orphan, out-of-date, or missing data.
-
 Open source
 
+DDL : Data Definition Languagea
+    Allows the specification of:
+        -The schema for each relation, including attribute types.
+        -Integrity constraints (eg null, etc)
+        -Authorization information for each relation.
+        -Non-standard SQL extensions also allow specification of
+        -The set of indices to be maintained for each relations.
+        -The physical storage structure of each relation on disk.
 
 ************************************************************
 
