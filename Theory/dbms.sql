@@ -138,10 +138,10 @@ different typs of Normal form->
     3NF: np->np, removes transitive dependencies(by making separate tables)
         A relation will be in 3NF if it is in 2NF and no transition dependency exists.
         a->b
-        b->c
+        b->c : np->np
         c->d  
         
-        tables -> abd, ac 
+        tables -> ab, bc, cd 
         candidateKey- {a} 
 
         here b->d transitive dependency : here b is not a prime key but still its determining d => violation

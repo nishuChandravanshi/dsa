@@ -399,6 +399,9 @@ Table & column alias
 
 
 ******************
+-- practice problems
+-- http://www.interviewquestionspdf.com/2014/07/join-sql-join-queries-interview.html
+
 JOIN
 --A relational database consists of multiple related tables linking together
 -- using common columns which are known as foreign key columns
@@ -406,10 +409,11 @@ JOIN
 
 INNER JOIN --left intersecion right
 --The inner join clause joins two tables based on a condition which is known as a join predicate.
---The inner join clause compares each row from the first table with every row from the second table.
+--it compares each row from the first table with every row from the second table.
 -- If values in both rows cause the join condition evaluates to true, 
 --the inner join clause creates a new row whose column contains all columns of the two rows from both tables and include this new row in the final result set. 
 --=>the inner join clause includes only rows whose values match(as per the condition mentioned after ON)
+-- ie it does not preserve nonmatched tuples 
 
     SELECT
         customerName,
@@ -424,7 +428,7 @@ INNER JOIN --left intersecion right
         total DESC;
 --The query above selects customer name and the number of orders from the customers and orders tables
 
-LEFT JOIN --all rows of left column with NULL on right column rows whose values are not present
+LEFT JOIN --preserves the relation written on left of left join clause
 --if the values in the two rows are not matched,
 --the left join clause still creates a new row whose columns contain columns of the row in the left table and NULL for columns of the row in the right table.
 --left join selects data starting from the left table. For each row in the left table, the left join compares with every row in the right table->
@@ -434,13 +438,60 @@ LEFT JOIN --all rows of left column with NULL on right column rows whose values 
     FROM table_1 
     LEFT JOIN table_2 USING (column_name);
 
-
 RIGHT JOIN
+
+
+FULL OUTER JOIN
+    -- The full outer join preserves tuples in both relations
+
 Self Join
 CROSS JOIN
 
+**
+Query: Get employee name, project name order by firstname from "EmployeeDetail" and "ProjectDetail" for all employee if project is not assigned then display "-No Project Assigned".
+Ans: SELECT FirstName, ISNULL(ProjectName,'-No Project Assigned') --if ProjectName not assigned then-> displaying 'No project assigned' else displaying assigned proj name
+FROM [EmployeeDetail] A LEFT OUTER JOIN [ProjectDetail] B
+ON A.EmployeeID = B.EmployeeDetailID ORDER BY FirstName
 
+
+
+-- ##ON and WHERE diff-> on clause works differently for outer join than where. 
+-- like -> 
+select * 
+from A
+natural join B  -- innner join
+on A.id = B.id 
+--above query will produce same result as->
+select * 
+from A
+natural join B  -- innner join
+where A.id = B.id 
+
+-- because in inner join those tuples which doesnt fulfill the where condition are eliminated and are those are not present in final table
+-- but->
+-- 1.
+select * 
+from A
+full outer join B  
+on A.id = B.id 
+
+-- and->
+
+-- 2.
+select * 
+from A
+full outer join B  -- innner join
+on true
+where A.id = B.id  
+
+
+-- 1. and 2. will produce different result as on 1 all the tuples of both relations A and B will be present in final relation after join. 
+-- but in 2. where A.id=B.id will return false for those tuples which will not satisfy the condition in where predicate and thus those tuples will not be present
 ****************************
+
+COUNT (*)
+    -- the aggregate function count is frequently to count the number of tuplesin a relation.
+
 GROUP BY
 --aggregate_functions -
 --used after the FROM, WHERE and SELECT clauses and before the HAVING , ORDER BY and LIMIT clauses

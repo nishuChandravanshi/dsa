@@ -151,10 +151,10 @@ from
         C.brno = Br.brno
     where c.Deposit =0;
 
+***********************************************************************************************
+1. KRISHI JAGARAN
 
-
-
-//Kisan Mitra basic db Design
+//Krishi Jagaran basic db Design
 
 Farmer->register-> login-> grainEntry-> customerRequestCheck->sell
 Customer-> register->login-> listOfGrain ->order 
@@ -200,7 +200,7 @@ Grain{
 
 grainEntryDetail{
     grain foreignKey Grain;
-    farmer foreignKey User;
+    farmer foreignKey Farmer;
     quantity float;
     price float;
     quality charfield;
@@ -215,16 +215,75 @@ orderDetails{
     price float;
 }
 
+*****
+?? HOW!
+-who is managing warehouse db?
+    -let say a farmer wants to store x amt of grain in  wahrehouse, how u ensure that it reaches warehouse?
 
 
-//Kisan Mitra DB design
+*****
 
-Flow->
+
+//Krishi Jagaran DB design
+
+Features
+    -a common platform where different farmers can report their produce and sell 
+    -considering the fact that not many farmers use smartphones, our app is seamlessly integrated with message services
+        -particular format of msg eg
+             to report produce->  REPORT<type><quantity><price>
+             to store in warehouse-> STORE<type><quantity>       
+    -smart warehouse management, after produce is reported we provide optimal list of warehouse and Delivery services
+    
+    -Since we have all the transaction data for a region in the centre we can do following things with it->
+    i) Surplus deficit ...
+        #note: there's only one server, and multiple virtual centers
+        -we can ensures equitable distribution of food resources across differetn regions,
+        like if theres  shortage of any particular food grain in region A then the server will send request msg to all other regions
+        and then region with surplus of that particulr food grain can connect with region A and perform the required trade
+    ii) Hoarding detection -> we have storage date
+    iii) Since we now lifespan of a grain and its produce date we can inform the farmer before a threshold(let's say 60 days of perishing) 
+    and also send the list of buyers who buy that grain frequently
+
+    #avg lifespan, if anybodys trying to hoard then we'll get to know as we have all the data of grain and farmers-> so we can prevent hoarding by informing govt agencies or smtg
+    #center architecture is the backbone of this, like we can 
+
+Future Scope:
+    i) We can use the supply demand data from each centre and couple it with the regional agricultural university data 
+    and give proper guidance regarding crop selection to farmers
+        (& ->since we've data of demand and supply-> we can suggest farmer what to grow, so as to maximize their profit )
+    ii) There are some shortcoming owing to the time limit in hackathon whch can be worked on->
+        a) Payment system, Refinement in delivery , warehouse model, etc
+    iii) multilingual support
+
+Problems with the app:
+    i) multilingual support
+    ii) Regfinement required in certain models like delivery, warehouse
+    iii)Payment
+
+
+Learnings:
+    -Designing features keeping in mind simplistic and easy to use design(for farmerss)
+    -Dataase design since it is a huge app with many apis
+    -the skill to complete the product in stipulated time
+
+   
+Challenges:
+    -we had to think of something to support sms services (twilio provides api (for sending farmers sms to server) but it is paid -> we used dummy app on which we'll get farmers sms -> then this app will generate sms/.. api and it to the server {see the image roos's send!})
+        (from server we are sending success msg directly to the user using api provided by msg91, as we had free-credits for the same)
+    -completing product in time was a big challenge, 
+        every sub module is a big thing so we tried to model it with real world as good as possible
+
+#apis used (ie urls made) -> signup, login, uploadGrainDetails(Post), getWareHouseStorage details, placeOrder, ...
+
+
+
+Flow-> --tell when asked
     Farmer->register-> login-> grainEntry-> customerRequestCheck->sell  store in warehouse(opt)->list warehouse->storageTransaction
     Customer-> register->login-> listOfGrain ->order 
 
 #entities->User, Grain, Farmer, Customer, Farm, Location(can be made), DeliveryService
 #transaction-> grainEntryDetail, orderDetails, storageTransaction
+
 
 /*
 User{
@@ -322,8 +381,50 @@ orderDetails{
 }
 
 
+//function implementation example->
+
+Grain->name, lifespan
+Farmer->user
+farmerGrainDetail
 
 
+Authentication->Session, Token
+
+url -> request(cookie user information) Session
+
+url -> request(header->Token) ->Token decrypt using a key : user  : jwt(json web based Token)
+key-> django Security key, {username, email }
+
+url-> /farmer/grainUpload ->post
+
+def grainUpload(request): //grainId, quantity, quality, price
+    user = request.user
+    grainID = request.data["grainID"]
+    quality = request.data["quality"]
+    quantity = request.data["quantity"]
+    price = request.data["price"]
+
+    farmer = Farmer.objects.get(user=user)
+    grain = Grain.objects.get(pk=grainId)
+
+    farmerGrainDetail = FarmerGrainDetail(farmer = farmer, grain = grain, quantity = quantity,
+                                            quality = quality, price = price)
+    
+    farmerGrainDetail.save()
+
+    return JsonResponse({"success":true})
+
+
+
+
+
+****************
+
+2. https://medium.com/@neshpatel/solving-sudoku-part-i-7c4bb3097aa7
+
+
+
+****************************************************************************************************************************
 
 //OOPS design:
 
