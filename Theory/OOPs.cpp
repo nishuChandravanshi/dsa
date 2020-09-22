@@ -834,42 +834,6 @@ every 5 min me update
 
 
 ******************************
-// DBMS
-Normalization
-
-1Nf,2Nf, 3Nf, BCNF
-
-Student   Branch  Hod
-R           CSE   A
-N           Mech  B
-K           CSE   A
-
-2NF:
-prime->non prime partial dep
-
-3NF:
-np->prime  transitive dep
-
-branch student hod
-a->b->c    a->c
-ac
-ab 
-
-BCNF:
-prime ->prime
-
-A->b c->d->a   ac
-c->a  
-ac
-bcd
-
-sql vs nosql
-file indexing->b+ tree 
-acid prop 
-page replacement 
-burst time , turnaround time,...
-
-
 
 
 

@@ -1,0 +1,172 @@
+SUDOKU SOLVER description
+
+# part2 image processing 
+#  https://medium.com/@neshpatel/solving-sudoku-part-ii-9a7019d196a2
+
+#numbered the tasks we need to done
+
+1. We need a method for identifying the grid in the center
+# There are functions we can use to try to detect the corners in the image, but before doing that we should process the image to improve the reliability of those operations->
+
+
+-for programming using images weve used: open source project, OpenCV
+    python biniding of openCV : cv2 library 
+    import cv2 #and use
+
+    # eg 
+    import cv2
+    img = cv2.imread('images/1-original.jpg', cv2.IMREAD_COLOR) #cv2.IMREAD_GRAYSCALE -> to read image as greyscale: to remove unnecessary colors
+    print(type(img))
+    print(img.shape)
+    print(img)
+
+
+-each pixel is represented by a tuple of 3 representing the Blue-Green-Red (BGR) colour channels (it defaults to BGR, not RGB). 
+Each channel is an integer between 0 and 255, so (0, 0, 0) is pure black and (255, 255, 255) is pure white. 
+These are in a list of lists (2-D matrix) where the number of rows is the height of the image and the number of columns the width.
+
+-read the image as greyscale (use cv2.IMREAD_GRAYSCALE), the colour information is lost and each element simply becomes a single integer between 0 and 255, 
+representing the brightness of the pixel.
+
+-At the moment the image is mostly grays and each pixel as some grey value between 0 and 255
+This is quite noisy for the operations we will perform for corner detection
+    -a way to reduce this noise(ie making clarity out of greyscale img weve) is THRESHOLDING
+
+binary thresholding 
+    -These algorithms reduce an image to pure black and white, based on the contrast
+    1. Global thresholding: makes the split based on a threshold measured from the entire image
+    2. Adaptive thresholding: calculates a threshold for each pixel in the image based on the mean value of surrounding pixels
+        -This is useful when the contrast is uneven across parts of the image,
+    #so we'll be using adaptive threshold as the contrast of image may not be even mostly (light effect n all)
+    
+    import cv2
+    import numpy as np
+    from matplotlib import pyplot as plt
+    img = cv2.imread('images/1-original.jpg', cv2.IMREAD_GRAYSCALE) #grayscaling image
+    
+    ret, threshold1 = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)  #global threshold
+    threshold2 = cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2) #adaptive threshold
+    
+    plot_many_images([threshold1, threshold2], ['Global', 'Adaptive']) #will print the image returned after resp threshold
+
+
+Blur and Dilation
+    blur the image beforehand to reduce the noise picked up by the thresholding algorithm and
+    dilate the image to increase the thickness of the line
+
+    # Dilate the image to increase the size of the grid lines.
+    kernel = np.array([[0., 1., 0.], [1., 1., 1.], [0., 1., 0.]])
+    proc = cv2.dilate(proc, kernel) #dilate func used 
+
+#now, we are assuming that sudoku is the largest single feature in the image
+
+Contours
+    -a way of describing the boundaries of a shape that has the exact same intensity
+    -findContours (algorithm) function to detect the contours in the image #Since we converted to binary tones using thresholding, we can use this func to detect boundaries now
+
+    new_img, ext_contours, hier = cv2.findContours(processed.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) #external contour-> finds outerr boundary 
+    new_img, contours, hier = cv2.findContours(processed.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE) #finds boundary of inner smaller areas as well
+
+    problems in finding corners-->
+    # The function cv2.contourArea is handy here as we can use it to easily get the largest feature in the image. 
+    # We could use the Ramer-Douglas-Peucker algorithm to approximate the number of sides of the shape as well as this would allow us to filter for rectangular objects only.
+    #However during testing I found that this limitation gave false negatives when folds in the page gave the illusion that the grid had 5 sides instead of 4.
+
+    @discuss
+    #ie with this we aint getting the corners so now-> applying following logic to get four corners->
+    
+Logic to find corners
+    Top left point has the smallest x and smallest y coordinate, so minimise x + y.
+    Top right point has the largest x and the smallest y coordinate, so maximise x - y.
+    Bottom right point has the largest x and the largest y coordinate, so maximise x + y.
+    Bottom left point has the smallest x and the largest y coordinate, so minimise x - y.
+
+    problem-->
+    # The next step is to cut out the part of the image we need and throw away the garbage.
+    #But the photo was taken at a slight angle, so whilst our points map out a rectangle, it’s not a perfect square.
+
+    sol-->
+    warpPerspective  #openCV function
+    #warpPerspective used to make the perspective of img processed so far into a square
+    #the warp transformation has made it look like we are viewing the board directly instead of at an angle
+
+2. Identify the cells from the board
+    -divide up the grid into 81 evenly sized squares, since we have already warped it into a square
+    
+    **** code snippet-->
+        def infer_grid(img):
+        """Infers 81 cell grid from a square image."""
+        squares = []
+        side = img.shape[:1]
+        side = side[0] / 9
+        for i in range(9):
+            for j in range(9):
+                p1 = (i * side, j * side)  # Top left corner of a bounding box
+                p2 = ((i + 1) * side, (j + 1) * side)  # Bottom right corner of bounding box
+                squares.append((p1, p2))
+        return squares
+
+    original = cv2.imread('images/1-original.jpg', cv2.IMREAD_GRAYSCALE)
+    processed = pre_process_image(original) 
+    corners = find_corners_of_largest_polygon(processed)
+    cropped = crop_and_warp(original, corners)
+    squares = infer_grid(cropped)
+
+    # See https://gist.github.com/mineshpatel1/22e86200eee86ebe3e221343b26fc3f3#file-display_rects-py
+    display_rects(cropped, squares)
+    
+    *****
+
+    problem - 
+        a lot of cells have overlapping grid lines and the digits aren’t very well centered
+    sol - #(refer code and see logic)
+        Taking advantage of the fact that Sudoku grids are always simple and can only contain single digits in the middle of each box, 
+        we can implement a function that finds the largest connected pixel structure found when searching around the centre of each square.
+
+
+
+*******************************************************************************
+
+
+@discuss 
+NumPy
+#https://www.tutorialspoint.com/numpy/numpy_quick_guide.htm
+
+    -In Python we have lists that serve the purpose of arrays, but they are slow to process.
+    -NumPy aims to provide an array object that is up to 50x faster that traditional Python lists.
+    -The array object in NumPy is called ndarray, it provides a lot of supporting functions that make working with ndarray very easy.
+    # -Arrays are very frequently used in data science, where speed and resources are very important.
+
+    Operations using NumPy
+    Using NumPy, a developer can perform the following operations −
+    Mathematical and logical operations on arrays.
+    Fourier transforms and routines for shape manipulation.
+    Operations related to linear algebra. NumPy has in-built functions for linear algebra and random number generation.
+
+    # NumPy is often used along with packages like SciPy (Scientific Python) and Mat−plotlib (plotting library). 
+    # This combination is widely used as a replacement for MatLab, a popular platform for technical computing.
+
+    Why is NumPy Faster Than Lists
+        NumPy arrays are stored at one continuous place in memory unlike lists, so processes can access and manipulate them very efficiently
+        This behavior is called locality of reference in computer science.
+        This is the main reason why NumPy is faster than lists. Also it is optimized to work with latest CPU architectures
+
+
+
+
+    Which Language is NumPy written in?
+        NumPy is a Python library and is written partially in Python, but most of the parts that require fast computation are written in C or C++.
+
+# The source code for NumPy is located at this github repository https://github.com/numpy/numpy
+
+
+matplotlib
+
+pyplot
+
+
+
+******************************************************************************
+Pixel
+# https://www.webopedia.com/TERM/P/pixel.html
+

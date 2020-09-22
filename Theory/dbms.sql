@@ -238,3 +238,26 @@ INDEXING
     -Indexing in database systems is similar to what we see in books.
 
 
+
+
+*******************************************************************************
+
+TRANSACTION
+    -set of instructions to perform some logical process
+    - It must be atomic in nature inorder to maintain the consistency in data base
+
+ACID Properties
+    -the purpose is to maintain the consistency of db and transaction is the process which interacts with database
+    so if we make sure that transaction does not violate the consistency of db then it is okay to perform that transaction on db.
+    So, to ensuret this theres set of properties k/as ACID properties->
+    
+    1. Atomicity : either a transaction executes completely or not at all. 
+                  'transaction management module' in db takes care of atomicity
+    2. Consistency :
+    3. Isolation : concurrent transactions are logically seperated from each other
+                   'Concurrency Control Component' in db takes care of Isolation
+    4. Durability : data must not be affected by any hardware of software failure
+                    'Recovery Management Component' in db takes care of Durability
+
+
+

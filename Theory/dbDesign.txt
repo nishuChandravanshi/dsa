@@ -220,6 +220,16 @@ orderDetails{
 -who is managing warehouse db?
     -let say a farmer wants to store x amt of grain in  wahrehouse, how u ensure that it reaches warehouse?
 
+##to do --
+    -python libraries ie files,packages used(read definitions of those which has been used in ur project)
+    -api(definition,which api and how), get post diff etc
+@rs -how u did load balancing??
+    -topology types and definition
+
+    -how does ur project work benefit xyz company?
+    
+#System Design
+    -gfg instagram rt le
 
 *****
 
@@ -392,14 +402,18 @@ Authentication->Session, Token
 
 url -> request(cookie user information) Session
 
-url -> request(header->Token) ->Token decrypt using a key : user  : jwt(json web based Token)
+url -> request(header->Token) ->Token decrypt using a key : user  : jwt(json web based Token) // so its like every request will contain header file with the token in it, so as for it to be processed
 key-> django Security key, {username, email }
 
 url-> /farmer/grainUpload ->post
 
+http request methods->
+    get : to request data from the server
+    post : to submit data to be processed to the server
+
 def grainUpload(request): //grainId, quantity, quality, price
     user = request.user
-    grainID = request.data["grainID"]
+    grainID = request.data["grainID"] //grainId => key that we've decided, similary quality,quantity,...
     quality = request.data["quality"]
     quantity = request.data["quantity"]
     price = request.data["price"]
@@ -414,7 +428,7 @@ def grainUpload(request): //grainId, quantity, quality, price
 
     return JsonResponse({"success":true})
 
-
+ #returning data in JSON(JavaScript Object Notation) format (which is implemented as dictionary objects in Python)
 
 
 
