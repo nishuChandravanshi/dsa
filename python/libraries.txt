@@ -1,16 +1,16 @@
 SUDOKU SOLVER description
 
-# part2 image processing 
+# part2 image processing (giving bernard eye)
 #  https://medium.com/@neshpatel/solving-sudoku-part-ii-9a7019d196a2
 
-#numbered the tasks we need to done
+#numbered the tasks we need to do
 
 1. We need a method for identifying the grid in the center
 # There are functions we can use to try to detect the corners in the image, but before doing that we should process the image to improve the reliability of those operations->
 
 
 -for programming using images weve used: open source project, OpenCV
-    python biniding of openCV : cv2 library 
+    python binding of openCV : cv2 library 
     import cv2 #and use
 
     # eg 
@@ -32,7 +32,7 @@ representing the brightness of the pixel.
 This is quite noisy for the operations we will perform for corner detection
     -a way to reduce this noise(ie making clarity out of greyscale img weve) is THRESHOLDING
 
-binary thresholding 
+Binary thresholding 
     -These algorithms reduce an image to pure black and white, based on the contrast
     1. Global thresholding: makes the split based on a threshold measured from the entire image
     2. Adaptive thresholding: calculates a threshold for each pixel in the image based on the mean value of surrounding pixels
@@ -125,6 +125,130 @@ Logic to find corners
 
 
 
+#part3. neural programming (giving bernard brain)
+#https://medium.com/@neshpatel/solving-sudoku-part-iii-3182fe747883
+
+*classification model used: as we know the ip as well as the op
+
+Neural Network Program 
+    -It consists of layers of neurons, where each neuron is an object that holds a number between 0 and 1 called its activation.
+     The output activations of each layer serves as part of the input for the neurons in the next layer and so on until we reach the output.
+    -the first layer of neurons is the input layer, providing the stimulus for the network. 
+     The final layer is the output layer, with a neuron for each possible outcome that can be achieved. 
+     The hidden layers are where the intelligence lies.
+    -these hidden layers will pick up on different features in the input and the combination of these features will indicate the right output
+        For example, the number 9 could be represented as a loop near the top and a vertical line and then a loop could be represented by 4 curves all placed adjacently. 
+        The idea is then that different stimuli in the input layer will cause different activations in each subsequent layer and eventually activate the correct neuron in the output layer.
+    
+    -Each connection between the neurons has a weight associated with it, 
+     which is a number that can be positive or negative, set arbitrarily to begin with
+    -The activation of a neuron is a weighted sum of all of the activations of connected neurons in the previous layer
+    - We also want a threshold below which the neuron is inactive, we can do this by just subtracting a term which we call the "bias".
+
+    There are many Variations of Neural network like->
+        Convolutional Neural network - good for image recognition
+        Long short-term memory network - good for speech recognition
+
+
+    #28x28 pixels = 784 neurons each holding a greyscale value b/w 0-1 : (but till now we've processed our img and in our image those neurons will be holding either 0(black) or 1(while) value)
+    #this number inside the neuron is called its activation
+    #this 784 neurons make up the first layer of our network
+    #the activation for each neuron in the following layers is based on the weighted sum of all the activations in the previous layer + bias
+        then we compose this sum (weighted sum+bias) with other func like sigmoid or ReLU
+    #the last layer is (op layer) consist of 10 neurons each consisting of a digit from 0-9
+    #pixel->edges->patterns->digits
+    
+
+
+
+    #every edge b/w any two neuron in two layers is assigned some weight, 
+        we calculate the weighted sum (to find any edge or pattern) and this weighted sum helps to recoginize which all neurons in next layer will be active 
+
+        Weighted sum = w1.a1 +w2.a2+.....(where w= edge weight, a = activation)
+        # this weighted sum may corresspond to any digit! but we want it between 0-1
+        so we use "sigmoid function"!
+                        -in sigmoid func(see the curve) for very -ve val op will be around 0 and for very positive op will be around 1
+                        #sigmoid(a) = 1/(1+e^(-a))
+        #nowadays sigmoid func aint used mch ->instead ReLU (rectified linear unit is in use) : as it was easier to train with reLU and gave good results
+                        #ReLU(a) = max(0,a)
+                        #it works as-> the neuron would be activated if it  passes some threshold otherwise not. 
+
+
+
+        #now we dont want neurons on next layer to be active when weighted sum>0,
+        lets say we want to be active when weighted sum >10 => we want sum "bias" for inactivity
+        So, add sum numebr (say -10) into the weighted sum before putting it inside sigmoid func
+    
+        #Learning => which weights and biases minimizes a certain cost function 
+        ie getting the computer to find the right set of weight and bias out of all the datasets, and so become able to solve the problem in hand
+        #cost function : take the output that the n/w gives and the output which we wanted and then-> 
+            add up the squares of the differences between each componenet. Doing this for all thousands of trainig examples and averaging the results gives the Total Cost of the Network.
+            #now-> the thing we're looking for is the -ve Gradient of this cost function which tells how we need to change all the weight and biases, so as to most efficiently decrease the cost.
+
+
+        Back Propagation: 
+            -an algorithm for determinig how a single trainig example would like to nudge the weights and biases,
+            not just in terms of whether they should go up or down, but in terms of what relative proportion to those changes cause the most rapid decrease to the cost.
+            A true gradient descent step would involve doing this for all the thousands of trainig examples and averaging the desired changes that we get-> but thats computationally slow. 
+@dis->      So instead we randomly subdivide the data into mini batches and compute each step wrt a mini batch, repeatedly going through all of these mini batches and making thsese adjustments
+            we'll converge towards a local minimum of the cost function.
+
+            # Backpropagation is really one instance of a more general technique called "reverse mode differentiation" to compute derivatives of functions represented in some kind of directed graph form.
+             
+
+        Feedforward 
+            -Then the activation of each neuron is part of the input for each neuron in the next layer. 
+            This passing of information sequentially through layers is called feedforward.
+
+        Implementation part->
+        
+            TensorFlow library:  to do the heavy lifting for the neural network
+                -Tensorflow works by first declaring a graph that describes your network and then runs sessions to perform training and prediction.
+                -Tensors (from which the library gets its name) are a bit like matrices (but with important differences) in that they have some shape and dimensionality. 
+                 Our placeholder for x, the input has a shape of [None, 784]
+                 The missing value will be filled in by the number of input images we choose, e.g. 81 for each cell of a Sudoku grid, each with 784 pixel values.
+                 The same is true for y_, but the second parameter is 10 as that is the number of possible classifications, 0-9. The shapes of these tensors are important when defining the layers
+
+                ***code snippet
+                    x = tf.placeholder(tf.float32, shape=[None, 784])  # Placeholder for input
+                    y_ = tf.placeholder(tf.float32, shape=[None, 10])  # Placeholder for true labels (used in training)
+                    hidden_neurons = 16  # Number of neurons in the hidden layer, constant
+                ***
+
+
+
+            Architecture-
+                We will be implementing the simple network that has one hidden layer in between the input and output layers
+                #our input images from the Sudoku grid are 28x28 pixels big which gives us 784 neurons to play with, one for each pixel intensity in the image.
+
+
+
+
+
+
+#todo-> error func,dataset(used on it), activation func, neural network, entropy, gradient descent,  
+    numpy, pandas lib, matplotlib, opencv2, scikitlearn, 
+
+    neural network
+    activation function (types : relu,...)
+    activation function
+    cross function
+    gradient descent (=>related to calculation)
+    feedforward and backward propagation
+
+    framework <-> (in neural network)
+        1. tensor flow, ->(library- keras)
+        2. pytorch
+
+
+
+    later-> 
+    popular mchine learning models name and definition
+        linear regression, logistic regression,classification,svm(support vector machine)
+
+
+
+
 *******************************************************************************
 
 
@@ -167,6 +291,17 @@ pyplot
 
 
 ******************************************************************************
-Pixel
+#gpu (graphic processing unit)
+
+
+#Pixel
 # https://www.webopedia.com/TERM/P/pixel.html
 
+
+
+**************************************
+Study resources
+
+Neural Networking 
+    book : http://neuralnetworksanddeeplearning.com/
+    videos: https://www.youtube.com/watch?v=aircAruvnKk
