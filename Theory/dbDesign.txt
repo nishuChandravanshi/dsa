@@ -430,6 +430,67 @@ def grainUpload(request): //grainId, quantity, quality, price
 
  #returning data in JSON(JavaScript Object Notation) format (which is implemented as dictionary objects in Python)
 
+***
+
+JSON : --https://beginnersbook.com/2015/04/json-tutorial/
+    JSON stands for JavaScript Object Notation. JSON objects are used for transferring data between server and client, 
+    XML serves the same purpose. However JSON objects have several advantages over XML.
+
+    JSON data: It basically has key-value pairs.
+        eg: var chaitanya = {
+                "firstName" : "Chaitanya",
+                "lastName" : "Singh",
+                "age" :  "28"
+            };
+
+    Features of JSON:
+        It is light-weight
+        It is language independent
+        Easy to read and write
+        Text based, human readable data exchange format
+
+    JSON data structure types and how to read them:
+        1) JSON objects:
+            var chaitanya = {
+                "name" : "Chaitanya Singh",
+                "age" : "28",
+                "website" : "beginnersbook"
+            };
+            The above text creates an object that we can access using the variable chaitanya. Inside an object we can have any number of key-value pairs like we have above. We can access the information out of a JSON object like this:
+            document.writeln("The name is:  " +chaitanya.name);
+       
+        2) JSON objects in array
+        In the above example we have stored the information of one person in a JSON object suppose we want to store the information of more than one person; in that case we can have an array of objects.
+            var students = [
+                {"name" : "Steve", "age" :  "29", "gender" : "male"},
+                {"a" : "aname", "age" : "aage", "gender":"agender"},
+                .....
+            ];
+            To access the information out of this array->
+            document.writeln(students[0].age); //output would be: 29
+    
+        3) Nesting of JSON objects:
+            var students = {
+                "steve" : {
+                    "name" : "Steve",
+                    "age" :  "29",
+                    "gender" : "male" 
+                },
+
+                "pete" : {
+                    "name" : "Peter",
+                    "age" : "32",
+                    "gender" : "male"
+                },
+
+                "sop" : {
+                    "name" : "Sophie",
+                    "age" : "27",
+                    "gender" : "female"
+                }
+            }
+        to access->
+        document.writln(students.steve.age); //output: 29
 
 
 ****************
@@ -483,7 +544,6 @@ class Student inherit Person {
         this->dept = dept;
         dept.enrollStudent(this);
     }
-
 
 }
 

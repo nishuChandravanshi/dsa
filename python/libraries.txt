@@ -226,7 +226,7 @@ Neural Network Program
 
 
 
-#todo-> error func,dataset(used on it), activation func, neural network, entropy, gradient descent,  
+#todo-> neural n/w, error func,dataset(used on it), activation func, neural network, entropy, gradient descent,  
     numpy, pandas lib, matplotlib, opencv2, scikitlearn, 
 
     neural network
@@ -239,7 +239,8 @@ Neural Network Program
     framework <-> (in neural network)
         1. tensor flow, ->(library- keras)
         2. pytorch
-
+        
+*digital technologies for-> tcs
 
 
     later-> 
@@ -297,7 +298,14 @@ pyplot
 #Pixel
 # https://www.webopedia.com/TERM/P/pixel.html
 
-
+#data set
+    1. training dataset: 
+        -trainig dataset and testing dataset are maintained seperately so as to check model on other dataset than that on which it is trained inorder to check its accuracy when new problem is encountered
+    
+    2. testing dataset: 
+    3. validation dataset: 
+    // overfitting(def pdh) 
+        
 
 **************************************
 Study resources
@@ -305,3 +313,5 @@ Study resources
 Neural Networking 
     book : http://neuralnetworksanddeeplearning.com/
     videos: https://www.youtube.com/watch?v=aircAruvnKk
+
+
