@@ -1,5 +1,7 @@
                 OOPS - Object Oriented Programming System
 
+@dis ->https://www.geeksforgeeks.org/storage-classes-in-c/
+
 INTRO::
 Oops-
     -Object oriented programming system in which programs are treated
@@ -9,6 +11,7 @@ Oops-
     and methods. 
     -in oops programming programs are organized around objects and data
     rather than actions and logics.
+    -it is BOTTOM UP approach
 
 ## C, PASCAL- STRUCTURED PROGRAMMING LANG.
 ## FORTRAN,COBOL - PROCEDURAL PROGRAMMING LANG
@@ -49,6 +52,11 @@ no life outside prog exec
 DIFF B/W PRIVATE AND PROTECTED access modifiers
     private: Only the member functions or the friend functions are allowed to access the private data members of a class.	
     protected: The class member declared as Protected are inaccessible outside the class but they can be accessed by any subclass(derived class) of that class.
+
+
+PROBLEMS WITH OOPS 
+    -Multiple Inheritence: 
+        due to which "Diamond Problem" arises
 
 *******
 
@@ -592,13 +600,12 @@ DIFF B/W PRIVATE AND PROTECTED access modifiers
 
 
 types-
-// Single Level Inheritance
+//1. Single Level Inheritance
     A->B :(base->derived)
 
    class A {  
         public:  
             float salary = 60000;
-
         void display()
     	{
     		cout<<"salary: "<<salary<<endl;
@@ -607,7 +614,7 @@ types-
     
    class B: public A //inheriting class A, =>B is derived class
    {  
-         public:  
+        public:  
         	float bonus;
         
         B(float b, float a)
@@ -634,89 +641,63 @@ types-
     The member which is declared as protected will be accessible
     to all the member functions within the class as well as the class immediately derived from it
 
-
-    // multi level Inheritence
+//2. multi level Inheritence or multiple inheritence
+    -Multiple Inheritance is a feature of C++ where a class can inherit from more than one classes.
+            
     class D : visibility B-1, visibility B-2, ?  
     {  
         // Body of the class;  
     }   
-
-
-//Aggregation -> has  a relation ship
-//one class has objects of other class as its members
-
-    class Employee    
+    //The constructors of inherited classes are called in the same order in which they are inherited. 
+    // eg->
+    class A 
     { 
-        private:  
-        Address* address;  //Employee HAS-A Address   
-        public:  
-            int id;    
-            string name;    
-        Employee(int id, string name, Address* address)    
-        {    
-            this->id = id;    
-            this->name = name;    
-            this->address = address;    
-        }    
-        void display()    
-        {    
-            cout<<id <<" "<<name<< " "<<     
-            address->addressLine<< " "<< address->city<< " "<<address->state<<endl;    
-        }    
-   };   
-    int main(void) {  
-        Address a1= Address("C-146, Sec-15","Noida","UP");    
-        Employee e1 = Employee(101,"Nakul",&a1);     //creating object with reference
-        e1.display();   
-    return 0;  
-    }  
-
-
-
-//compile time poly.. -> funcn overloading , operator overloading
-//funcn overloading ->e.g constructor types, any function different parameter inputs
-//fucnn overloading can have different return types 
-//but it must have diff input args
-
-
-//operator overloading
-    operators that cant be overloaded
-        Scope operator (::)
-        Sizeof
-        member selector(.)
-        member pointer selector(*)
-        ternary operator(?:)
-
-    class A  
-    {      
-        int x;  
-        public:  
-            A(){}  
-
-        A(int i)  
-        {  
-            x=i;  
-        }  
-        void operator+(A);  
-        void display();  
-    };  
-    void A :: operator+(A a)  
-    {  
-        int m = x+a.x;  
-        cout<<"The result of the addition of two objects is : "<<m;  
+        public: 
+            A() { cout << "A's constructor called" << endl; } 
+    }; 
+    class B 
+    { 
+        public: 
+            B() { cout << "B's constructor called" << endl; } 
+    }; 
+    class C: public B, public A // Note the order 
+    { 
+        public: 
+            C() { cout << "C's constructor called" << endl; } 
+    }; 
+    int main() 
+    { 
+        C c; 
+        return 0; 
     } 
-    int main()  
-    {  
-        A a1(5);  
-        A a2(4);  
-        a1+a2;  
-        return 0;  
-    }  
+// op->
+    B's constructor called
+    A's constructor called
+    C's constructor called
+
+
 
 
 2.Abstraction -
+    -Abstraction means displaying only essential information and hiding the details. 
+    Data abstraction refers to providing only essential information about the data to the outside world, hiding the background details or implementation.
 
-    //virtual void function & runtime polymorphism
+    eg-
+        Consider a real-life example of a man driving a car. The man only knows that pressing the accelerators will increase the speed of the car or applying brakes will stop the car 
+        but he does not know about how on pressing accelerator the speed is actually increasing, he does not know about the inner mechanism of the car or the implementation of accelerator, brakes etc in the car. This is what abstraction is!
+    
+    
+    Abstraction using Classes:   We can implement Abstraction in C++ using classes. 
+                                 The class helps us to group data members and member functions using available access specifiers. 
+                                 A Class can decide which data member will be visible to the outside world and which is not.
+    Abstraction in Header files: One more type of abstraction in C++ can be header files. 
+                                 For example, consider the pow() method present in math.h header file. 
+                                 Whenever we need to calculate the power of a number, we simply call the function pow() present in the math.h header file and pass the numbers as arguments 
+                                 without knowing the underlying algorithm according to which the function is actually calculating the power of numbers.
+
+
+//Abstract Class 
+//virtual void function & runtime polymorphism
     class B {
     public:
         virtual void s() = 0; // Pure Virtual Function
@@ -741,14 +722,149 @@ types-
     // it is an ex of OVERRIDING : runtime binding or dynamic binding
     // (overloading -> is ka compile time or static binding)
 
-3.Encapsulation -
-4.Polymorphism -
-4.Inheritance -
-5.Composition
-6.Association
-7.Aggregation -
+3. Encapsulation -
+    - Its the process of wrapping up of Data and Functions inside a single Entity (usually
+    Classes)
+    - Encapsulation helps to establish Abstraction and Data Hiding.
 
--
+4. Polymorphism -
+    Polymorphism means the ability to take more than one form. An operation may exhibit different
+    behaviors in different instances. The behavior depends on the data types used in the operation.
+    Polymorphism is extensively used in implementing Inheritance using same name with either
+    Different number of Arguments or Different Data types of Arguments.
+    Types:- 
+        Compile Time: 
+            the compiler recognizes the binding between the function and its code during compile time
+        Run Time:    
+            -In dynamic binding, the code to be executed in response to function call is decided at runtime.
+             ie the compiler recognizes the binding between the function and its code during runtime
+             it is implemented using Virtual Functions, during Inheritance.
+    //compile time poly.. -> funcn overloading , operator overloading
+    //funcn overloading ->e.g constructor types, any function different parameter inputs
+    //fucnn overloading can have different return types 
+    //but it must have diff input args
+
+
+    //operator overloading
+        operators that cant be overloaded
+            Scope operator (::)
+            Sizeof
+            member selector(.)
+            member pointer selector(*)
+            ternary operator(?:)
+
+        class A  
+        {      
+            int x;  
+            public:  
+                A(){}  
+
+            A(int i)  
+            {  
+                x=i;  
+            }  
+            void operator+(A);  
+            void display();  
+        };  
+        void A :: operator+(A a)  
+        {  
+            int m = x+a.x;  
+            cout<<"The result of the addition of two objects is : "<<m;  
+        } 
+        int main()  
+        {  
+            A a1(5);  
+            A a2(4);  
+            a1+a2;  
+            return 0;  
+        }  
+
+
+//RELATION defined between entities-> 
+//1. Assosiation (eg airline & passenger -> 
+    // both are independent : ie even if obj of airline is destroyed passenger obj will remain. ie both can exist independently.
+    // none of them are component of each other
+//2. Aggregation (eg car and tire)
+    //one entity is component of other 
+    //they can still exist indepently
+//3. Composition -> eg human & brain (1-1)
+    //one entity is component of other
+    //if obj of one is destroyed other also gets destroyed and vise versa 
+    // https://www.visual-paradigm.com/guide/uml-unified-modeling-language/uml-aggregation-vs-composition/#:~:text=Aggregation%20and%20Composition%20are%20subsets,exist%20independently%20of%20the%20parent.
+
+5. Association
+    If two classes in a model need to communicate with each other, there must be a link between them, and that can be represented by an association (connector).
+
+6. Aggregation 
+    -Aggregation implies a relationship where the child can exist independently of the parent. 
+    Example: Class (parent) and Student (child). Delete the Class and the Students still exist.
+    -one class has objects of other class as its members
+    or->
+    -aggregation is a process in which one class defines another class as any entity reference. 
+    It is another way to reuse the class. It is a form of association that represents HAS-A relationship.
+
+    class Address {  
+    public:  
+        string addressLine, city, state;    
+        Address(string addressLine, string city, string state)    
+        {    
+            this->addressLine = addressLine;    
+            this->city = city;    
+            this->state = state;    
+        }    
+    };
+
+    class Employee    
+    { 
+        private:  
+            Address* address;  //Employee HAS-A Address   
+        public:  
+            int id;    
+            string name;    
+        Employee(int id, string name, Address* address)    
+        {    
+            this->id = id;    
+            this->name = name;    
+            this->address = address;    
+        }    
+        void display()    
+        {    
+            cout<<id <<" "<<name<< " "<<     
+            address->addressLine<< " "<< address->city<< " "<<address->state<<endl;    
+        }    
+   };   
+    int main(void) {  
+        Address a1= Address("C-146, Sec-15","Noida","UP");    
+        Employee e1 = Employee(101,"Nakul",&a1);     //creating object with reference
+        e1.display();   
+    return 0;  
+    }  
+
+7. Composition- 
+    -implies a relationship where the child cannot exist independent of the parent. 
+    Example: House (parent) and Room (child). Rooms dont exist separate to a House.
+
+
+
+8. Data Hiding :-
+    Its the process of keeping the Data under such an Access mode that its only accessible to
+    permitted Functions. Using Private, Protected specifiers, we can hide Data from access from
+    outside a Class. Functions, Structures and Classes implement Data Hiding at programmer
+    level.
+
+@dis->
+9. Message Passing :-
+    - Its the process of passing Data between Objects of same Class and also of different
+     Classes.
+    - Its implemented using Function calling or by simply sharing data.
+    - Types:- 
+        From User to Objects: (done by invoking Function inside an Object) and 
+        From Object to Object: (by sharing Data of one Object with another Object).
+    - Using Friend functions (with objects as input arguments), message passing can be done
+    between two or more Objects of Different Classes.
+    - Using member Functions (with objects as input arguments), message passing can be done
+    between objects of same Class.
+
 
 ****************************************************************************************************************
 
