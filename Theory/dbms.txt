@@ -7,6 +7,77 @@
 -- -To add, access, and process data stored in a computer database, 
 -- you need a database management system such as MySQL Server
 
+***********************************************************
+@gfg
+DBMS ARCHITECTURE
+    https://www.geeksforgeeks.org/introduction-of-3-tier-architecture-in-dbms-set-2/
+
+
+***********
+DDL: 
+    -DDL is short name of Data Definition Language, which deals with database schemas and descriptions, 
+    of how the data should reside in the database.
+
+    //amrita mam ne CAT ReCommenD kia 
+    CREATE: to create a database and its objects like (table, index, views, store procedure, function, and triggers)
+    ALTER: alters the structure of the existing database
+    TRUNCATE: remove all records from a table, including all spaces allocated for the records are removed
+    RENAME: rename an object
+    COMMENT: add comments to the data dictionary
+    DROP: delete objects from the database
+
+DML:
+    -is short name of Data Manipulation Language which deals with data manipulation and includes most common SQL statements such SELECT, INSERT, UPDATE, DELETE, etc., and it is used to store, modify, retrieve, delete and update data in a database.
+
+    SELECT: retrieve data from a database
+    INSERT: insert data into a table
+    UPDATE: updates existing data within a table
+    DELETE: Delete all records from a database table
+    MERGE: UPSERT operation (insert or update)
+    CALL: call a PL/SQL or Java subprogram
+    EXPLAIN PLAN: interpretation of the data access path
+    LOCK TABLE: concurrency Control
+
+*************************************************
+
+@dis->
+@sJan 
+FILE STRUCTURE:
+    SRS- system requirement specification
+    
+    db design levels:
+        SRS -> ER-diagram -> Relational model -> normalization (to obtain optimal structure ie tables) -> File Structure (Indexing & Physical Structure) 
+        or:
+        requirements -> conceptual design -> logical design -> Physical design
+
+
+    Methods of storing file
+        i. Sorted File: 
+            -can be sorted only acg to one attribute(search key)
+            -searching fast
+            -fast searching (O(log(n)))
+            -insertion difficult -> as we'll first search location for key to be inserted and then make place to store it(by shifting all values in and after its location)
+        
+        ii. Unsorted File:
+            -stored in random order ie any record can be placed anywhere
+            -searching slow (O(n))
+            -easy insertion, as we can directly insert at last due to random storage 
+
+    SPANNED/UN-SPANNED MAPPING
+        SPANNED:
+            -while storing a record in a block (in disk) if block gets completely filled and half of the records are left 
+            then also we let the half fill into prev block and fill the other half in next block.
+                
+            adv: memory utilization
+            disadv: search time increases (as searching a block in disk is more costly then searching a record in a block)
+
+        UN-SPANNED:
+            -we store a record in a block only if it completely fits into the block
+
+            adv: search time less (as to search any record we only need to search one block)
+            disadv: external fragmentation
+
+********************
 
 
 --entitity == table
@@ -34,11 +105,11 @@ REDUNDENCY
     Redundancy means having multiple copies of same data in the database.
     This problem arises when a database is not normalized
 
-Problems caused due to redundancy are: 
-    Insertion anomaly: This problem happens when the insertion of a data record is not possible without adding some additional unrelated data to the record
-    Deletion anomaly: This anomaly happens when deletion of a data record results in losing some unrelated information that was stored as part of the record that was deleted from a table
-    Updation anomaly: Suppose if the rank of the college changes then changes will have to be all over the database which will be time-consuming and computationally costly.
-                      If updation do not occur at all places then database will be in inconsistent state.
+    Problems caused due to redundancy are: 
+        Insertion anomaly: This problem happens when the insertion of a data record is not possible without adding some additional unrelated data to the record
+        Deletion anomaly:  This anomaly happens when deletion of a data record results in losing some unrelated information that was stored as part of the record that was deleted from a table
+        Updation anomaly: Suppose if the rank of the college changes then changes will have to be all over the database which will be time-consuming and computationally costly.
+                            If updation do not occur at all places then database will be in inconsistent state.
 
 
 
@@ -81,18 +152,15 @@ types
     FOREIGN KEY
         -A Foreign Key creates a link between tables. It references the primary key in another table and links it.
 
-For example, the DeptID in the Employee table is a foreign key −
-<Employee>
-    EmpID       EmpName     EmpAge      DeptID
+        For example, the DeptID in the Employee table is a foreign key −
+        <Employee>
+            EmpID       EmpName     EmpAge      DeptID
 
-<Department>
-    DeptID      DeptName    DeptZone
+        <Department>
+            DeptID      DeptName    DeptZone
 
-The DeptID in the Department table is a Primary Key in the Department Table.
-The DeptID in the Employee table is a Foreign Key in the Employee Table.
-
-
-
+        The DeptID in the Department table is a Primary Key in the Department Table.
+        The DeptID in the Employee table is a Foreign Key in the Employee Table.
 
 
 
@@ -100,6 +168,7 @@ The DeptID in the Employee table is a Foreign Key in the Employee Table.
 -- https://www.javatpoint.com/dbms-first-normal-form
 --prime attribute - tose attributes which are part of any of the candidate keys
 --non prime attributes - other than prime
+
 NORMALIZATION
     -Redundancy in relation may cause insertion, deletion and updation anomalies
      Normalization is the process of minimizing redundancy from a relation or set of relation
@@ -157,44 +226,41 @@ different typs of Normal form->
 
     4NF:	A relation will be in 4NF if it is in Boyce Codd normal form and has no multi-valued dependency.
     
-
-
-
-
-
+***************
 
 SCHEMA
     -logical representation of db.
 
 ER- Diagram
--- https://www.tutorialspoint.com/dbms/er_model_basic_concepts.htm
-entity-(table name)
-    An entity can be a real-world object, either animate or inanimate, that can be easily identifiable.
-    For example, in a school database, students, teachers, classes, and courses offered can be considered as entities. 
-    All these entities have some attributes or properties that give them their identity
+    -- https://www.tutorialspoint.com/dbms/er_model_basic_concepts.htm
 
-attributes-(column name)
-    -properties of entities
-    - All attributes have values. 
-    For example, a student entity may have name, class, and age as attributes.
-    
-    types-
-    -simple- atomic (eg students phone number is an atomic value of 10 digits.)
-    -composite- eg name(firstName,midName,lastName)
-    -derived- (eg avg salary,age)
-    -single valued - (eg social_security_no)
-    -multivalued- (eg emailId, phnNo : one person can have more than one phn no or emailId)
-    
-Entity set & keys
-    - entity set is  collection of similar types of entities
+    entity-(table name)
+        An entity can be a real-world object, either animate or inanimate, that can be easily identifiable.
+        For example, in a school database, students, teachers, classes, and courses offered can be considered as entities. 
+        All these entities have some attributes or properties that give them their identity
 
-key -
-    Key is an attribute or collection of attributes that uniquely identifies an entity among entity set.
+    attributes-(column name)
+        -properties of entities
+        - All attributes have values. 
+        For example, a student entity may have name, class, and age as attributes.
+        
+        types-
+        -simple- atomic (eg students phone number is an atomic value of 10 digits.)
+        -composite- eg name(firstName,midName,lastName)
+        -derived- (eg avg salary,age)
+        -single valued - (eg social_security_no)
+        -multivalued- (eg emailId, phnNo : one person can have more than one phn no or emailId)
+        
+    Entity set & keys
+        - entity set is  collection of similar types of entities
 
-    For example, the roll_number of a student makes him/her identifiable among students.
-    Super Key − A set of attributes (one or more) that collectively identifies an entity in an entity set.
-    Candidate Key − A minimal super key is called a candidate key. An entity set may have more than one candidate key.
-    Primary Key − A primary key is one of the candidate keys chosen by the database designer to uniquely identify the entity set.
+    key -
+        Key is an attribute or collection of attributes that uniquely identifies an entity among entity set.
+
+        For example, the roll_number of a student makes him/her identifiable among students.
+        Super Key − A set of attributes (one or more) that collectively identifies an entity in an entity set.
+        Candidate Key − A minimal super key is called a candidate key. An entity set may have more than one candidate key.
+        Primary Key − A primary key is one of the candidate keys chosen by the database designer to uniquely identify the entity set.
 
 
 Relationship
@@ -229,107 +295,7 @@ Participation Constraints
 
 
 
-INDEXING
-    -Indexing is a way to optimize the performance of a database by minimizing the number of disk accesses required when a query is processed.
-    It is a data structure technique which is used to quickly locate and access the data in a database.
-
-    -Indexing is a data structure technique to efficiently retrieve records from the database files 
-    based on some attributes on which the indexing has been done.
-    -Indexing in database systems is similar to what we see in books.
-
-
-
-
-*******************************************************************************
-
-TRANSACTION
-    -set of instructions to perform some logical process
-    - It must be atomic in nature inorder to maintain the consistency in data base
-
-ACID Properties
-    -the purpose is to maintain the consistency of db and transaction is the process which interacts with database
-    so if we make sure that transaction does not violate the consistency of db then it is okay to perform that transaction on db.
-    So, to ensuret this theres set of properties k/as ACID properties->
-    
-    1. Atomicity : either a transaction executes completely or not at all. 
-                  'transaction management module' in db takes care of atomicity
-    2. Consistency :
-    3. Isolation : concurrent transactions are logically seperated from each other
-                   'Concurrency Control Component' in db takes care of Isolation
-    4. Durability : data must not be affected by any hardware of software failure
-                    'Recovery Management Component' in db takes care of Durability
-
-
-
-@gfg
-DBMS ARCHITECTURE
-    https://www.geeksforgeeks.org/introduction-of-3-tier-architecture-in-dbms-set-2/
-
-
-***********
-DDL: 
-    -DDL is short name of Data Definition Language, which deals with database schemas and descriptions, 
-    of how the data should reside in the database.
-
-    //amrita mam ne CAT ReCommenD kia 
-    CREATE: to create a database and its objects like (table, index, views, store procedure, function, and triggers)
-    ALTER: alters the structure of the existing database
-    TRUNCATE: remove all records from a table, including all spaces allocated for the records are removed
-    RENAME: rename an object
-    COMMENT: add comments to the data dictionary
-    DROP: delete objects from the database
-
-DML:
-    -is short name of Data Manipulation Language which deals with data manipulation and includes most common SQL statements such SELECT, INSERT, UPDATE, DELETE, etc., and it is used to store, modify, retrieve, delete and update data in a database.
-
-    SELECT: retrieve data from a database
-    INSERT: insert data into a table
-    UPDATE: updates existing data within a table
-    DELETE: Delete all records from a database table
-    MERGE: UPSERT operation (insert or update)
-    CALL: call a PL/SQL or Java subprogram
-    EXPLAIN PLAN: interpretation of the data access path
-    LOCK TABLE: concurrency Control
-
 ***************
-@dis->
-@sJan 
-FILE STRUCTURE:
-    SRS- system requirement specification
-    
-    db design levels:
-        SRS -> ER-diagram -> Relational model -> normalization (to obtain optimal structure ie tables) -> File Structure (Indexing & Physical Structure) 
-        or:
-        requirements -> conceptual design -> logical design -> Physical design
-
-
-    Methods of storing file
-        i. Sorted File: 
-            -can be sorted only acg to one attribute(search key)
-            -searching fast
-            -fast searching (O(log(n)))
-            -insertion difficult -> as we'll first search location for key to be inserted and then make place to store it(by shifting all values in and after its location)
-        
-        ii. Unsorted File:
-            -stored in random order ie any record can be placed anywhere
-            -searching slow (O(n))
-            -easy insertion, as we can directly insert at last due to random storage 
-
-    SPANNED/UN-SPANNED MAPPING
-        SPANNED:
-            -while storing a record in a block (in disk) if block gets completely filled and half of the records are left 
-            then also we let the half fill into prev block and fill the other half in next block.
-                
-            adv: memory utilization
-            disadv: search time increases (as searching a block in disk is more costly then searching a record in a block)
-
-        UN-SPANNED:
-            -we store a record in a block only if it completely fits into the block
-
-            adv: search time less (as to search any record we only need to search one block)
-            disadv: external fragmentation
-
-********
 INDEXING
     -Indexes are special lookup table that the db search engine can use to speed up data retrieval. 
     Simply, an index is a pointer to data in table.
@@ -339,11 +305,21 @@ INDEXING
     but it slows down data input with the UPDATE and ISERT stmts,
 
     -Indexes can be created or dropped with no effect on the data
-
-
+    
     An Index 
         -takes a *search key* input 
         -Efficiently returns a collection of matching records
+
+
+    /*
+    -Indexing is a way to optimize the performance of a database by minimizing the number of disk accesses required when a query is processed.
+    It is a data structure technique which is used to quickly locate and access the data in a database.
+
+    -Indexing is a data structure technique to efficiently retrieve records from the database files 
+    based on some attributes on which the indexing has been done.
+    -Indexing in database systems is similar to what we see in books.
+    */
+
 
     # We often want to have more than one index for a ﬁle. 
     For example, we may wish to search for a book by author, by subject, or by title. 
@@ -383,8 +359,6 @@ Types:
         i. Clustering
         ii. Secondary 
         iii. Multilevel Indexing
-
-
 
 
 
