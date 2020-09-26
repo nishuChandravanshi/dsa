@@ -1,0 +1,610 @@
+-- https://www.studytonight.com/dbms/overview-of-dbms.php
+--javatpoint->
+
+-- MySQL is a database management system
+-- -A database is a structured collection of data
+-- (from a simple shopping list to a picture gallery or the vast amounts of information in a corporate network)
+-- -To add, access, and process data stored in a computer database, 
+-- you need a database management system such as MySQL Server
+
+
+
+--entitity == table
+--attribute == column & tuples == rows
+--a+ => closure of (a)
+
+FUNCTIONAL DEPENDENCIES
+    The functional dependency is a relationship that exists between two attributes. It typically exists between the primary key and non-key attribute within a table.
+    
+    X   →   Y  
+    
+    The left(X) side of FD is known as a determinant, the right side(Y) of the production is known as a dependent.
+    TYPES
+        Trivial
+            A → B has trivial functional dependency if B is a subset of A.
+            The following dependencies are also trivial like: A → A, B → B
+        Non Trivial 
+            A → B has a non-trivial functional dependency if B is not a subset of A.
+            When A intersection B is NULL, then A → B is called as complete non-trivial.
+
+
+
+REDUNDENCY
+-- https://www.geeksforgeeks.org/the-problem-of-redundancy-in-database/#:~:text=Redundancy%20means%20having%20multiple%20copies,%2C%20college%20rank%2C%20course%20opted.
+    Redundancy means having multiple copies of same data in the database.
+    This problem arises when a database is not normalized
+
+Problems caused due to redundancy are: 
+    Insertion anomaly: This problem happens when the insertion of a data record is not possible without adding some additional unrelated data to the record
+    Deletion anomaly: This anomaly happens when deletion of a data record results in losing some unrelated information that was stored as part of the record that was deleted from a table
+    Updation anomaly: Suppose if the rank of the college changes then changes will have to be all over the database which will be time-consuming and computationally costly.
+                      If updation do not occur at all places then database will be in inconsistent state.
+
+
+
+KEYS
+    -It is(that value of attribute(ie columns)) used to uniquely identify any record or row of data from the table. It is also used to establish and identify relationships between tables.
+    -closure(key) = R (ie entire relational table/ can say all the attributes are present in closure of key)
+types
+    SUPER KEY
+        -The set of attributes which can uniquely identify a tuple is known as Super Key. For Example, STUD_NO, (STUD_NO, STUD_NAME) etc
+        -A candidate key is a super key but vice versa is not true.
+        -Adding zero or more attributes to candidate key generates super key.
+
+    CANDIDATE
+        -minimal super key or 
+        -that super key whose proper subset is not a super key or
+        -The minimal set of attribute(columns) which can uniquely identify a tuple(row) is known as candidate key. 
+        eg
+            R(abcd) : a,b,c,d are attributes of relational table
+            given functional dependencies
+            abc->d  => abc+ = abcd = R  : ie abc is a super key
+            ab->cd  => ab+ = abcd = R : ie ab is also a super key
+            a->bcd  => a+ = abcd = R : ie a is also a super key
+            
+            super key = {abc, ab, a}
+            candidate key = a
+            {as theres no proper subset of a which is a super key. 
+            on the other hand if we consider 'abc' then its subset 'ab' and 'a' are also super keys }
+
+        For Example, STUD_NO in STUDENT relation
+        -The value of Candidate Key is unique and non-null for every tuple
+        -There can be more than one candidate key in a relation
+        -The candidate key can be simple (having only one attribute) or composite as well. For Example, {STUD_NO, COURSE_NO} is a composite candidate key for relation STUDENT_COURSE.    
+
+    PRIMARY KEY
+        -any one of the candidate key can be chosen as a primary key
+        -ie There can be more than one candidate key in relation out of which one can be chosen as the primary key. 
+        For Example, STUD_NO, as well as STUD_PHONE both, are candidate keys for relation STUDENT but STUD_NO can be chosen as the primary key (only one out of many candidate keys).
+   
+    
+    FOREIGN KEY
+        -A Foreign Key creates a link between tables. It references the primary key in another table and links it.
+
+For example, the DeptID in the Employee table is a foreign key −
+<Employee>
+    EmpID       EmpName     EmpAge      DeptID
+
+<Department>
+    DeptID      DeptName    DeptZone
+
+The DeptID in the Department table is a Primary Key in the Department Table.
+The DeptID in the Employee table is a Foreign Key in the Employee Table.
+
+
+
+
+
+
+
+-- https://www.javatpoint.com/dbms-first-normal-form
+--prime attribute - tose attributes which are part of any of the candidate keys
+--non prime attributes - other than prime
+NORMALIZATION
+    -Redundancy in relation may cause insertion, deletion and updation anomalies
+     Normalization is the process of minimizing redundancy from a relation or set of relation
+    -it is the process of organizing the data in the database by dividing the larger table into the smaller table and links them using relationship.
+    -The normal form is used to reduce redundancy from the database table.
+-- eg
+--##imp- https://www.geeksforgeeks.org/normal-forms-in-dbms/#:~:text=Normalization%20is%20the%20process%20of,reduce%20redundancy%20in%20database%20tables.
+
+different typs of Normal form->
+    1NF:	
+        A relation is in 1NF if it contains an atomic value, and it must follow INTEGRITY Constraints(like if attribute is defined integer than all values in that attribute must be integer)
+        It states that an attribute of a table cannot hold multiple values. It must hold only single-valued attribute.
+        First normal form disallows the multi-valued attribute, composite attribute, and their combinations.
+        Example: Relation EMPLOYEE is not in 1NF because of multi-valued attribute EMP_PHONE
+        --to make it in 1nf for multiple phn no, new rows are being made 
+
+    2NF: must not hold => prime->non prime ie partial dep	
+        eg (i) R(abcd)
+        ab->d
+        b->c
+        => candidate key ={ab} => primary key = ab
+        here, b->c {c(non prime attribute) is dependent on b(prime attribute(partial cuz ab is complete cand key))}
+        -->this type of p->np (is np dependent partially on p) is k/as partial dependency. which is removed in 2nf form
+        converting (i) it in 2nf -> by removing partial dependency
+        --make separate table for partial dependent attributes and for complete cand key
+        ab->d => table1 : R1(abd) (table1 must hold complete candidate keys )
+        b->c => table2 : R2(bc)
+
+        -A relation will be in 2NF if it is in 1NF and all non-key attributes are fully functional dependent on the primary key.
+        -ie for a table to be in 2nf it must be -
+        1. in 1nf
+        2. there should not be any paritial dependency
+                                        
+    
+    
+    3NF: np->np, removes transitive dependencies(by making separate tables)
+        A relation will be in 3NF if it is in 2NF and no transition dependency exists.
+        a->b
+        b->c : np->np
+        c->d  
+        
+        tables -> ab, bc, cd 
+        candidateKey- {a} 
+
+        here b->d transitive dependency : here b is not a prime key but still its determining d => violation
+
+        A relation is in 3NF if at least one of the following condition holds in every non-trivial function dependency X –> Y
+            1. X is a super key.
+            2. Y is a prime attribute (each element of Y is part of some candidate key).
+
+	
+    BCNF: prime ->prime
+        -A relation R is in BCNF if R is in Third Normal Form and for every FD, LHS is super key
+        -A relation is in BCNF iff in every non-trivial functional dependency X –> Y, X is a super key.
+
+    4NF:	A relation will be in 4NF if it is in Boyce Codd normal form and has no multi-valued dependency.
+    
+
+
+
+
+
+
+SCHEMA
+    -logical representation of db.
+
+ER- Diagram
+-- https://www.tutorialspoint.com/dbms/er_model_basic_concepts.htm
+entity-(table name)
+    An entity can be a real-world object, either animate or inanimate, that can be easily identifiable.
+    For example, in a school database, students, teachers, classes, and courses offered can be considered as entities. 
+    All these entities have some attributes or properties that give them their identity
+
+attributes-(column name)
+    -properties of entities
+    - All attributes have values. 
+    For example, a student entity may have name, class, and age as attributes.
+    
+    types-
+    -simple- atomic (eg students phone number is an atomic value of 10 digits.)
+    -composite- eg name(firstName,midName,lastName)
+    -derived- (eg avg salary,age)
+    -single valued - (eg social_security_no)
+    -multivalued- (eg emailId, phnNo : one person can have more than one phn no or emailId)
+    
+Entity set & keys
+    - entity set is  collection of similar types of entities
+
+key -
+    Key is an attribute or collection of attributes that uniquely identifies an entity among entity set.
+
+    For example, the roll_number of a student makes him/her identifiable among students.
+    Super Key − A set of attributes (one or more) that collectively identifies an entity in an entity set.
+    Candidate Key − A minimal super key is called a candidate key. An entity set may have more than one candidate key.
+    Primary Key − A primary key is one of the candidate keys chosen by the database designer to uniquely identify the entity set.
+
+
+Relationship
+    The association among entities is called a relationship. 
+    For example, an employee works_at a department, a student enrolls in a course. Here, Works_at and Enrolls are called relationships.
+
+Relationship Set
+    A set of relationships of similar type is called a relationship set. Like entities, a relationship too can have attributes. These attributes are called descriptive attributes.
+
+Degree of Relationship
+    The "number of participating entities" in a relationship.
+    -Binary = degree 2
+    -Ternary = degree 3
+    -n-ary = degree
+
+Mapping Cardinalities
+    -Cardinality defines the number of entities in one entity set, 
+    which can be associated with the number of entities of other set via relationship set.
+    types-
+    -One to One(1:1)
+    -one to many(1:N)
+    -many to one (N:1)
+    -many to many(N:N)
+
+Participation Constraints
+    Total Participation − Each entity is involved in the relationship. 
+    Total participation is represented by double lines(=).
+
+    Partial participation − Not all entities are involved in the relationship. 
+    Partial participation is represented by single lines.
+
+
+
+
+INDEXING
+    -Indexing is a way to optimize the performance of a database by minimizing the number of disk accesses required when a query is processed.
+    It is a data structure technique which is used to quickly locate and access the data in a database.
+
+    -Indexing is a data structure technique to efficiently retrieve records from the database files 
+    based on some attributes on which the indexing has been done.
+    -Indexing in database systems is similar to what we see in books.
+
+
+
+
+*******************************************************************************
+
+TRANSACTION
+    -set of instructions to perform some logical process
+    - It must be atomic in nature inorder to maintain the consistency in data base
+
+ACID Properties
+    -the purpose is to maintain the consistency of db and transaction is the process which interacts with database
+    so if we make sure that transaction does not violate the consistency of db then it is okay to perform that transaction on db.
+    So, to ensuret this theres set of properties k/as ACID properties->
+    
+    1. Atomicity : either a transaction executes completely or not at all. 
+                  'transaction management module' in db takes care of atomicity
+    2. Consistency :
+    3. Isolation : concurrent transactions are logically seperated from each other
+                   'Concurrency Control Component' in db takes care of Isolation
+    4. Durability : data must not be affected by any hardware of software failure
+                    'Recovery Management Component' in db takes care of Durability
+
+
+
+@gfg
+DBMS ARCHITECTURE
+    https://www.geeksforgeeks.org/introduction-of-3-tier-architecture-in-dbms-set-2/
+
+
+***********
+DDL: 
+    -DDL is short name of Data Definition Language, which deals with database schemas and descriptions, 
+    of how the data should reside in the database.
+
+    //amrita mam ne CAT ReCommenD kia 
+    CREATE: to create a database and its objects like (table, index, views, store procedure, function, and triggers)
+    ALTER: alters the structure of the existing database
+    TRUNCATE: remove all records from a table, including all spaces allocated for the records are removed
+    RENAME: rename an object
+    COMMENT: add comments to the data dictionary
+    DROP: delete objects from the database
+
+DML:
+    -is short name of Data Manipulation Language which deals with data manipulation and includes most common SQL statements such SELECT, INSERT, UPDATE, DELETE, etc., and it is used to store, modify, retrieve, delete and update data in a database.
+
+    SELECT: retrieve data from a database
+    INSERT: insert data into a table
+    UPDATE: updates existing data within a table
+    DELETE: Delete all records from a database table
+    MERGE: UPSERT operation (insert or update)
+    CALL: call a PL/SQL or Java subprogram
+    EXPLAIN PLAN: interpretation of the data access path
+    LOCK TABLE: concurrency Control
+
+***************
+@dis->
+@sJan 
+FILE STRUCTURE:
+    SRS- system requirement specification
+    
+    db design levels:
+        SRS -> ER-diagram -> Relational model -> normalization (to obtain optimal structure ie tables) -> File Structure (Indexing & Physical Structure) 
+        or:
+        requirements -> conceptual design -> logical design -> Physical design
+
+
+    Methods of storing file
+        i. Sorted File: 
+            -can be sorted only acg to one attribute(search key)
+            -searching fast
+            -fast searching (O(log(n)))
+            -insertion difficult -> as we'll first search location for key to be inserted and then make place to store it(by shifting all values in and after its location)
+        
+        ii. Unsorted File:
+            -stored in random order ie any record can be placed anywhere
+            -searching slow (O(n))
+            -easy insertion, as we can directly insert at last due to random storage 
+
+    SPANNED/UN-SPANNED MAPPING
+        SPANNED:
+            -while storing a record in a block (in disk) if block gets completely filled and half of the records are left 
+            then also we let the half fill into prev block and fill the other half in next block.
+                
+            adv: memory utilization
+            disadv: search time increases (as searching a block in disk is more costly then searching a record in a block)
+
+        UN-SPANNED:
+            -we store a record in a block only if it completely fits into the block
+
+            adv: search time less (as to search any record we only need to search one block)
+            disadv: external fragmentation
+
+********
+INDEXING
+    -Indexes are special lookup table that the db search engine can use to speed up data retrieval. 
+    Simply, an index is a pointer to data in table.
+    And is a db very similar to the index in the front/back of a book.
+
+    -An index helps to speed up SELECT queries and WHERE clauses, 
+    but it slows down data input with the UPDATE and ISERT stmts,
+
+    -Indexes can be created or dropped with no effect on the data
+
+
+    An Index 
+        -takes a *search key* input 
+        -Efficiently returns a collection of matching records
+
+    # We often want to have more than one index for a ﬁle. 
+    For example, we may wish to search for a book by author, by subject, or by title. 
+    *An attribute or set of attributes used to look up records in a ﬁle is called a search key*. 
+    Note that this deﬁnition of key differs from that used in primary key, candidate key,and superkey.
+
+    NOTE: index comprises of two column first column containig the primary key or candidate key of a table 
+        and second column contains a set of pointers for holding the address
+        of the disk block where that specific key value is stored
+
+Types: 
+    1. Ordered (bs yehi btana pehle toh)
+        i. Dense
+        ii. Sparse
+    2. Hash File Organization :(Indices are based on the values being distributed uniformly across a range of bucket)
+        i. Clustering
+        ii. Secondary 
+        iii. Multilevel Indexing
+
+    
+    1. Ordered : 
+        -indices are based on a sorted ordering of the values.
+
+        i. Dense:
+            -For every search key value in the data file, there is an index record.
+            -This record contains the search key and also a reference to the first data record with that search key value
+        ii. Sparse:
+            -The index record appears only for a few items in the data file. Each item points to a block as shown.
+            -To locate a record, we find the index record with the largest search key value less than or equal to the search key value we are looking for.
+            -We start at that record pointed to by the index record, and proceed along with the pointers in the file (that is, sequentially) until we find the desired record
+    
+    @dis->
+    2. Hash File Organization:
+        -Indices are based on the values being distributed uniformly across a range of buckets. 
+        The buckets to which a value is assigned is determined by a function called a hash function
+        
+        i. Clustering
+        ii. Secondary 
+        iii. Multilevel Indexing
+
+
+
+
+
+*********************
+@sJan
+TRANSACTION
+    -set of instructions to perform some logical process
+    - It must be atomic in nature inorder to maintain the consistency in data base
+
+ACID Properties
+    -the purpose is to maintain the consistency of db and transaction is the process which interacts with database
+    so if we make sure that transaction does not violate the consistency of db then it is okay to perform that transaction on db.
+    So, to ensuret this theres set of properties k/as ACID properties->
+    
+    1. Atomicity : either a transaction executes completely or not at all. 
+                  'transaction management module' in db takes care of atomicity
+    2. Consistency :
+    3. Isolation : concurrent transactions are logically seperated from each other
+                   'Concurrency Control Component' in db takes care of Isolation
+    4. Durability : data must not be affected by any hardware of software failure
+                    'Recovery Management Component' in db takes care of Durability
+
+
+
+STATES OF TRANSACTION
+    active -(r/w op)-> Partially committed,  active -(failure-> Failed 
+    Partially committed -(failure)-> Failed, Paritally Committed -(Permanent store)-> Committed
+    Committed -> terminated
+    Failed -(Roll back)-> aborted
+    aborted-> terminated
+
+
+    1. Active:  When a transaction is executing
+    2. Partially committed: Whatever changes that transaction has done are properly executed but they are still stored in the 
+                            local buffer in the main memory and not permanently stored in the database this state is k/as Partially committed state 
+    3. Committed: After Paritally committed if there occurs no failure then the changes is permanently stored into the main db (in disk)
+                *once the transaction is committed the system is updated into a new consistent state
+                *after committing the changes theres no way to roll back that transaction!
+
+    4. Failed: When a transaction faces any hardware or software failure and cant continue its normal execution it switches to failed state
+    5. aborted: After failure when the transaction roll back and delete changes that has been made into the local buffer (as till now changes has not been commited ie it can be deleted from the local buffer)
+                its said to be in aborted state.
+    6. Terminated: when system is in state where it is ready for new transaction
+
+    #either in aborted or committed in both the states the system is in CONSISTENT state. 
+    (as aborted-> transaction failure and rolled back ie no changes being made into our db (which was originally consitent))
+    (& committed-> all the changes made has been saved to the db without any failure ie db is updated successfully and is consistent)
+
+    #local buffer is same for all the transactions
+    #committed transaction cant be rolled back 
+        sol-> COMPONSATING TRANSACTION:
+                we can make a new transaction to undo the changes made by prev transaction which u want to roll back this is k/as compensating transaction 
+            eg. train ticket reservation has been made -> then we cant undo the reservation
+                    we can make new transaction Cancel reservation to cancel the ticket but cant undo that transaction which has been made previously
+
+
+CONCURRENCY
+    -performing multiple transactions in same time
+    
+    Advantages: 
+        1. Waiting time: reduce
+        2. Response time: reduce
+        3. Resource utilization: increases
+        4. Efficiency: increases
+
+    #even though different transaction satisfy ACID prop, but when they are executed concurrently system may get into inconsistent state
+
+
+    Problems:
+        Even if independent transactions are executing properly with acid property but if multiple transactions 
+        are executing together in concurrency the resultant system may go into inconsistent state  
+        //ie how a system may go into an inconsistent state because of Concurrency
+
+        1. Dirty Read: 
+                    If a running transaction reads a value from the local buffer which is written by an uncommitted transaction then that read is cld dirty read
+                    and that dirty read is vulnerable to inconsistent bcz if we execute (commit) first and that transaction(whose written val we've read) suffers
+                    some problem and roll back then we've no chance to roll back 
+            #if there exist a dirty read and there's a chance of failure then the system may go into an inconsistent state
+        
+            let a=5
+            t1                t2
+            r(a)    
+            w(a):
+                a++
+            .               
+            .               r(a)    //dirty read : t2 read a=6 from local buffer, as itll first search in local buffer and as a was already in local buff itll read the val 6
+            .               commit //ie now t2 has read a = 6 and commited it ie now it cant roll back a's val 
+            .
+            .
+            failure
+                rollback // make a=5 agn
+
+            *here finally again in db there'll be a=5, but t2 will have a =6. => Inconsitency 
+
+
+        2. Unrepeatable read problem: 
+            when a transaction reads different val of same data in two different reads even when it has not itself changed the val 
+
+            let a = 10
+            t1               t2
+            r(a)
+                            r(a) //a=10
+            w(a):
+                a=15
+                            r(a) //a=15-> Unrepeatable read
+
+        3. Phantom read problem: 
+
+            let a = 10
+            t1               t2
+            r(a)
+                            r(a) //a=10
+            
+            delete(a)//t1 deleted var a
+
+                            r(a) //a doesnt exist in db: Phantom Read
+
+        4. Lost Update Problem or Write-Write conflict problem: occurs due to blind write
+
+            let a = 10
+            t1               t2
+            r(a)
+            w(a):                       //acg to t1 a=11 in local buffer as not committed yet
+                a++
+                            w(a):       //BLIND WRITE: (wirting without reading)
+                                a=50    //a now =50 in local buffer
+
+                            commit      //a=50 permanently saved in db
+
+            commit                      //here t1 will think like it is storing a=11 in db but infact it'll store a=50 in db agn as its val has been changed 
+
+
+    Solution:
+        SHEDULING
+        
+        Schedule: 
+            -set of transactions executing concurrently
+                *first take all the instructions of every transaction in schedule
+                *sequential order of execution of independent transactions can not be changed, only context switches may be done
+            # let no of instructions in transactions (t1,t2,....tn) = (n1,n2,....nn)
+            then total no of possible schedule = (n1+n2+...nn)/n1!*n2!*....nn!
+
+        1. Serial schedule: 
+            after executing one transactions only other transaction can be started ie 
+            at any instance of time only one transaction will be executing
+                    s1(Serial) 
+                t1               t2
+                                r(b)
+                                w(b)
+                                r(a)
+                                w(a)
+
+                r(a)
+                w(a)
+                r(b)
+                w(b)
+
+            adv: no chance of Inconsitency as at any given pt of time only one transaction is executing
+            disadv: theres no concurrency, as executing one transaction at a time
+
+            # if n = no of transactions(t1,t2,....tn)
+                no. of different serial transactions possible = n! = n*n-1*n-2*......1
+                -->as first we can chose say t1 (out of n) then n-1 option to choose next and so on 
+
+        2. Non Serial
+                s2(non Serial)                or            s3
+                t1               t2                     t1          t2
+                r(a)                                    r(a)        r(b)
+                w(a)                                    w(a)        w(b)
+                                r(b)                    r(b)        r(a)    
+                                w(b)                    w(b)        w(a)
+
+                r(b)
+                w(b)
+                                r(a)
+                                w(b)
+
+                adv: concurrency (read its adv rt,bt,utilization etc factors)
+                disadv: theres always a potential risk that the system may go into inconsistent state
+
+
+                #conflict and view serializability: we study what kind of non-serial schedule may  be safe 
+                to work on and guarantee that the system will be consistent
+            
+
+                #no of instructions in transactions (t1,t2,....tn) = (n1,n2,....nn)
+                #no of possible non-serial schedules = (n1+n2+...nn)/n1!*n2!*....nn! - (n!)
+
+        SERIALIZABILITY: 
+
+            1. Conflict serializable: 
+                    A non-serial schedule is conflict serializable if after swapping of non-conflicting instructions
+                    a non-serial schedule can be transformed into a serial schedule.
+                    
+                    #if a schedule is conflict serializable=> it is CONSISTENT (cus we've proved it logically equivalent to serial schedule and Serial schedules are consistent)
+                    #if a schedule is not conflict serializable => schedule may or may not be consistent
+
+
+                conflicting instructions: if any two instructions satisfy below three conditions they are conflicting instructions
+                    i. both instructions belong to different transactions
+                    ii. both instructions are operating on same data
+                    iii. atleast one of the instruction must be write instruction
+                #if any of above three conditions violates => instructions are non-conflicting=> swap possible=> conflict serializable
+                =>swap non-conflicting instructions and convert non-serial schedule into serial=> consistent 
+
+            #for checking conflicting serializability among different transactions in a schedule-> 
+                i. draw graph making transactions as nodes
+                ii. conflicts b/w transactions as edges
+                *if cycle exist in graph => schedule is NOT CONFLICT SERIALIZABLE
+                *if no cycle => CONFLICT SERIALIZABLE
+                    --> order of serializability(ie order of execution of transactions when transformed into serial)
+                     will be indicated by the edges in b/w transaction nodes in graph
+
+            2. View Serialiazable:
+                if conflict serializable => view serializable
+                if not conflicting serializable -> if not blind write => NOT view serializable
+                                                -> if blind write => may or may not be view serializable 
+
+
+*********************
+https://www.javatpoint.com/query-processing-in-dbms
+https://www.cs.nmsu.edu/~hcao/teaching/cs582/note/DB2_t11_query_evaluation_overview.pdf
+https://www.geeksforgeeks.org/structure-of-database-management-system/
