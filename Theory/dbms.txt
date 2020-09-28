@@ -27,7 +27,8 @@ DDL:
     DROP: delete objects from the database
 
 DML:
-    -is short name of Data Manipulation Language which deals with data manipulation and includes most common SQL statements such SELECT, INSERT, UPDATE, DELETE, etc., and it is used to store, modify, retrieve, delete and update data in a database.
+    -is short name of Data Manipulation Language which deals with data manipulation and includes most common 
+    SQL statements such SELECT, INSERT, UPDATE, DELETE, etc., and it is used to store, modify, retrieve, delete and update data in a database.
 
     SELECT: retrieve data from a database
     INSERT: insert data into a table
@@ -84,35 +85,6 @@ FILE STRUCTURE:
 --attribute == column & tuples == rows
 --a+ => closure of (a)
 
-FUNCTIONAL DEPENDENCIES
-    The functional dependency is a relationship that exists between two attributes. It typically exists between the primary key and non-key attribute within a table.
-    
-    X   →   Y  
-    
-    The left(X) side of FD is known as a determinant, the right side(Y) of the production is known as a dependent.
-    TYPES
-        Trivial
-            A → B has trivial functional dependency if B is a subset of A.
-            The following dependencies are also trivial like: A → A, B → B
-        Non Trivial 
-            A → B has a non-trivial functional dependency if B is not a subset of A.
-            When A intersection B is NULL, then A → B is called as complete non-trivial.
-
-
-
-REDUNDENCY
--- https://www.geeksforgeeks.org/the-problem-of-redundancy-in-database/#:~:text=Redundancy%20means%20having%20multiple%20copies,%2C%20college%20rank%2C%20course%20opted.
-    Redundancy means having multiple copies of same data in the database.
-    This problem arises when a database is not normalized
-
-    Problems caused due to redundancy are: 
-        Insertion anomaly: This problem happens when the insertion of a data record is not possible without adding some additional unrelated data to the record
-        Deletion anomaly:  This anomaly happens when deletion of a data record results in losing some unrelated information that was stored as part of the record that was deleted from a table
-        Updation anomaly: Suppose if the rank of the college changes then changes will have to be all over the database which will be time-consuming and computationally costly.
-                            If updation do not occur at all places then database will be in inconsistent state.
-
-
-
 KEYS
     -It is(that value of attribute(ie columns)) used to uniquely identify any record or row of data from the table. It is also used to establish and identify relationships between tables.
     -closure(key) = R (ie entire relational table/ can say all the attributes are present in closure of key)
@@ -164,6 +136,35 @@ types
 
 
 
+FUNCTIONAL DEPENDENCIES
+    The functional dependency is a relationship that exists between two attributes. 
+    It typically exists between the primary key and non-key attribute within a table.
+    
+    X   →   Y  
+    
+    The left(X) side of FD is known as a determinant, the right side(Y) of the production is known as a dependent.
+    TYPES
+        Trivial
+            A → B has trivial functional dependency if B is a subset of A.
+            The following dependencies are also trivial like: A → A, B → B
+        Non Trivial 
+            A → B has a non-trivial functional dependency if B is not a subset of A.
+            When A intersection B is NULL, then A → B is called as complete non-trivial.
+
+
+
+REDUNDENCY
+-- https://www.geeksforgeeks.org/the-problem-of-redundancy-in-database/#:~:text=Redundancy%20means%20having%20multiple%20copies,%2C%20college%20rank%2C%20course%20opted.
+    Redundancy means having multiple copies of same data in the database.
+    This problem arises when a database is not normalized
+
+    Problems caused due to redundancy are: 
+        Insertion anomaly: This problem happens when the insertion of a data record is not possible without adding some additional unrelated data to the record
+        Deletion anomaly:  This anomaly happens when deletion of a data record results in losing some unrelated information that was stored as part of the record that was deleted from a table
+        Updation anomaly: Suppose if the rank of the college changes then changes will have to be all over the database which will be time-consuming and computationally costly.
+                            If updation do not occur at all places then database will be in inconsistent state.
+
+
 
 -- https://www.javatpoint.com/dbms-first-normal-form
 --prime attribute - tose attributes which are part of any of the candidate keys
@@ -172,7 +173,8 @@ types
 NORMALIZATION
     -Redundancy in relation may cause insertion, deletion and updation anomalies
      Normalization is the process of minimizing redundancy from a relation or set of relation
-    -it is the process of organizing the data in the database by dividing the larger table into the smaller table and links them using relationship.
+    -it is the process of organizing the data in the database by dividing the larger table into the smaller table 
+    and links them using relationship.
     -The normal form is used to reduce redundancy from the database table.
 -- eg
 --##imp- https://www.geeksforgeeks.org/normal-forms-in-dbms/#:~:text=Normalization%20is%20the%20process%20of,reduce%20redundancy%20in%20database%20tables.
@@ -266,9 +268,11 @@ ER- Diagram
 Relationship
     The association among entities is called a relationship. 
     For example, an employee works_at a department, a student enrolls in a course. Here, Works_at and Enrolls are called relationships.
+    //oops relationships-> association, aggregation, composition
 
 Relationship Set
-    A set of relationships of similar type is called a relationship set. Like entities, a relationship too can have attributes. These attributes are called descriptive attributes.
+    A set of relationships of similar type is called a relationship set. 
+    Like entities, a relationship too can have attributes. These attributes are called descriptive attributes.
 
 Degree of Relationship
     The "number of participating entities" in a relationship.
@@ -294,32 +298,26 @@ Participation Constraints
 
 
 
-
 ***************
 INDEXING
-    -Indexes are special lookup table that the db search engine can use to speed up data retrieval. 
-    Simply, an index is a pointer to data in table.
-    And is a db very similar to the index in the front/back of a book.
 
-    -An index helps to speed up SELECT queries and WHERE clauses, 
-    but it slows down data input with the UPDATE and ISERT stmts,
-
-    -Indexes can be created or dropped with no effect on the data
-    
-    An Index 
-        -takes a *search key* input 
-        -Efficiently returns a collection of matching records
-
-
-    /*
-    -Indexing is a way to optimize the performance of a database by minimizing the number of disk accesses required when a query is processed.
+    -Indexing is a way to optimize the performance of a database by minimizing the number of disk accesses 
+    required when a query is processed. 
     It is a data structure technique which is used to quickly locate and access the data in a database.
 
-    -Indexing is a data structure technique to efficiently retrieve records from the database files 
-    based on some attributes on which the indexing has been done.
-    -Indexing in database systems is similar to what we see in books.
-    */
+    index:
+        -Indices are special lookup table that the db search engine can use to speed up data retrieval. 
+        Simply, an index is a pointer to data in table.
+        And is a db very similar to the index in the front/back of a book.
 
+        -An index helps to speed up SELECT queries and WHERE clauses, 
+        but it slows down data input with the UPDATE and ISERT stmts,
+
+        -Indexes can be created or dropped with no effect on the data
+    
+        An Index 
+            -takes a *search key* input 
+            -Efficiently returns a collection of matching records
 
     # We often want to have more than one index for a ﬁle. 
     For example, we may wish to search for a book by author, by subject, or by title. 
@@ -341,7 +339,7 @@ Types:
 
     
     1. Ordered : 
-        -indices are based on a sorted ordering of the values.
+        -indices are based on ordered values.
 
         i. Dense:
             -For every search key value in the data file, there is an index record.
@@ -359,6 +357,9 @@ Types:
         i. Clustering
         ii. Secondary 
         iii. Multilevel Indexing
+                -ds used: 
+                        a. B Tree 
+                        b. B+ Tree
 
 
 

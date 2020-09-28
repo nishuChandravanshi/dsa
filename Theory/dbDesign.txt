@@ -371,7 +371,7 @@ storageTransaction { //amount of grain farmer has stored in warehouse
 
 farmerStoredGrainDetail{ //amount of grain left with farmer
     grain foreignKey Grain;
-    farmer foreignKey User;
+    farmer foreignKey Farmer;
     quantity float;
     price float;
     quality charfield;

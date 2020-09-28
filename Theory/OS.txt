@@ -22,64 +22,64 @@ throughput
 PROCESS
 #http://courses.cs.vt.edu/csonline/OS/Lessons/Processes/index.html
 
-program- 
-    static set of directions or instructions
-process - 
-    the dynamic activity whose properties change as time progresses
+    program- 
+        static set of directions or instructions
+    process - 
+        the dynamic activity whose properties change as time progresses
 
--A process is an instance of program in execution
-For example a Web Browser is a process, a shell (or command prompt) is a process.
--A process encompasses(keeps) the current status of the activity, called the process state.
--process state includes
-    -the current position in the program being executed (the value of the program counter)
-    -other CPU registers and the associated memory cells
-    - process state is a snapshot of the machine at that time. At different times during the execution of a program(at different times in a process) different snapshots (different process states) will be observed
+    -A process is an instance of program in execution
+    For example a Web Browser is a process, a shell (or command prompt) is a process.
+    -A process encompasses(keeps) the current status of the activity, called the process state.
+    -process state includes
+        -the current position in the program being executed (the value of the program counter)
+        -other CPU registers and the associated memory cells
+        - process state is a snapshot of the machine at that time. At different times during the execution of a program(at different times in a process) different snapshots (different process states) will be observed
 
-process table-
-    -To keep track of the state of all the processes, the operating system maintains a table known as the process table. 
-    -Inside this table, every process is listed along with the resources the processes is using and the current state of the process.
+    process table-
+        -To keep track of the state of all the processes, the operating system maintains a table known as the process table. 
+        -Inside this table, every process is listed along with the resources the processes is using and the current state of the process.
 
-PROCESS CONTROL BLOCK(PCB)
-    -ds which stores the info about a particular process. this info is reqd by the cpu while executing the process
-    -each process is identified by its own pcb, is also known as CONTEXT OF THE PROCESS
-    -pcb of all process are present in the LINKED LIST
-    -info stored in pcb are-
-        1. process id (pid) :When a process is created, a unique id is assigned to the process which is used for unique identification of the process in the system.
-        2. program counter(pc): contains address of the next instruction to be executed
-        3. process state : new/ready/running/waiting
-        4. priority :
-        5. general purpose registers (GPR): Every process has its own set of registers,
-           which are used to hold the data which is generated during the execution of the process.
-        6. list of open files: During the Execution, Every process uses some files which need to be present in the main memory. 
-           OS also maintains a list of open files in the PCB
-        7. list of open device: OS also maintain the list of all open devices which are used during the execution of the process
-        8. protections:
-        *first 7 are important
+    PROCESS CONTROL BLOCK(PCB)
+        -ds which stores the info about a particular process. this info is reqd by the cpu while executing the process
+        -each process is identified by its own pcb, is also known as CONTEXT OF THE PROCESS
+        -pcb of all process are present in the LINKED LIST
+        -info stored in pcb are-
+            1. process id (pid) :When a process is created, a unique id is assigned to the process which is used for unique identification of the process in the system.
+            2. program counter(pc): contains address of the next instruction to be executed
+            3. process state : new/ready/running/waiting
+            4. priority :
+            5. general purpose registers (GPR): Every process has its own set of registers,
+            which are used to hold the data which is generated during the execution of the process.
+            6. list of open files: During the Execution, Every process uses some files which need to be present in the main memory. 
+            OS also maintains a list of open files in the PCB
+            7. list of open device: OS also maintain the list of all open devices which are used during the execution of the process
+            8. protections:
+            *first 7 are important
 
-STATES OF PROCESS
-    running state-
-        the process has all the resources it need for execution and it has been given permission by the operating system to use the processor.
-        Only one process can be in the running state at any given time
+    STATES OF PROCESS
+        running state-
+            the process has all the resources it need for execution and it has been given permission by the operating system to use the processor.
+            Only one process can be in the running state at any given time
 
-    ready state-
-        -waiting for permission to use the processor
+        ready state-
+            -waiting for permission to use the processor
 
-    waiting state-
-        -waiting for some external event to occur such as user input or a disk access
+        waiting state-
+            -waiting for some external event to occur such as user input or a disk access
 
-    #the waiting and ready states are implemented as QUEUES which hold the processes in these states
+        #the waiting and ready states are implemented as QUEUES which hold the processes in these states
 
-degree of multiprogramming 
-    -the no. of processes present in main memory at any point of time
+    degree of multiprogramming 
+        -the no. of processes present in main memory at any point of time
 
-scheduler in os (long term scheduler, short term, mid term)
-        1                   2                  3                4 
-    - new state -(LTS)-> ready state -(STS)->running -(MTS)-> waiting {or waiting -(MTS)->running}
-    -ie  1->2:lts,
-         2->3: sts, (also kns as DISPATCHER) 
-         3->4(or 4->2): mts - performs swapping (main memory <-> secondary memory)
-    
-    #DISPATCHER : responsible for saving the context of one process and loading the context of other process
+    scheduler in os (long term scheduler, short term, mid term)
+            1                   2                  3                4 
+        - new state -(LTS)-> ready state -(STS)->running -(MTS)-> waiting {or waiting -(MTS)->running}
+        -ie  1->2:lts,
+            2->3: sts, (also kns as DISPATCHER) 
+            3->4(or 4->2): mts - performs swapping (main memory <-> secondary memory)
+        
+        #DISPATCHER : responsible for saving the context of one process and loading the context of other process
 
 SCHEDULING
     -The responsibility of determining how to allocate processor time among all the ready processes is known as scheduling
@@ -229,21 +229,222 @@ DIFF B/W STARVATION & DEADLOCK
 
 *********************************************
 
+@sJan (6.8-6.10 for paging numers)
+
+            #2^10 = 1K, 2^20 = 1M, 2^30 = 1G, 2^40 = 1T(tera), 2^50 = 1P(peta)
 MEMORY MANAGEMENT
 
+    goal is to achieve 
+        i. memory size - larger
+        ii. access time - lesser
+        iii. per unit cost - lesser
+        #but not all the above three can be obtained at with a single memory so to obtain this we've Hierarchy of memory
+
+    Hierarchy of memory:
+        CPU <-> CACHE MEMORY <-> MAIN MEMORY <-> SECONDARY MEMORY
+
+                #for now we are considering -> CPU <-> MM <-> SM 
+        Address Translation:
+            cpu generates Logical Address (of SM), and to access MM we want Physical Address,so conversion of LA to PA is reqd
+
+        How this hierarchy works->
+            Locality of reference:
+                --https://www.geeksforgeeks.org/locality-of-reference-and-cache-operation-in-cache-memory/  
+                -Locality of Reference refers to the tendency of the computer program to access instructions 
+                whose addresses are near one another
+                -The property of locality of reference is mainly shown by loops and subroutine calls in a program.
 
 
+        *task of os-> 
+            i. memory allocation (ie how memo is to be allocated in mm and sm)
+            ii. address Translation, 
+
+        MEMORY ALLOCATION
+            1. Contiguos Memory Allocation (eg array)
+                -a process must be kept together completely in continuous order
+                - memory allocation in sequential nature
+
+                adv: 
+                    i. Address Translation is easy (eg think of array: uk the base address and are supposed to find any address then u can simply reach to that addres by adding it with base address) 
+                    ii. It is very fast ie Access Time will be less due to contiguos memo allocation to the process
+
+                disadv: 
+                    i. External Fragmentation: (cont. memo allocation always sufferes from external fragmentation)
+                        When the space requested by a process is in total available but still cant be allocated
+                        because the space is not available continuously and process wants space in Contiguos fashion.
+                    ii. Internal Fragmentation:
+                
+                #External Fragmentation is severe issue compared to internal, as a lot of memory is wasted
+
+            2. Non Contiguos Memory Allocation (eg linked list)
+                -not necessary to keep entire process at one place, pointers are used to point where next instruction of the process is stored
+                -access time is more as we need to access with the help of pointers and go one by one inorder to reach the reqd addres
+
+                adv: 
+                    i. Free From external fragmentation
+                disadv:
+                    i. slow - as access time will be more
 
 
+            1. Contiguos Memory Allocation
+                i. Fixed Size Partitioning
+                    - Divide the memory into certain number of partitions and
+                    - the size of each partion will be fixed and cannot be changed (size of diff partitions may differ from each other)
+                    - Only one process can be accomodated in one partition. 
+                    eg lets say we have partion of size 5 kb, 2 kb, 1 kb and a process requre 3kb space
+                        then that process will be allocated 5kb space (as we cant divide and allocate 2 and 1 kb to the process due to contiguos allocation)
+                         => 5-3 ie 2kb will be wasted from that partition -> this is k/as Internal Fragmentation
+
+                    adv: 
+                        i. Easy to  manage
+                    disadv:
+                        i. Internal Fragmentation
+                            when a process can not use the entire space of the partion then the internal memory of the partition is wasted
+                            (ie when size of partion is > size of process which has been allocated to that partion)
+                        ii. External Fragmentation
+
+                ii. Variable Size Partitioning
+                    -to overcome the problems  in fixed size memo allocation
+                    -No pre defined partition, whole system is treated as a single unit of memory and
+                    as space is allocated acg to the requirement of the process in runtime
+
+                    adv:
+                        i. No internal Fragmentation
+                            -As there are no fixed partitions => no memory waste due to internal remainig of partition which happened in fixed size partitioning
+                    disadv: 
+                        i. External Fragmentation
+
+            SPACE ALLOCATION POLICIES (applicable in both fixed and variable size partitioning)
+                1. First Fit
+                    -starts searching (reqd space for the process)from the Start(of memory)
+                    -allocate the first space available which is capable of accomodating the reqd process
+                    #search starts from the Start of memory each time
+
+                2. Best Fit
+                    -searchs all the empty space or blocks available in the memory and
+                    -allocates that block which is of smallest size and is capable of accomodating the process
+                    #performs best in "Fixed size partitioning" as the remainig space of the block(partition) cannot be reused 
+
+                3. Worst Fit
+                    -largest block is allocated
+                    => the remainig block space after allocating the process will also be large
+                    => theres high probability that the remainig space can be reused later(considering var size partitioning)
+                    
+                    #Worst Fit -> performs best in Variable Size Partitioning
+
+                    #Best Fit - performs best for Fixed Size Partitioning (as the remainig space in a block cant be reused anyways)
+                              - performs worst for Variable Size Partitioning 
+                            (because it uses the smallest block but the remainig space will be of very small size that 
+                            theres very less possibility that it can be reused again)
+
+                
+                ADDRESS TRANSLATION     //@sJan 6.6
+                    #cpu always generates Logical Address (ie for Secondary Memory)
+                    #but cpu access MM not SM as accessing SM will be take more time
+                    #so Physical Address is generated (to acces MM where the reqd info pointed by address generated by cpu is residing)
+
+                    flow:
+                        CPU -(la)-> LIMIT REGISTER -(traps if address is illegal, else go fwd) -> 
+                        RELOCATION REGISTER -(adds base address of the process with instruction no => resulting pa)
+                        -(pa)-> MAIN MEMORY
+                            
+                            *la = logical address, pa = physical address
+
+                    Relocation Register: 
+                        -holds the base address of the process in Main Memory
+                    Limit Register:
+                        -contains the size of the process and so->
+                        -checks the address requested by cpu is legal or not ie 
+                        the address is in limit (of the instruction number or say size of the process) of process or not
 
 
+                Major Problem with Contiguos Memory Allocation:
+                    External Fragmentation => fragmented space available but process demands contiguos space
+
+                Sol: 
+                    i. either we defragment the memory and make a contiguos space available for the process 
+                        -which will be ofc very costly in runtime 
+                    ii. we fragment the process and allocate it in non-contiguos fashion
+                        => here comes Paging and Segmentation (ie non-contiguos memory allocation)
+
+            2. Non-Contiguos Memory Allocation
+                // we want to use MM more efficiently by removing external fragmentation-> concept of paging <-> as we are utilizing space we had to trade it with time as time will be doubled..
+                Paging: 
+                    -SM is divided into fixed size partition and size of each partition will be same
+                    these partitions are called "Pages", and size of each page is same
+                    -similarly MM is divided into fixed equal size partitions called "Frames"
+                    *size of page = size of frame
+
+                    Address Translation: 
+                        cpu generates la = page no.(p) + instruction offset(d)
+                        f = frame no.
+                        
+                        cpu -(p+d)-> page Table -(f+d)-> MM
+                                                
+                        *reqd page no will be searched in the page table of that process -> from there we'll get 
+                            the address of frame where that page lies in MM -> then frame No. + instruction offset (=physical address)
+                            -> and then we have physical addres finally to access MM
+
+                    Page Table:
+                        -data structure used as index to store the address of frames(in MM) of a particular process
+                        -No. of entries in page table = no of pages in that process
+                        -every process has its own page table independently
+                        -pt stores the base addres(ie address of frame corresponding to the particular page)
+                        of every page 
+
+                    adv: 
+                        -No External Fragmentation (memory utilization)
+                    disadv:
+                        -extra space reqd for page table in MM
+                        -as it is Fixed Size Partitioning scheme => suffers from Internal Fragmentation
+                        -instruction access time becomes DOUBLE -> as memory is accessed twice->
+                            1. to access Page Table (inorder to convert la -> pa)
+                            2. accessing mm (with generated pa) for required instruction
+
+                        #as instruction access time becomes double => speed becomes half! --> this is a severe penalty
 
 
+                    # n bit address => 2^n different addresses possible => memory size = (2^n)*size of location(generally 1 Byte)
+                    # ie n bit address will support ((2^n)*size of location) size of memory
 
+            Problem with Paging: 
+                cpu generates logical address -> problem was MM was accessed twice:
+                                                1. cuz of Page Table (which is stored in MM)
+                                                2. to access the generated physical address (so as to get the reqd page's frame in MM)
+                =>Access time double (page table + mm) => speed halved
+            solution:
+                TLB (Translational Look aside Buffer) : to resolve the timing penalty cuz of paging
+            
+            TLB 
+                -stored in hardware (ie not in MM instead in SM) //@dis-> as it is in SM how come access time is less
+                -has very small size => access time will be lesser than MM(page table) access time
+                -contains two columns -> i) Page No 
+                                        ii) corresponding frame No.
+                -Page is first searched in TLB when not found (ie that page is searched for the first time)
+                    that page is searched in Page Table and then recorded into TLB so as in near fututre if again that 
+                    page is searched than it can be found directly in TLB. 
+                -Common TLB is shared among all the Processes, 
+                -holds data of one process at a time
+                =>when new process comes -> prev process's info needs to be flushed from the tlb
 
-
-
-
+                    #avg memory access time using tlb: 
+                        h(tlb + MM) +(1-h)*(tlb + MM + MM) //twice mm =>for page table + physical address 
+                        where, h = tlb hit ratio, tlb = tlb access time, MM = main memory access time
+                adv: 
+                    avg memory access time reduced (as we dont have to access MM twice as soon as tlb gets filled, as in general tlb hit ratio>90%)
+                disadv: 
+                    -special hardware=> some additional cost
+                    -performance of TLB degrades when theres multiple context switches(as hit ratio degrades due to multiple context switch)
+                    //in case of multiple context switching -> lets say tlb just got filled and got speed but then
+                        ->if theres context switch then entire page no details in tlb will be deleted as now tlb 
+                        will be used to store the details for next process
+                         
+                Sol: 
+                    tlb performance can be improved
+                        i. either by using multiple copies of tlb
+                        ii. by reserving some part of os so as when theres context swith the data of runnning process
+                            is not deleted but saved in reserved memo and then when again the process starts executing 
+                            its data will already be available in tlb
 ***********************************************
 VIRTUAL MEMORY
 
