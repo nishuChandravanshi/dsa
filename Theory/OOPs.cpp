@@ -464,7 +464,8 @@ PROBLEMS WITH OOPS
 //Friend Fucntion (ff) ??benefits & uses?
 
     -friend keyword used to define
-    -A friend function of a class is defined outside that class' scope but it has the right to access all private and protected members of the class. 
+    -A friend function of a class is defined outside that class' scope 
+    but it has the right to access all private and protected members of the class. 
     Even though the prototypes for friend functions appear in the class definition, friends are not member functions.
     - the protected and private data of a class
     can be accessed using the friend function.
@@ -687,13 +688,13 @@ types-
         but he does not know about how on pressing accelerator the speed is actually increasing, he does not know about the inner mechanism of the car or the implementation of accelerator, brakes etc in the car. This is what abstraction is!
     
     
-    Abstraction using Classes:   We can implement Abstraction in C++ using classes. 
-                                 The class helps us to group data members and member functions using available access specifiers. 
-                                 A Class can decide which data member will be visible to the outside world and which is not.
-    Abstraction in Header files: One more type of abstraction in C++ can be header files. 
-                                 For example, consider the pow() method present in math.h header file. 
-                                 Whenever we need to calculate the power of a number, we simply call the function pow() present in the math.h header file and pass the numbers as arguments 
-                                 without knowing the underlying algorithm according to which the function is actually calculating the power of numbers.
+    Abstraction using Classes:  We can implement Abstraction in C++ using classes. 
+                                The class helps us to group data members and member functions using available access specifiers. 
+                                A Class can decide which data member will be visible to the outside world and which is not.
+    Abstraction in Header files:One more type of abstraction in C++ can be header files. 
+                                For example, consider the pow() method present in math.h header file. 
+                                Whenever we need to calculate the power of a number, we simply call the function pow() present in the math.h header file and pass the numbers as arguments 
+                                without knowing the underlying algorithm according to which the function is actually calculating the power of numbers.
 
 
 //Abstract Class 

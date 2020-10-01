@@ -64,7 +64,7 @@ public:
                 { 
                     // cout<<word[0]<<endl;
                     ans = ans || dfs(i,j,0,word,board);
-                     cout<<endl;
+                    //  cout<<endl;
                     if(ans == true)
                         break;
                 }

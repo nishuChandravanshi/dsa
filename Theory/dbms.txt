@@ -39,6 +39,19 @@ DML:
     EXPLAIN PLAN: interpretation of the data access path
     LOCK TABLE: concurrency Control
 
+    DDL
+        CREATE
+        ALTER
+        DROP
+    DML
+        SELECT
+        UPDATE
+        INSERT
+    ​​​​​​​DCL
+        GRANT
+        ​​​​​​​REVOKE
+    ​​​​​​​​​​​​​​
+
 *************************************************
 
 @dis->
@@ -86,7 +99,8 @@ FILE STRUCTURE:
 --a+ => closure of (a)
 
 KEYS
-    -It is(that value of attribute(ie columns)) used to uniquely identify any record or row of data from the table. It is also used to establish and identify relationships between tables.
+    -It is(that value of attribute(ie columns)) used to uniquely identify any record or row of data from the table. 
+    It is also used to establish and identify relationships between tables.
     -closure(key) = R (ie entire relational table/ can say all the attributes are present in closure of key)
 types
     SUPER KEY
@@ -113,12 +127,14 @@ types
         For Example, STUD_NO in STUDENT relation
         -The value of Candidate Key is unique and non-null for every tuple
         -There can be more than one candidate key in a relation
-        -The candidate key can be simple (having only one attribute) or composite as well. For Example, {STUD_NO, COURSE_NO} is a composite candidate key for relation STUDENT_COURSE.    
+        -The candidate key can be simple (having only one attribute) or composite as well. 
+        For Example, {STUD_NO, COURSE_NO} is a composite candidate key for relation STUDENT_COURSE.    
 
     PRIMARY KEY
         -any one of the candidate key can be chosen as a primary key
         -ie There can be more than one candidate key in relation out of which one can be chosen as the primary key. 
-        For Example, STUD_NO, as well as STUD_PHONE both, are candidate keys for relation STUDENT but STUD_NO can be chosen as the primary key (only one out of many candidate keys).
+        For Example, STUD_NO, as well as STUD_PHONE both, are candidate keys for relation STUDENT 
+        but STUD_NO can be chosen as the primary key (only one out of many candidate keys).
    
     
     FOREIGN KEY
@@ -159,10 +175,13 @@ REDUNDENCY
     This problem arises when a database is not normalized
 
     Problems caused due to redundancy are: 
-        Insertion anomaly: This problem happens when the insertion of a data record is not possible without adding some additional unrelated data to the record
-        Deletion anomaly:  This anomaly happens when deletion of a data record results in losing some unrelated information that was stored as part of the record that was deleted from a table
-        Updation anomaly: Suppose if the rank of the college changes then changes will have to be all over the database which will be time-consuming and computationally costly.
-                            If updation do not occur at all places then database will be in inconsistent state.
+        Insertion anomaly: This problem happens when the insertion of a data record is not possible without 
+            adding some additional unrelated data to the record
+        Deletion anomaly:  This anomaly happens when deletion of a data record results in 
+            losing some unrelated information that was stored as part of the record that was deleted from a table
+        Updation anomaly: Suppose if the rank of the college changes then changes will have to be all over the 
+            database which will be time-consuming and computationally costly.
+            If updation do not occur at all places then database will be in inconsistent state.
 
 
 
@@ -172,7 +191,7 @@ REDUNDENCY
 
 NORMALIZATION
     -Redundancy in relation may cause insertion, deletion and updation anomalies
-     Normalization is the process of minimizing redundancy from a relation or set of relation
+     Normalization is the process of minimizing redundancy from a relation or set of relation 
     -it is the process of organizing the data in the database by dividing the larger table into the smaller table 
     and links them using relationship.
     -The normal form is used to reduce redundancy from the database table.
@@ -181,8 +200,10 @@ NORMALIZATION
 
 different typs of Normal form->
     1NF:	
-        A relation is in 1NF if it contains an atomic value, and it must follow INTEGRITY Constraints(like if attribute is defined integer than all values in that attribute must be integer)
-        It states that an attribute of a table cannot hold multiple values. It must hold only single-valued attribute.
+        A relation is in 1NF if it contains an atomic value, and it must follow 
+            INTEGRITY Constraints(like if attribute is defined integer than all values in that attribute must be integer)
+        It states that an attribute of a table cannot hold multiple values. 
+            It must hold only single-valued attribute.
         First normal form disallows the multi-valued attribute, composite attribute, and their combinations.
         Example: Relation EMPLOYEE is not in 1NF because of multi-valued attribute EMP_PHONE
         --to make it in 1nf for multiple phn no, new rows are being made 
@@ -199,7 +220,8 @@ different typs of Normal form->
         ab->d => table1 : R1(abd) (table1 must hold complete candidate keys )
         b->c => table2 : R2(bc)
 
-        -A relation will be in 2NF if it is in 1NF and all non-key attributes are fully functional dependent on the primary key.
+        -A relation will be in 2NF if it is in 1NF and all non-key attributes are fully functional dependent 
+            on the primary key.
         -ie for a table to be in 2nf it must be -
         1. in 1nf
         2. there should not be any paritial dependency
@@ -228,6 +250,53 @@ different typs of Normal form->
 
     4NF:	A relation will be in 4NF if it is in Boyce Codd normal form and has no multi-valued dependency.
     
+    USE:
+        -Useful for OLTP systems, where main goal is to do inert, update and delete
+            and we want quality data to insert into our system (ie mainly when we are storing data from lets say 
+            daily transactions, where we want to ensure there data must be error free, not redundant etc)
+
+
+
+DENORMALIZATION:
+    -opposite of normalization (in denormalization we can have-> redundant,duplicate,aggregate etc datas)
+    -combining the data into one big table rather than going and fetching data from multiple tables
+    
+    MOTIVE:     
+        -to make search faster!
+    TECHNIQUES:
+        i. Snow flake design
+            -can have normalized dimension tables
+            -Less redundancy so less maintainance
+            -complex queries due to normalized dimension tables
+            -more joins due to normalization
+            -more concerned about data integrity and duplication
+
+        ii. Star Schema (or star design)
+            -Pure denormalized dimension tables
+            -More redundancy due to denormalized format so more maintainance
+            -simple queries due to pure denormalized design, less joins
+            -more than data integrity speed and performance are concern here
+
+        #dimension table- describe about the fact (eg Employee(id,name), Country(id,description), products(id,proName)..) 
+        #fact table - storing the numbers(eg Fact(countryID,EmpId, ProductId,TotalSales,....))
+
+    USE: 
+        -denormalization is useful for OLAP systems,
+         where faster analysing is more important than insert, update and delete
+        
+        
+@.NET video
+OLAP & OLTP 
+    OLTP: online transaction processing system
+        -faster insert,delete,update operations
+        
+    OLAP: online analytical processing system
+        -goal is analysis on historical data 
+            
+
+
+
+
 ***************
 
 SCHEMA
@@ -347,7 +416,8 @@ Types:
         ii. Sparse:
             -The index record appears only for a few items in the data file. Each item points to a block as shown.
             -To locate a record, we find the index record with the largest search key value less than or equal to the search key value we are looking for.
-            -We start at that record pointed to by the index record, and proceed along with the pointers in the file (that is, sequentially) until we find the desired record
+            -We start at that record pointed to by the index record, and proceed along with the pointers 
+             in the file (that is, sequentially) until we find the desired record
     
     @dis->
     2. Hash File Organization:
@@ -385,7 +455,7 @@ ACID Properties
 
 
 STATES OF TRANSACTION
-    active -(r/w op)-> Partially committed,  active -(failure-> Failed 
+    active -(r/w op)-> Partially committed,  active -(failure)-> Failed 
     Partially committed -(failure)-> Failed, Paritally Committed -(Permanent store)-> Committed
     Committed -> terminated
     Failed -(Roll back)-> aborted
@@ -425,7 +495,8 @@ CONCURRENCY
         3. Resource utilization: increases
         4. Efficiency: increases
 
-    #even though different transaction satisfy ACID prop, but when they are executed concurrently system may get into inconsistent state
+    #even though different transaction satisfy ACID prop, but when they are executed concurrently 
+     system may get into inconsistent state
 
 
     Problems:
@@ -434,9 +505,11 @@ CONCURRENCY
         //ie how a system may go into an inconsistent state because of Concurrency
 
         1. Dirty Read: 
-                    If a running transaction reads a value from the local buffer which is written by an uncommitted transaction then that read is cld dirty read
-                    and that dirty read is vulnerable to inconsistent bcz if we execute (commit) first and that transaction(whose written val we've read) suffers
-                    some problem and roll back then we've no chance to roll back 
+                    -If a running transaction reads a value from the local buffer which is 
+                        written by an uncommitted transaction then that read is cld dirty read.
+                    -and that dirty read is vulnerable to inconsistent bcz if we execute (commit) first 
+                        and that transaction(whose written val we've read) suffers
+                        some problem and roll back then we've no chance to roll back 
             #if there exist a dirty read and there's a chance of failure then the system may go into an inconsistent state
         
             let a=5
@@ -554,7 +627,8 @@ CONCURRENCY
                     A non-serial schedule is conflict serializable if after swapping of non-conflicting instructions
                     a non-serial schedule can be transformed into a serial schedule.
                     
-                    #if a schedule is conflict serializable=> it is CONSISTENT (cus we've proved it logically equivalent to serial schedule and Serial schedules are consistent)
+                    #if a schedule is conflict serializable=> it is CONSISTENT 
+                        (cus we've proved it logically equivalent to serial schedule and Serial schedules are consistent)
                     #if a schedule is not conflict serializable => schedule may or may not be consistent
 
 
@@ -567,7 +641,7 @@ CONCURRENCY
 
             #for checking conflicting serializability among different transactions in a schedule-> 
                 i. draw graph making transactions as nodes
-                ii. conflicts b/w transactions as edges
+                ii. conflicts b/w transactions as directed edges
                 *if cycle exist in graph => schedule is NOT CONFLICT SERIALIZABLE
                 *if no cycle => CONFLICT SERIALIZABLE
                     --> order of serializability(ie order of execution of transactions when transformed into serial)

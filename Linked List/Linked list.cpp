@@ -190,6 +190,84 @@ idea-
 */
 
 
+//Merge k-sorted List : T(O(n*k*k))
+// https://leetcode.com/problems/merge-k-sorted-lists/submissions/
+class Solution {
+public:
+    ListNode* merge(ListNode* l1, ListNode* l2)
+    {
+        if(l1==NULL) return l2;
+        if(l2==NULL) return l1;
+        
+        if(l1->val <= l2->val)
+        {
+            l1->next = merge(l1->next,l2);
+            return l1;
+        }
+        else{
+            l2->next = merge(l1,l2->next);
+            return l2;
+        }
+        return NULL;
+    }
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        if(lists.size() == 0)
+            return NULL;
+        ListNode* dh = lists[0];
+        int i=1;        
+        while(i<lists.size())
+        {
+            dh = merge(dh, lists[i]);
+            i++;
+        }
+        return dh;
+    }
+};
+
+//using heap-> T:O(n*k*log(k))
+class Solution {
+public:
+    struct cmp{
+        bool operator()(ListNode*a, ListNode* b)
+        {
+            return a->val>b->val;
+        }
+    };
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        if(lists.size() == 0)
+            return NULL;
+        int k = lists.size();
+        priority_queue<ListNode*, vector<ListNode*>, cmp> pq;
+        
+        for(int i=0;i<k;i++)
+            if(lists[i] != NULL)
+                pq.push(lists[i]);
+        
+        ListNode* dh = NULL, *last = NULL;
+        while(!pq.empty())
+        {
+            ListNode* curr  = pq.top();
+            pq.pop();
+            if(curr->next != NULL)
+                pq.push(curr->next);
+            if(dh == NULL)
+            {
+                dh = curr;
+                last = dh;
+            }
+            else{
+                last->next = curr;
+                last = curr;
+            }
+        }
+        return dh;
+    }
+    
+}; 
+
+
+
+
 //6.Detect loop, //-->do removal
 //slow fast => if both ptr(x and 2x speed) start revolving in a circle from a pt then they'll meet again at the starting point.
 //https://www.geeksforgeeks.org/detect-and-remove-loop-in-a-linked-list/

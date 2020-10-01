@@ -416,7 +416,7 @@ MEMORY MANAGEMENT
                 TLB (Translational Look aside Buffer) : to resolve the timing penalty cuz of paging
             
             TLB 
-                -stored in hardware (ie not in MM instead in SM) //@dis-> as it is in SM how come access time is less
+                -stored in hardware (ie not in MM instead a special hardware used(not SM)) 
                 -has very small size => access time will be lesser than MM(page table) access time
                 -contains two columns -> i) Page No 
                                         ii) corresponding frame No.
@@ -445,6 +445,28 @@ MEMORY MANAGEMENT
                         ii. by reserving some part of os so as when theres context swith the data of runnning process
                             is not deleted but saved in reserved memo and then when again the process starts executing 
                             its data will already be available in tlb
+
+            
+            Segmentation: 
+            //https://www.geeksforgeeks.org/segmentation-in-operating-system/
+                -Same as paging except instead of dividing memory into equal size pages, 
+                division is done on the basis of different size of segments acg to process
+                (lets say in a process we can have different segments for say main fun, add fun, etc etc)
+                -size of segments need not necessary be same
+
+                Segment table:
+                    contains the base address of segment and its size -> 
+                    so that the requested segment + instruction offset's range will be checked(with the help of ba and size of segment)
+                   
+                #Limit register used to check the validity of address requested by cpu
+                
+                Advantages of Segmentation –
+                    No Internal fragmentation.
+                    Segment Table consumes less space in comparison to Page table in paging.
+                Disadvantage of Segmentation –
+                    As processes are loaded and removed from the memory, 
+                    the free memory space is broken into little pieces, causing External fragmentation
+
 ***********************************************
 VIRTUAL MEMORY
 
@@ -452,6 +474,7 @@ VIRTUAL MEMORY
 
 **********************************************
 THRASHING
+    Fall of CPU utilization with increase in Degree of multiprogramming
 
 BELADY'S ANOMALY
 
