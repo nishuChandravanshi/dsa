@@ -65,8 +65,7 @@ Brute Force:
     return valid board
     
 Backtracking:
-    place 1-9 in each empty cell st
-        it doesnt violate the constraints
+    place 1-9 in each empty cell st it doesnt violate the constraints
     fill the board
 */
 

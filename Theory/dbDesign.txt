@@ -216,14 +216,10 @@ orderDetails{
 }
 
 *****
-?? HOW!
--who is managing warehouse db?
-    -let say a farmer wants to store x amt of grain in  wahrehouse, how u ensure that it reaches warehouse?
 
 ##to do --
     -python libraries ie files,packages used(read definitions of those which has been used in ur project)
     -api(definition,which api and how), get post diff etc
-@rs -how u did load balancing??
     -topology types and definition
 
     -how does ur project work benefit xyz company?

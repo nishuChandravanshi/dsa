@@ -754,14 +754,14 @@ int solve(int n, int k) //return min no of attempts for(n egg , k floors)
 
     for(int i=1;i<=k;i++) //as we have option to drop egg from 1 to k floors
     {
-            res = max(solve(n-1,i-1), solve(n, k-i));    //this will give the maximum possible attempt from ith floor
+            res = 1 + max(solve(n-1,i-1), solve(n, k-i));    //this will give the maximum possible attempt from ith floor
            
            // ith floor-> 1.if egg breaks=> critical floor is eithr ith or floor below it ie we're left with n-1 egg and i-1 floors(ie solve(n-1,i-1)
            //2.otherwise -> critical floor will be above ith floor and we've same no of eggs as it didnt break from ith floor (ie solve(n, k-i)  
            
             if(minAttempts > res)
-                minAttempts = 1+res;//+1 for each attempt
-                //this will store the min attempts (resulted from any floor)    
+                minAttempts = res;
+                    //this will store the min attempts (resulted from any floor)    
     }
     dp[n][k] = minAttempts;
     return minAttempts;
