@@ -85,13 +85,17 @@ SCHEDULING
     -The responsibility of determining how to allocate processor time among all the ready processes is known as scheduling
 
     PREEMPTIVE (running state <-> ready state)    
-        -one approach to scheduling known as preemptive scheduling: "this task is accomplished by dividing time into short segments, each called a time slice or quantum (typically about 50 milliseconds), 
-        and then switching the CPU's attention among the processes as each is allowed to execute for no longer than one time slice
+        -one approach to scheduling known as preemptive scheduling: 
+         "this task is accomplished by dividing time into short segments, each called a time slice or quantum
+         (typically about 50 milliseconds), 
+        and then switching the CPU's attention among the processes as each is allowed to execute for no longer 
+        than one time slice
         -context switching
             -This procedure of swapping processes is called a process switch or a context switch.
 
     NON PREEMPTIVE (ready state -> running state)
-        - processes are give control of the processor until they complete execution or voluntarily move themselves to a different state
+        - processes are give control of the processor until they complete execution or 
+        voluntarily move themselves to a different state
 
     strategies for scheduling-
 
@@ -188,6 +192,15 @@ THREADS
     ADV - threads can share common data, they do not need to use interprocess communication.
         - context switching
         -sharing
+    #process context switch-> more time consuming as there will be swithces b/w different pcb
+    #threads
+     switching time very less. can consider as a part of process, when we parallelism in job we break the job into different threads
+
+    #implemention 
+        i. user level
+        ii. kernel level
+            -> mapping is done b/w both then only it'll work 
+            ->user level on its own is has nt any existece-> it has to be mapped with kernel level 
 
 Similarities
     -Like processes threads share CPU and only one thread active (running) at a time.

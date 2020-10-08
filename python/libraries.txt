@@ -350,7 +350,7 @@ Neural Networking
 regression
     - value prediction
     -continuous range me kch value chiye jb
-    eg -> mark preduction, 
+    eg -> mark prediction, 
 
 classification
     -certain class me classify krna which class it belongs to

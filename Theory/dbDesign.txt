@@ -489,8 +489,65 @@ JSON : --https://beginnersbook.com/2015/04/json-tutorial/
         document.writln(students.steve.age); //output: 29
 
 
-****************
+******
 
+DJANGO
+    -server side web application development framework written in python
+
+    any web app consist of two parts
+        i. client side
+            -any application which can request data from a server
+             could be web application or android app or iOS app or any other  kind of app which can request data from the server
+        ii. server side
+            -a server which is runnig an application which is written in server side lang such as PHP,python,ruby and so on..
+            -job of server side app is -> to respond to these request
+            -so server side app will take the request ->
+              get the data from db if required -> construct a response -> 
+                then send it back in an appropriate format to the client 
+
+    Architectural Pattern followed by Django
+        -Django follows MVT (Model View Template) architecture.
+        MVT is slight variation of MVC(Model View Controller) architecture
+
+        #Architectural pattern is just a way of constructing the code or managing the code.
+        #by seperating the code into smaller pieces it becomes easier to create bigger project so for that we use
+        an Architectural pattern
+
+
+        MVC:
+            consist of three parts
+            i. Model
+                -any code that deals with the "data & business logic" 
+                ie data manipulation, data validation, user authentication and anything that deals with data is
+                    considered to be a part of the model 
+            
+            ii. View
+                -Views are the UI elements
+                the buttons, the images, the forms which the users sees and interact with
+
+            iii.Controller
+                -controller is a glue that sits b/w the model and the view
+
+            => whenver a user interacts with the view -> the controller receives the request -> 
+            fetches the data from model if necessary -> & creates new view or update the view with data that it receives from the model
+
+        #MVT is similar to the MVC architecture
+        Django calls :  models = models
+                        Views = Template (views are called Template in django)
+                        Controller = View (controller in django is called a View)
+
+                        #just the nomanclature differs in mvc and mvt otherwise same functionality in both
+    
+
+    Project & App:
+        -a project is an entire application and an app is a module inside the project 
+         that deals with one specific requirement
+        eg in our Krishi jag pro-> inside the proj we'll have several apps like->
+            users,transaction, templates
+
+
+
+******************************
 2. https://medium.com/@neshpatel/solving-sudoku-part-i-7c4bb3097aa7
 
 
@@ -566,3 +623,4 @@ class Stream {
 
 
 
+****************************
