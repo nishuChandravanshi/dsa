@@ -54,7 +54,7 @@ bool isCyclic(vector<int> g[], int V)
 //initially set col[i] = 0 for all nodes  //run this dfs for all nodes whise col[i]=0;
 bool dfs(int src) { //returns true if cycle is present
     
-    bool cycle = 1; //?? should be 0?
+    bool cycle = 0; 
     col[src] = 1;
     for(auto to:adj[src]) {
         if(col[to]==1) {

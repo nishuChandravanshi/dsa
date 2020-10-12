@@ -2,9 +2,9 @@
 About yourself?
     -My name is Nishu Chandravanshi. 
     Im a Computer Sciece and Engineering Undergraduate.
-    Im always enthusiastic to learn and explore new things,
+    Im enthusiastic and always ready to learn and explore new things,
     i like developing new skills and harnessing those which ive learned so far.
-    ive participated in various hackathons which helped me learn new technlogies, Ive mainly worked as backend developer
+    ive participated in various hackathons which helped me learn new technlogies, Ive mainly worked as web backend developer
     in Django currently im exploring ML. and ive done my beginner project sudoku solver in ml
 
 //nonSde
@@ -34,6 +34,80 @@ Weakness:
         to decide whether to let go or to stay.  but i believe ill  get better in it with experience
     ii.
     iii.
+
+
+
+
+Strength
+    -i dont giveup to situations i try to find a way(tution story : managed clg curriculum, ecell activities, tution)
+    -
+    -
+Weakness 
+    -
+    -
+    -
+
+Next 5 year plans
+    -learning 
+    -id like to see myself after 5 yr who understand the scale, design, not only coding but also indulge in design part
+
+
+Why should i hire you
+
+example when u worked within a team
+    -
+
+
+
+Different types of teams u worked with
+    hackathon, diff role -> focused on coding, building product 
+    while ecell -> role-> public relation and marketing, i was mainly llokin got interact with 
+    diff campuses engage them and plan marketing strategy
+
+
+Tell me about a time when u didnt meet ur goals
+    -failure story
+ 
+Time when u set ur goals and achieved it
+Describe a time when u were able to motivate someone
+    -leadership
+    -team stuck -> morale down -> i suggested->started fresh again (sms integration story)
+
+Describe a time when u worked well under stress
+    -
+Describe a time when u did any creative work
+Describe a time when u disagree with ur team member
+
+
+#success,
+    getting into one of the Institute with national importance and into the branch of my choice.
+    In 12th i decided to crack jee but
+    i belong to a small town where we didnt have any coaching center specifically for JEE preparation and neither was
+    my school focussed on it. So i started preparing for jee on my own and joined coaching for 1 yr, 
+    and prepared rigorously and was able to get into one of the NITs in CSE stream.
+
+failure,
+    -in my first hackathon, none of the team members had much knowledge in backend we were all learning at that time
+    and so though we tried our best for that 24 hrs as that was the time we had in total for completing our task, but
+    we couldnt complete our project at that time 
+
+
+leadership,
+    in hackathon while we were making our app krishi jagaran, we wanted to integrate our app with sms service
+    but sms api was costly and we couldnt afford buying it at that time and our was stuck and moral went down then 
+    i stood up and took responsibility for the same
+    and i came up with an idea of making dummy app for sending msgs to server for demo purpose, and 
+    i contacted few seniors who helped me in this by giving us msg91 free credits, which we used for 
+    sending success msgs to farmers from server
+
+struggle
+    -during my clg i was working part time as a home tutor, and also actively managing ecell and 
+    tpo activities along with academics, so in the beginning it was hectic schedule and 
+    i struggled to manage time initially but i didnt give up and managed all of those effectively by 
+    properly organizing the tasks and dividing time accordingly
+
+
+
 
 
 

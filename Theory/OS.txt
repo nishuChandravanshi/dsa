@@ -36,29 +36,34 @@ PROCESS
         - process state is a snapshot of the machine at that time. At different times during the execution of a program(at different times in a process) different snapshots (different process states) will be observed
 
     process table-
-        -To keep track of the state of all the processes, the operating system maintains a table known as the process table. 
-        -Inside this table, every process is listed along with the resources the processes is using and the current state of the process.
+        -To keep track of the state of all the processes, the operating system maintains a table known as 
+        the process table. 
+        -Inside this table, every process is listed along with the resources the processes is using 
+        and the current state of the process.
 
     PROCESS CONTROL BLOCK(PCB)
         -ds which stores the info about a particular process. this info is reqd by the cpu while executing the process
         -each process is identified by its own pcb, is also known as CONTEXT OF THE PROCESS
         -pcb of all process are present in the LINKED LIST
         -info stored in pcb are-
-            1. process id (pid) :When a process is created, a unique id is assigned to the process which is used for unique identification of the process in the system.
+            1. process id (pid) :When a process is created, a unique id is assigned to the process 
+                which is used for unique identification of the process in the system.
             2. program counter(pc): contains address of the next instruction to be executed
             3. process state : new/ready/running/waiting
             4. priority :
             5. general purpose registers (GPR): Every process has its own set of registers,
-            which are used to hold the data which is generated during the execution of the process.
-            6. list of open files: During the Execution, Every process uses some files which need to be present in the main memory. 
-            OS also maintains a list of open files in the PCB
-            7. list of open device: OS also maintain the list of all open devices which are used during the execution of the process
+                which are used to hold the data which is generated during the execution of the process.
+            6. list of open files: During the Execution, Every process uses some files which need to be present 
+                in the main memory. OS also maintains a list of open files in the PCB
+            7. list of open device: OS also maintain the list of all open devices which are used during 
+                the execution of the process
             8. protections:
             *first 7 are important
 
     STATES OF PROCESS
         running state-
-            the process has all the resources it need for execution and it has been given permission by the operating system to use the processor.
+            the process has all the resources it need for execution and it has been given permission by 
+             the operating system to use the processor.
             Only one process can be in the running state at any given time
 
         ready state-
@@ -92,6 +97,9 @@ SCHEDULING
         than one time slice
         -context switching
             -This procedure of swapping processes is called a process switch or a context switch.
+        
+        #preemptive=> allows context switching b/w process in running state and that in ready state,
+            even when process in runnig state has not finished its execution.
 
     NON PREEMPTIVE (ready state -> running state)
         - processes are give control of the processor until they complete execution or 
@@ -126,7 +134,8 @@ SCHEDULING
         As each process becomes ready, it joins the ready queue.
         A clock interrupt is generated at periodic intervals.
         When the interrupt occurs, the currently running process is preempted,
-        and the *oldest process in the ready queue is selected to run next. The time interval between each interrupt may vary.
+        and the *oldest process in the ready queue is selected to run next. 
+        The time interval between each interrupt may vary.
 
     SHORTEST JOB FIRST 
         -preemptive 
@@ -135,12 +144,13 @@ SCHEDULING
         -non preemptive
         Shortest Process Next(srtf shortest remainig time first)
             This non-preemptive scheduling algorithm favors processes with the shortest expected execution time.
-            As each process becomes ready, it joins the ready queue. When the current running process finishes execution,
-            the process in the ready queue with the shortest expected execution time is selected to run next.
+            As each process becomes ready, it joins the ready queue. When the current running process finishes 
+            execution, the process in the ready queue with the shortest expected execution time is selected to run next.
 
     HRRN (Highest Response Ratio Next) Scheduling
-        -the scheduling is done on the basis of an extra parameter called Response Ratio. A Response Ratio is calculated for each of the available jobs and 
-        the Job with the highest response ratio is given priority over the others.
+        -the scheduling is done on the basis of an extra parameter called Response Ratio.
+            A Response Ratio is calculated for each of the available jobs and 
+            the Job with the highest response ratio is given priority over the others.
         - non-preemptive algorithm
         -one of the most optimal scheduling algorithms
         -its mode is non preemptive hence context switching is minimal in this algorithm
@@ -151,7 +161,8 @@ SCHEDULING
         where, W = waiting time, S = Service time or BT (burst time)
         eg. of HRRN: javatpoint.com/os-hrrn-example
 
-        *can notice that: job with the shortest BT will be given priority but it is also including an extra factor which is W (ie waiting time)
+        *can notice that: job with the shortest BT will be given priority but it is 
+            also including an extra factor which is W (ie waiting time)
         
 
     PRIORITY SCHEDULING
@@ -186,12 +197,12 @@ THREADS
     - The CPU switches rapidly back and forth among the threads giving illusion that the threads are running in parallel.
     -Each thread has its own program counter (PC), a register set, and a stack space.
     -Threads are not independent of one other like processes
-        as a result threads shares with other threads their code section, data section, OS resources  also known as task, 
-        such as open files and signals.
+        as a result threads shares with other threads their code section, data section, OS resources  also known as 
+        task, such as open files and signals.
 
     ADV - threads can share common data, they do not need to use interprocess communication.
         - context switching
-        -sharing
+        - sharing
     #process context switch-> more time consuming as there will be swithces b/w different pcb
     #threads
      switching time very less. can consider as a part of process, when we parallelism in job we break the job into different threads
@@ -200,7 +211,7 @@ THREADS
         i. user level
         ii. kernel level
             -> mapping is done b/w both then only it'll work 
-            ->user level on its own is has nt any existece-> it has to be mapped with kernel level 
+            ->user level on its own has nt any existece-> it has to be mapped with kernel level 
 
 Similarities
     -Like processes threads share CPU and only one thread active (running) at a time.
@@ -218,6 +229,188 @@ Differences
     -It makes the system more responsive and enables resource sharing.
     It leads to the use of multiprocess architecture.
     It is more economical and preferred
+
+
+
+
+*******
+
+PROCESS SYNCHRONIZATION
+    -process synchronization is reqd becz multiple processes are involved in a system and these processes access
+    some shared resources
+        *if they access (that shared resources) one by one then no problem
+        *but if they try to access it in mixed fashion(ie simultaneously by context switching even when one process has not completed its work on resource)
+            then system may give inconsistent result  ==> race condition
+    #prblem: when two processes access the shared resource in the same time (ie not in proper orderly manner) -> this might lead to inconsistency k/as race around condition 
+    #critical section: that section of code/ hardware/software which has been shared among different processes
+    
+    RACE CONDITION
+        -different order of execution (of processes) result in different results when they share some resources or code(critical section), this cond is called race condition
+        (as now diff process will race like the op produced by them is correct and not other processes)   
+
+    eg. (refer lec-5.2 @sJan)
+        #total no. of possible cases = n! / n1!*n2!*..  { divided by n1!*n2!*.. as order of execution of instructions within the process must be same(ie consider them as duplicates in arrangement)}
+            where n = total number of instructions in all processes, 
+            n1 = no of instructions in process1
+            n2 = no of instructions in p2, ....
+
+
+    CRITICAL SECTION PROBLEM: 
+        -the problem arised due to critical section, when multiple process share critical sec at the same time
+            system may go to inconsistent state
+
+        #critical section is that part of the code where a process access sharable resources
+
+        Following are three main crieterias to solve critical section problem! ->
+        Mandatory Criteria:
+            i. Mutual Exclusion: critical sec must be accessed in mutual exclusive way (ie one process access at a time)
+            ii. Progress: consider only those process should compete to enter in critical sec those who want to (ie those process which doesnt 
+                require to go in critical sec must not be unnecessary considered for critical sec problem)
+        
+        Optional Criteria:
+            iii. Bounded Wait: There must be a max bound upto which a process can wait, ie after a specific time limit
+                the process will be given chance to enter into the critical section
+
+        SOLUTIONS: 
+
+            ## 
+                P{
+                    entry section;
+                    Critical Section;
+                    Exit section;
+                    remainder section;
+                }
+
+            sol1: solution of critical sec problem for two processes let p0, p1
+                -coding in such a way that until one of the process is in cs other wont be able to access go into the cs
+
+                #p0->p1 or p1->p0 by context switching (NOTE: at any pt of time context switching is possible)
+
+                p0:                                                           p1: 
+                    //turn = 0                                                  //turn = 1
+                    while(1)                                                    while(1)
+                    {                                                           {
+                      
+                        while(turn != 0)// false-> p0 will enter cs                 while(turn != 1)// false-> p1 will enter cs      
+                      
+                        Critical Section //p0 entering CS                           Critical Section //p1 entering CS
+                      
+                        turn = 1 //changing turn st next time p0                    turn = 0 //changing turn st next time p0  
+                                 //will not enter cs                                          //will not enter cs
+
+                        remainder section                                           remainder section
+                    
+                    }                                                           }
+
+                #from above code it is clear that let say when p0 is in cs then no matter how many times p1 attempts
+                to go in cs it will not be able to enter, as itll be stuck in infinite while loop until p0
+                exits cs and changes the value of turn variable
+                #ie above code follows 1st criteria : MUTUAL EXCLUSION
+                
+                #but it aint following 2nd criteria ie NO PROGRESS 
+                    problem:
+                        see above code is following strict alternation => ROUND ROBIN 
+                        ie we are just giving access of cs to p0 and p1 alternately without even checking whether 
+                        they want to go into cs or not, 
+                        - now lets say p1 doesnt want to go into cs but p0 wants to but it wont be able to 
+                        go into cs until p1 goes and then make p0's turn to go into cs 
+
+
+
+                #=> sol1 is FAULTY as it doesnt satisfy Progress criteria, sol1 is suffering from strict alternation
+
+
+
+            @sJan lec 5.5 
+            sol2: (modifications done in sol1 so as to satisfy criteria 2 ie Progress)
+
+                    p0:                                                         p1: 
+                                        //flag[F,F]
+                    while(1)                                                    while(1)
+                    {                                                           {
+                      
+                        flag[0] = T;                                                flag[1] = T;
+                        while(flag[1]);                                             while(flag[0]); //if flag[0]=t => p0 already in cs ie p1 will not be able to enter cs      
+                      
+                        Critical Section //p0 entering CS                           Critical Section //p1 entering CS
+                      
+                        flag[0] = F;                                                flag[1] = F;
+                    }                                                           }
+
+                #improvement: 
+                    now we are not directly altering b/w process but instead checking wth of flag[] if a process wants to enter cs or not 
+                #prob: deadlock 
+                    => still NO PROGRESS 
+
+            ///continue lec [5.6,  ]
+
+
+@rooos
+A solution to the critical section problem must satisfy the following three conditions:
+    i) Mutual Exclusion. Out of a group of cooperating processes, only one process can be in its critical section at a given point of time.
+    ii) Progress. ...
+    iii) Bounded Waiting.
+
+solution of critical section problem: i. Semaphores
+
+    Semaphore-> Integer values 
+        i)Critical section: 0, 1
+
+        void wait(int &t) {
+            while(t==0); //infinite loop(active wait->cpu is involved)
+            t--;
+        }
+
+        void signal(int &t) {
+            t++;
+        }
+
+    //order
+        P->
+        //initialize
+        int t =1;
+
+        //normal instructions
+        //before entering critical section wait
+        wait(t);
+        //critical section
+        //complete critical section instructions
+        signal(t);
+
+    eg:
+    P1
+        //normal instructions
+        //before entering critical section wait
+        wait(t);  //t=0
+        //critical section
+        //complete critical section instructions
+        signal(t);
+
+        //normal instructions
+
+    P2
+        //normal instructions
+        //before entering critical section wait
+        wait(t);
+        //critical section
+        //complete critical section instructions
+        signal(t);
+
+        //normal instructions
+
+
+problems with semaphore:
+    i. active wait
+    ii. value of semaphore itself might be changed by the process
+        sol for ii. 
+            #monitor -> abstract data type used to solve cs problem
+            -> similar to semaphore -> except -> the data types in semaphore are kept private and only funcions are public
+
+
+    #problems solved with semaphores: diner philosopher problem, read write problem 
+
+
+
 
 
 
@@ -479,6 +672,66 @@ MEMORY MANAGEMENT
                 Disadvantage of Segmentation –
                     As processes are loaded and removed from the memory, 
                     the free memory space is broken into little pieces, causing External fragmentation
+
+
+
+
+*********
+@gfg 
+
+CACHE MEMORY
+    Cache memory is an extremely fast memory type that acts as a buffer between RAM and the CPU.
+    It holds frequently requested data and instructions so that they are immediately available to the CPU when needed.
+    Cache memory is used to reduce the average time to access data from the Main memory.
+    There are various different independent caches in a CPU, which store instructions and data.
+    
+    //@L3.5+ (comp architecture @gateSmashers)
+        CPU->cache(lines)->RAM(blocks)
+        
+        #size of lines in cache = size of blocks in RAM
+        #here words => similar to byte (but 1 word =x bytes , x (- 1,2,.. )
+        //consider similar to cpu->RAM(frames)->SM(pages)
+
+    cache mapping types:
+        i. Direct Mapping:              //https://www.youtube.com/watch?v=eObN3u3eAnU&list=PLxCzCOWd7aiHMonh3G6QNKq53C6oNXGrX&index=36
+            -pos of blocks is directly fixed (k%n) in cache
+
+            Ln = k%n 
+            where k = block no, n = no of lines
+                  Ln =Line no in which block k is to be placed in cache
+
+            #pa = physical addres
+
+            pa = block no. + block offset
+            pa-> tag + line no. + block offset
+
+            adv: fast search
+            disadv: conflict miss more(ie frequently miss even when empty lines are available, cuz block pos are fixed for particular line(k%n))
+
+        ii. Fully Assosiative mapping:
+            -any block can be placed in any of the empty lines
+            
+            pa = block no. + block offset
+            pa-> tag + block offset
+            #here no need to fix line no as in any line any block can be placed 
+
+            adv: cache hit more
+            disad: comparison increased (for search)
+
+        iii. K-way set associative Mapping:
+            -direct+fully associative
+
+            no of set(s) = no of lines / K 
+
+            *k(blockNo.)%n =replaced=> k(blockNo)%s
+            #k(blockNo)%s -> will give block k is in which set and then it can be any of the lines of that set
+
+            pa=block no + block offset
+            pa->cacheaddress=> tag + set no. + block offset
+
+
+CACHE COHERENCE
+// https://www.geeksforgeeks.org/cache-coherence/
 
 ***********************************************
 VIRTUAL MEMORY
