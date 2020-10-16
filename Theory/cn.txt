@@ -51,27 +51,6 @@ Data Flow Types:
 
 
                             DATA COMMUNICATIONS & COMPUTER NETWORK
-
-Module I
-    Overview of Data Communications and Networking.
-    Physical Layer : Analog and Digital, Analog Signals, Digital Signals, Analog versus Digital, Data Rate Limits, Transmission Impairment, More about signals.
-    Digital Transmission: Line coding, Block coding, Sampling, Transmission mode. Analog Transmission: Modulation of Digital Data; Telephone modems, modulation of Analog signals.
-    Multiplexing : FDM , WDM , TDM.
-    Transmission Media: Guided Media, Unguided Media (wireless).
-    Circuit switching and Telephone Network: Circuit switching, Telephone network.
-
-Module –II (12 Hrs) Data Link Layer
-    Error Detection and Correction: Types of Errors, Detection, Error Correction Data Link Control and Protocols:
-        Flow and Error Control, Stop-and-wait ARQ. Go-Back-N ARQ, Selective Repeat ARQ, HDLC.
-    Point-to –Point Access: PPP ,Point –to- Point Protocol, PPP Stack, Multiple Access: Random Access, Controlled Access, Channelization.
-        Local area Network: Ethernet, Traditional Ethernet, Fast Ethernet, Gigabit Ethernet. Token bus, Token ring.
-    Wireless LANs: IEEE 802.11, Bluetooth Virtual Circuits: Frame Relay and ATM. Module – III (12 Hrs)
-    Network Layer:
-    Host to Host Delivery: Internetworking, addressing and Routing. Network Layer Protocols: ARP, IPV4, ICMP, IPV6 and ICMPV6.
-    Transport Layer: Process to Process Delivery: UDP, TCP, Congestion Control and Quality of Service.
-    Application Layer : Client Server Model, Socket Interface, Domain Name System (DNS), Electronic Mail (SMTP) and File Transfer (FTP), HTTP and WWW.
-
-    Module -i & Module-ii
     Imp topics:
         Components of Data communication
         Network physical structures
