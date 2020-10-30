@@ -437,7 +437,7 @@ DIFF B/W STARVATION & DEADLOCK
 
 @sJan (6.8-6.10 for paging numers)
 
-            #2^10 = 1K, 2^20 = 1M, 2^30 = 1G, 2^40 = 1T(tera), 2^50 = 1P(peta)
+            #2^10 = 1K, 2^20 = 1M, 2^30 = 1G, 2^40 = 1T(tera), 2^50 = 1P(peta), 2^60 = 1 zeta, 2^70 = 1 zebi
 MEMORY MANAGEMENT
 
     goal is to achieve 
