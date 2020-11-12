@@ -396,7 +396,7 @@ idea-
 
 
 //LEFT VIEW 
-//??discuss recursive sol
+//recursive sol: https://www.geeksforgeeks.org/print-left-view-binary-tree/
 void leftView(Node *root)
 {
     if(root == NULL)
