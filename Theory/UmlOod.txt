@@ -1,0 +1,151 @@
+UML (Unified Modeling Language)
+
+why UML:
+    -Be able to design a SW system
+    -understand and apply OO-principles
+    -describe your design using a standard Language
+    -UML: common diagramming techniques
+
+## Use-case diagrams, Class diagrams, Sequence diagramming,
+    activity and state diagram
+
+THE WATERFALL MODEL
+    -Linear Model, defines develpt steps/phases
+    -start one step->complete it->start another step
+    -this approach gives us steady downward order=>waterfall
+
+    -the development process flows in cascades
+        > each development phase requires the previous one to be complete
+        ie each phase builds upon the prev one
+
+    Phases: 
+        1. Collect and analyse requirements
+            > the expected functionality of the 
+            future application must be clarified with the stakeholders
+            > all the details must be documented thouroughly
+            > this is very important phase
+        
+        2. Architecture definition
+            > define the overall designe of our s/w
+            > defining architecture is like creating a 
+            blueprint for a building
+            > the team should be able to implement the 
+            product based on this plan    
+            > we should address questions like: 
+                >>packages/components:
+                 what packages or components will form our system
+                >> key types:
+                 what are the fundamental types of each component 
+                >> Interactions:
+                 how do this types interact with each other 
+                to achieve the required functionality
+                >> Security:
+                 Is our s/w secure
+                >> performance 
+                >> Fault-tolerance: how does our s/w respond to errors
+                >> Robustness: 
+                  how do we handle edge cases
+                >> Extensibility: should extend our syst in future?
+                >> 3rd party components usage
+        
+        3. Implementation
+            > s/w development is divided into small units
+            each unit is implemented nd tested seperately
+            > after completion of development phase->
+            the product undergoes the verification phase
+
+        4. Verification 
+            > s/w is evaluated based on predefined criteria
+        
+            >Testing
+                >> Functional, performance, security, usabilitye issues r tested
+                >> detected problems r recorded nd fixed. 
+                >> the process goes on until all severe bugs r fixed
+
+        5. Maintainance  
+            >fixing small bugs
+            >small enhancements on functionality
+            # avoid making substantial changes during
+             maintance phase, instead u should set up a 
+             new waterfall project nd repeat all the steps
+
+    
+    # Waterfall Model used for: 
+        -Life-control systems
+        -Medical systems
+        -Military systems 
+    
+    # use waterfall model if
+        -The requirements are clearly defined
+        and wont change frequently
+    
+    # disadv:
+        -new requirements cant be considered at later phases
+
+
+
+THE AGILE APPROACH
+    -agile manifesto(2001)
+        > aimed to end the proliferation of s/w 
+        development methodologies
+         # proliferation=rapid increase in no. or rapid growth
+   
+    -main idea is to provide functional s/w iteratively
+    instead of delivering the entire project all at once
+        >the work is broken into smaller chunks called SPRINTS
+    -testing is not seperated from devpt (unlike waterfall model)
+        >testing is tightly integrated w/d the devpt
+        nd entire team owns the responsibility of the quality of the product
+    -involving the business users int the devpt process stands
+    at the core 
+    -works best where the reqt cant be defined upfront       
+
+    # Agile is NOT a METHODOLOGY, but rather a way of 
+     thinking defined by Agile Manifesto
+
+    agile Values:
+        1. Individual and Interactions over process nd tools
+        2. Working s/w over comprehensive documentation
+        3. Customer collaboration over contract negotiation
+        4. Responding to change over following a plan
+
+    agile frameworks eg. :
+        -Scrum, Kanban
+
+    adv:
+        > more flexible comp. to waterfall model
+        > welcomes changes even at the later phases
+        of the devpt cycle
+        > detailed plan for the entire project b4 starting 
+        any devpt is not required 
+            >> we r not blocked until each nd every requirements
+            are defined
+        > stakeholders have a chance to evaluate the s/w nd provide
+        their feedback early on, rather than waiting for the
+        final product to be delivered
+        > leads to higher customer satisfactions
+        nd team members will likely be more motivated
+        by engaging customers directly
+
+
+***********************
+Non-Structured Programming(1950)
+    problem: 
+        -Spaghetti code: complicated, diffi to understand nd maintain
+
+Structured Programming(1960)
+    -break down code into logical steps
+    -relies on subroutines 
+    -improves code readability
+
+    eg. C(1969)
+    
+    problems:
+        -as the problems got bigger
+            >Structured programming could not address
+             all the increased complexity
+
+
+Object-oriented programming
+    -idea is to split the program into self-contained objects
+    -aims to bring programming closer to real world    

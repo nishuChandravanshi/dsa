@@ -1,0 +1,40 @@
+
+
+Def:
+    -Maven is a build tool,
+     developed by java,
+     automates most common build tasks that r needed
+    to be done
+    -Dependency Management
+    -repository system
+    -plugin framework : nearly all functionality
+     in maven is provided by plugins
+    
+    *configuration = arrangement of parts or elements in
+       a particular form, figure or combination
+
+Overview:
+    -Convention over configuration
+        >can provide functionality with a litlle/no configuration
+    -POM (Project Object Model)
+        > the way to structure our builds in maven
+    -Dependency Resolution
+    -Maven repository
+    -Lifecycle, Phases, and Goals
+    -Plugin Architecture
+
+Maven Default Directories
+
+    structure              :(respective paths-->)
+    
+    Project Base Folder     
+      |_pom.xml             :(Project Base Folder/pom.xml)
+      |_src                 :(Project Base Folder/src)
+         |_main             :(Project Base Folder/src/main)
+             |_java         :(Project Base Folder/src/main/java)
+             |_resources    :(Project Base Folder/src/main/resources)
+         |_test             :(Project Base Folder/src/test)
+             |_java         :(Project Base Folder/src/test/java)
+             |_resources    :(................................/resources)
+      |_target              :(Project Base Folder/target)    
+        
