@@ -149,3 +149,64 @@ Structured Programming(1960)
 Object-oriented programming
     -idea is to split the program into self-contained objects
     -aims to bring programming closer to real world    
+
+
+OOPs concepts: Inheritence, Polymorphism, Abstraction, Encapsulation
+
+
+*****************
+OO-DESIGN CONCEPTS:
+
+Steps:
+1. Collect requirements: 
+    -identify the problems we want to solve
+    -what does our app/framework needs to do to accomplish that functionality
+    -documnet important decisions
+
+        summarise:
+            >>requirements collection defines what the
+            system needs to do. And which r the constraints
+            and boundaries we need to consider 
+    Types: 
+        a. Functional requirements
+        b. Non-Functional requirements
+    
+    # no need to write lengthy description,
+    # adap this format -> <the app/system>must<do something>
+
+
+2. Describe the s/w:
+    -once the reqmt is clear we should come up 
+    with the description of s/w systems
+    -we should describe the app from USER's perspective
+        >depending on the project we may pick an Agile
+    or Waterfall methodology
+    -create wrieframes and prototypes if needed
+
+3. identify the classes:
+
+4. Create Diagrams:
+    -describe the behaviour of our system in a
+    formal way
+        > by creating visual representations of our
+        classes, their attributes and behaviour
+        > model the interaction b/w the objects
+        > we rely on UML for this diagrammatic representations
+
+
+UML (Unified Modeling Language)
+    -Graphical notation used to describe oo systems 
+      
+    -UML has various types of diagrams:
+
+    Use-Case Diagrams:
+        -describes the functionality of a system 
+        from user's point of view
+    
+    Structural diagram:
+        -to describe the structure of a system
+    
+    Class Diagram:
+        -to describe the structure of a system 
+        in terms of objects, attributes, operations, 
+        and relations
