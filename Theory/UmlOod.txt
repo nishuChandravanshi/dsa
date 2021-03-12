@@ -199,14 +199,14 @@ UML (Unified Modeling Language)
       
     -UML has various types of diagrams:
 
-    Use-Case Diagrams:
+    1. Use-Case Diagrams:
         -describes the functionality of a system 
         from user's point of view
     
-    Structural diagram:
+    2. Structural diagram:
         -to describe the structure of a system
     
-    Class Diagram:
+    3. Class Diagram:
         -to describe the structure of a system 
         in terms of objects, attributes, operations, 
         and relations
@@ -260,7 +260,9 @@ UML (Unified Modeling Language)
         everybody to access our class's data.
 
 
-        Associations: 
+        Relations are as follows:
+
+        Associations: ("has-a" relationship)
             -Relations 
             -represented by solid lines b/w classes
             -Associations tells us that the classes refer to each other
@@ -278,3 +280,68 @@ UML (Unified Modeling Language)
                 # these symbols are written above the arrow at edge
 
         # should try to avoid tight coupling
+
+
+        Generalization: ("is-a" relationship)
+            -shown as solid line with a hollow arrowhead that points to the parent
+
+        Dependency: (--->), ("references")
+            -this relationship means if change in one
+             of the classe may cause change to the other
+            - in UML Dependency is represented as dashed line,
+            that ends with n open arrow head, the arrow points to 
+            the Dependency
+
+        # Associations and Dependency has big difference
+            >Associations indicates a class has an attribute of other classes types
+                eg: 
+                Trip() //a class
+                {
+                    Expenses expense; //expense attribute of class Expenses inside Trip class
+                }
+                Expense{
+                    //
+                }
+            > Dependency is usually created when a class receives a reference to 
+            the other class for instance, through a member function parameter
+                eg:
+                Trip()
+                {
+                    addNote(Note note)
+                    {
+                        //
+                    }
+                }
+                Note{
+                     //   this itself is a class                 
+                }
+
+        
+        Aggregation: ("has-a" relationship)
+            -solid line with hollow diamond at the owner's end
+
+        Compositon: ("part-of" relationship)
+            -solid line with solid diamond 
+            -strong Association
+            -implies ownership
+            eg: the expenses of the trip cant exist 
+            without trip, if we remove trip its expenses should 
+            also be removed
+
+        Realization: ("implements behavior")
+            -indicates the behaviour specified by another model element
+
+
+
+        4. Sequence Diagram: (represents the dynamic behaviour)
+            -describes the flow of logic in one particular scenario.
+
+        5. Activity Diagrams:
+            -behavioral diagrams used to describe workflow
+    
+        6. Statechart Diagrams:
+            -describes the state(ie new, pending, saved, terminated etc) changes of an object 
+            in response to certain events
+
+
+
