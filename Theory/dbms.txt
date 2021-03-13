@@ -93,6 +93,11 @@ FILE STRUCTURE:
 
 ********************
 
+##
+    Rdbms proposes following two constraints->
+    1. entity integrity constraints
+    2. referential integrity constraints
+##
 
 --entitity == table
 --attribute == column & tuples == rows
@@ -289,11 +294,13 @@ DENORMALIZATION:
 OLAP & OLTP 
     OLTP: online transaction processing system
         -faster insert,delete,update operations
+        -uses sql dbs
         
     OLAP: online analytical processing system
         -goal is analysis on historical data 
+        -use mongodb or other Nosql databases
             
-
+#CAP theoram
 
 
 

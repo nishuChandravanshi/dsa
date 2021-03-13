@@ -178,7 +178,7 @@ Steps:
 2. Describe the s/w:
     -once the reqmt is clear we should come up 
     with the description of s/w systems
-    -we should describe the app from USER's perspective
+    -we should describe the app from USER's perspective(Use-case diagrmas r useful here)
         >depending on the project we may pick an Agile
     or Waterfall methodology
     -create wrieframes and prototypes if needed
@@ -263,7 +263,8 @@ UML (Unified Modeling Language)
         Relations are as follows:
 
         Associations: ("has-a" relationship)
-            -Relations 
+            -Relations between the classes, 
+            -there r different types of association as -> aggregation and composition, ...etc (below explaind)
             -represented by solid lines b/w classes
             -Associations tells us that the classes refer to each other
             -drawing solid line that ends with an open arrow head,
@@ -284,13 +285,17 @@ UML (Unified Modeling Language)
 
         Generalization: ("is-a" relationship)
             -shown as solid line with a hollow arrowhead that points to the parent
+            -superclass is a genralized form of subclass
+                > same as subclass is a specialized form of superclass
 
-        Dependency: (--->), ("references")
+
+        Dependency: (--->), ("using" relationship)
             -this relationship means if change in one
              of the classe may cause change to the other
             - in UML Dependency is represented as dashed line,
             that ends with n open arrow head, the arrow points to 
             the Dependency
+            eg: a person uses credit card for some transaction
 
         # Associations and Dependency has big difference
             >Associations indicates a class has an attribute of other classes types
@@ -319,11 +324,15 @@ UML (Unified Modeling Language)
         
         Aggregation: ("has-a" relationship)
             -solid line with hollow diamond at the owner's end
+            -it doesnt own the part class. 
+            eg. library has books (even if lib is destroyed book can be accessible (as we can remove book nd the close lib))
+            eg. (whole)car<-engine(part) 
 
         Compositon: ("part-of" relationship)
             -solid line with solid diamond 
             -strong Association
             -implies ownership
+            eg. book has pages (if book is destroyed pages will be destroyed)
             eg: the expenses of the trip cant exist 
             without trip, if we remove trip its expenses should 
             also be removed
@@ -345,3 +354,5 @@ UML (Unified Modeling Language)
 
 
 
+##private memebers of superclass are also inherited into subclass
+its just they are not visible##
