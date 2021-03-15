@@ -1,0 +1,77 @@
+mongoDB:
+    -Humongous DB
+    -its a database solution
+
+flow->
+    Drivers/Shell -> (queries) -> MongoDB Server -> (after doing several operations)
+    ->Storage Engine->(stores the info in files at the end)-> File Sytem
+    
+    #(=>actions performed<=)
+    # Wired Tiger is the default storage engine and is very powerful as well
+    # Now if we have a closer look at that data layer with the server, the storage engine and the file system, 
+    then we actually have to differentiate 
+    between writing and reading from files which is a bit slower and writing
+    and reading from memory which is faster.
+    The storage engine actually does both,
+    it loads a chunk of data into memory and
+    manages that such that the data you often use is in memory of
+    possible,it also writes data in memory at first so that this is really fast
+    but then of course it also goes ahead and stores data in the database files.
+
+**********************************
+
+mongod      : to connect with the server
+                > mongod --dbpath "C:\Program Files\MongoDB\Server\4.4\data\db"
+                    //if data/db folder is not in root directory. then here we've to mention this folders path
+
+mongo       : to start service
+
+show dbs    :to show the databases 
+                >admin, config, local <- these r 3 default databases
+                    which contains some metadatas
+
+use dbName  :"use" cmd to connect wid database,
+                >we can connect with xyz db even if its not existing yet,
+                it will be created once you start inserting data
+
+
+db.collectionName.insertOne({key: "value"})
+            this will insert the info in the collection product(even though it was not existing yet)
+            , insertOne will create if not existing and then insert the info it
+        
+            :eg. db.products.insertOne({name: "Maths Book", price: 15.90})
+            >this will insert a document(in the products collection)
+             with the name and a price
+
+db.collectionName.find()
+            :this will give all the data in that collection 
+            eg. db.products.find()
+                >{ "_id" : ObjectId("604f5129c54117911a900fbb"), "name" : "Maths Book", "price" : 15.9 }
+                #mongodb will automatically assign an id (_id) to all the docutments
+
+    db.collection.find().pretty() 
+                :to output above info in a prettier way
+                > 
+                {
+                        "_id" : ObjectId("604f5129c54117911a900fbb"),
+                        "name" : "Maths Book",
+                        "price" : 15.9
+                }
+    
+    #we can also insert nested docutments like
+    eg. 
+    db.products.insertOne({name:"computer",
+    price:30000, description:"high quality computer",
+    details:{
+        cpu:"Interl core i3"
+        memory: 64
+    }}
+    )
+
+
+# drivers are the packages for different prog languages available in doc section in mongodb official site
+# these drivers are the bridges between the prog lang and the mongodb server
+
+
+
+
