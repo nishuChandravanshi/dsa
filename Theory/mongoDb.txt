@@ -18,11 +18,36 @@ flow->
     possible,it also writes data in memory at first so that this is really fast
     but then of course it also goes ahead and stores data in the database files.
 
+# sql       : Database->Tables->rows->columns
+# mongodb   : Database->collections->documents
+    >In mongoDB the databases, collections, and documents
+    are automatically created implicitly when you
+    start working with them
+
+# In mongoDB data is stored in BSON format.
+    >though we write in JSON only
+    > JASON to BSON conversion is done by the
+    mongoDB Drivers
+    # Storing in BSON format:
+        >more efficient from space/size perspective
+        > also it supports different formats (ie different special data types)
+            eg. ObjectId <- is not normal json. 
+                > ObjectId is a the type of _id which 
+                mongoDB implicitly provide to each document
+
+# can explicitly assign id to the documents
+we create by eg:{_id:"a_1"}, as long as we ensure
+each id is unique
+
 **********************************
 
 mongod      : to connect with the server
                 > mongod --dbpath "C:\Program Files\MongoDB\Server\4.4\data\db"
                     //if data/db folder is not in root directory. then here we've to mention this folders path
+
+mongod --port 27018
+            : incase default port is being used for smtg else we can change the port this way
+            , here itll connect with 27018 port now
 
 mongo       : to start service
 
@@ -69,8 +94,129 @@ db.collectionName.find()
     )
 
 
+show collections
+            :lists the collections in the db
+            eg. show collection
+            output-> products
+getCollectionNames()
+            : lists the collection names in dbs
+            eg. db.getCollectionNames()
+            output    [ "products" ]
+
 # drivers are the packages for different prog languages available in doc section in mongodb official site
 # these drivers are the bridges between the prog lang and the mongodb server
+
+
+********************************
+
+Let our DB=>
+db: Flight
+collection: flightData
+documents
+    flightData
+    {       //doc_1
+        _id: "-----"
+        departureAirport:"abc"
+        arrivalAirport:"def"
+        aircraft:"airbus"
+        distance:12121
+        intercontinental:true
+    }
+    {       //doc_2
+        _id: "-----"
+        departureAirport:"pqr"
+        arrivalAirport:"xyz"
+    }
+
+CRUD operations
+    Create
+        insertOne(data, options)
+        insertMany(data, options)
+
+        eg: 
+        1. db.flightData.insertOne({ departureAirport:"pqr"
+        arrivalAirport:"xyz"})
+        2. db.flightData.insertMany({---,---},{---},{},{//like this many docs can be inserted})
+
+
+    Read
+        find(filter, options) : finds all matching documents
+        findOne(filter, options): finds the first matching document
+
+        # find() 
+        >does not return an array of all the documents in the collection (as it could be millions of data)
+        >it gives a Cursor Object, which is an object with 
+        a lot of metadeta behind it which allows to cycle through the Results
+        > it : command is used to fetch the next bunch of data
+        
+        db.collectionName.find().toArray() : this will exhaust the cursor 
+            and get all the docs in the collection
+        eg.
+        db.passengers.find().toArray()
+        db.passengers.find().forEach(//code)
+        -like:
+        db.passengers.find().forEach((passengerData)=>{printjson(passengerData)})
+    Update
+        updateOne(filter, data, options)
+        updateMany(filter, data, options)
+        replaceOne(filter,  data, options)
+
+        ie 
+        1. updateOne({any key-value pair of the doc which u wanna delete},
+        {$set: {new key-val to be added or updated}})
+    
+        2. db.flightData.updateMany({},
+        {$set:{marker:"delete"}})
+            >this will add marker:"delete" in all the documetns in the collection
+    
+    ##  3. db.flightData.update({_id:"xyz"},{delayed:false})
+            >Note: here with update only this {delayed:"false"} 
+            will get accepted withou $set, which is not the case with updateOne and updateMany
+            > with 3. syntax, all the existing key-valu of the specified doc (in first curly braces)
+            will be overridden by this new key-value. and only this will be there in the document after it
+            >Thus** avoid using update, instead use updateOne/Many as reqd
+
+
+    Delete
+        deleteOne(filter, options)
+        deleteMany(filter, options)
+
+        eg. 
+        1. flightData.deleteOne({distance:12121})
+        >this will delete doc_1 from the db
+
+        2. flightData.deleteMany({})
+        >this will delete all the documents
+
+# $: reserved operator or word
+# $gt : greater than
+# $lt : less than
+# $set
+
+db.flightData.find({distance: 1200}) : finds all docs with dist=1200
+db.flightData.find({distance: {$gt: 1200}}) :finds all docs with dist>1200
+db.flightData.findOne({distance: {$gt: 1200}}) :return the first doc with dist>1200
+
+
+****
+Projection
+    -getting only necessary data from mongoDB server
+    
+    db.passengers.find({},{name:1}):
+        >this will return name of all the passengers excluding
+        all other details
+        >but by default _id will be included by mongoDB
+            >inorder to exclude it we can explicitly do as follows
+            db.passengers.find({},{name:1,_id:0})
+
+
+
+**
+# we can have upto 100 levels of Nesting (document nesting) in mongoDB
+# overall documents size <=16 megabytes
+
+
+
 
 
 
