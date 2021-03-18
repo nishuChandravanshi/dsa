@@ -251,7 +251,8 @@ DB->Collection:restaurants->documents
         "name" : "Wild Asia",
         "restaurant_id" : "40357217"
 }
-//
+//@ref: https://www.w3resource.com/mongodb-exercises/#PracticeOnline
+
 1.  Write a MongoDB query to display the first 5 restaurant which is in the borough Bronx
 >db.restaurants.find({"borough": "Bronx"}).limit(5);
 
