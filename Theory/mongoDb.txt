@@ -215,9 +215,55 @@ Projection
 # we can have upto 100 levels of Nesting (document nesting) in mongoDB
 # overall documents size <=16 megabytes
 
+************************************
+DB->Collection:restaurants->documents
+//eg. -> one document in restaurant as->
+{
+        "_id" : ObjectId("6053352ef47983054489a70c"),
+        "address" : {
+                "building" : "2300",
+                "coord" : [
+                        -73.8786113,
+                        40.8502883
+                ],
+                "street" : "Southern Boulevard",
+                "zipcode" : "10460"
+        },
+        "borough" : "Bronx",
+        "cuisine" : "American ",
+        "grades" : [
+                {
+                        "date" : ISODate("2014-05-28T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 11
+                },
+                {
+                        "date" : ISODate("2013-06-19T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 4
+                },
+                {
+                        "date" : ISODate("2012-06-15T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 3
+                }
+        ],
+        "name" : "Wild Asia",
+        "restaurant_id" : "40357217"
+}
+//
+1.  Write a MongoDB query to display the first 5 restaurant which is in the borough Bronx
+>db.restaurants.find({"borough": "Bronx"}).limit(5);
 
+2. Write a MongoDB query to display the next 5 restaurants after skipping first 5 which are in the borough Bronx
+>db.restaurants.find({"borough": "Bronx"}).skip(5).limit(5);
 
+3.  Write a MongoDB query to find the restaurants who achieved a score more than 90
+>db.restaurants.find({grades : { $elemMatch:{"score":{$gt : 90}}}});
 
+4.  Write a MongoDB query to find the restaurants that achieved a score, more than 80 but less than 100
+>db.restaurants.find({grades : { $elemMatch:{"score":{$gt : 80 , $lt :100}}}});
 
-
+5. Write a MongoDB query to find the restaurants which locate in latitude value less than -95.754168
+>db.restaurants.find({"address.coord" : {$lt : -95.754168}});
 
