@@ -1,0 +1,11 @@
+Git
+
+@resources
+[
+1. https://frontendmasters.com/courses/git-in-depth/working-area-staging-area-repository/#:~:text=The%20working%20area%20is%20where,occur%20for%20the%20next%20commit.
+2. https://medium.com/@bencabanes/things-you-probably-didnt-know-about-git-f0fbdb86a071
+3. Pro Git - Free Book on Git, worth every penny.
+
+]
+
+Notes drive link: https://docs.google.com/document/d/1CUh6rG6nzGA0Z_w9_6DYmyRxkIbc_hFNv9QmPyqAY9U/edit#

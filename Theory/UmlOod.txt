@@ -1,0 +1,358 @@
+UML (Unified Modeling Language)
+
+why UML:
+    -Be able to design a SW system
+    -understand and apply OO-principles
+    -describe your design using a standard Language
+    -UML: common diagramming techniques
+
+## Use-case diagrams, Class diagrams, Sequence diagramming,
+    activity and state diagram
+
+THE WATERFALL MODEL
+    -Linear Model, defines develpt steps/phases
+    -start one step->complete it->start another step
+    -this approach gives us steady downward order=>waterfall
+
+    -the development process flows in cascades
+        > each development phase requires the previous one to be complete
+        ie each phase builds upon the prev one
+
+    Phases: 
+        1. Collect and analyse requirements
+            > the expected functionality of the 
+            future application must be clarified with the stakeholders
+            > all the details must be documented thouroughly
+            > this is very important phase
+        
+        2. Architecture definition
+            > define the overall designe of our s/w
+            > defining architecture is like creating a 
+            blueprint for a building
+            > the team should be able to implement the 
+            product based on this plan    
+            > we should address questions like: 
+                >>packages/components:
+                 what packages or components will form our system
+                >> key types:
+                 what are the fundamental types of each component 
+                >> Interactions:
+                 how do this types interact with each other 
+                to achieve the required functionality
+                >> Security:
+                 Is our s/w secure
+                >> performance 
+                >> Fault-tolerance: how does our s/w respond to errors
+                >> Robustness: 
+                  how do we handle edge cases
+                >> Extensibility: should extend our syst in future?
+                >> 3rd party components usage
+        
+        3. Implementation
+            > s/w development is divided into small units
+            each unit is implemented nd tested seperately
+            > after completion of development phase->
+            the product undergoes the verification phase
+
+        4. Verification 
+            > s/w is evaluated based on predefined criteria
+        
+            >Testing
+                >> Functional, performance, security, usabilitye issues r tested
+                >> detected problems r recorded nd fixed. 
+                >> the process goes on until all severe bugs r fixed
+
+        5. Maintainance  
+            >fixing small bugs
+            >small enhancements on functionality
+            # avoid making substantial changes during
+             maintance phase, instead u should set up a 
+             new waterfall project nd repeat all the steps
+
+    
+    # Waterfall Model used for: 
+        -Life-control systems
+        -Medical systems
+        -Military systems 
+    
+    # use waterfall model if
+        -The requirements are clearly defined
+        and wont change frequently
+    
+    # disadv:
+        -new requirements cant be considered at later phases
+
+
+
+THE AGILE APPROACH
+    -agile manifesto(2001)
+        > aimed to end the proliferation of s/w 
+        development methodologies
+         # proliferation=rapid increase in no. or rapid growth
+   
+    -main idea is to provide functional s/w iteratively
+    instead of delivering the entire project all at once
+        >the work is broken into smaller chunks called SPRINTS
+    -testing is not seperated from devpt (unlike waterfall model)
+        >testing is tightly integrated w/d the devpt
+        nd entire team owns the responsibility of the quality of the product
+    -involving the business users int the devpt process stands
+    at the core 
+    -works best where the reqt cant be defined upfront       
+
+    # Agile is NOT a METHODOLOGY, but rather a way of 
+     thinking defined by Agile Manifesto
+
+    agile Values:
+        1. Individual and Interactions over process nd tools
+        2. Working s/w over comprehensive documentation
+        3. Customer collaboration over contract negotiation
+        4. Responding to change over following a plan
+
+    agile frameworks eg. :
+        -Scrum, Kanban
+
+    adv:
+        > more flexible comp. to waterfall model
+        > welcomes changes even at the later phases
+        of the devpt cycle
+        > detailed plan for the entire project b4 starting 
+        any devpt is not required 
+            >> we r not blocked until each nd every requirements
+            are defined
+        > stakeholders have a chance to evaluate the s/w nd provide
+        their feedback early on, rather than waiting for the
+        final product to be delivered
+        > leads to higher customer satisfactions
+        nd team members will likely be more motivated
+        by engaging customers directly
+
+
+***********************
+Non-Structured Programming(1950)
+    problem: 
+        -Spaghetti code: complicated, diffi to understand nd maintain
+
+Structured Programming(1960)
+    -break down code into logical steps
+    -relies on subroutines 
+    -improves code readability
+
+    eg. C(1969)
+    
+    problems:
+        -as the problems got bigger
+            >Structured programming could not address
+             all the increased complexity
+
+
+Object-oriented programming
+    -idea is to split the program into self-contained objects
+    -aims to bring programming closer to real world    
+
+
+OOPs concepts: Inheritence, Polymorphism, Abstraction, Encapsulation
+
+
+*****************
+OO-DESIGN CONCEPTS:
+
+Steps:
+1. Collect requirements: 
+    -identify the problems we want to solve
+    -what does our app/framework needs to do to accomplish that functionality
+    -documnet important decisions
+
+        summarise:
+            >>requirements collection defines what the
+            system needs to do. And which r the constraints
+            and boundaries we need to consider 
+    Types: 
+        a. Functional requirements
+        b. Non-Functional requirements
+    
+    # no need to write lengthy description,
+    # adap this format -> <the app/system>must<do something>
+
+
+2. Describe the s/w:
+    -once the reqmt is clear we should come up 
+    with the description of s/w systems
+    -we should describe the app from USER's perspective(Use-case diagrmas r useful here)
+        >depending on the project we may pick an Agile
+    or Waterfall methodology
+    -create wrieframes and prototypes if needed
+
+3. identify the classes:
+
+4. Create Diagrams:
+    -describe the behaviour of our system in a
+    formal way
+        > by creating visual representations of our
+        classes, their attributes and behaviour
+        > model the interaction b/w the objects
+        > we rely on UML for this diagrammatic representations
+
+
+UML (Unified Modeling Language)
+    -Graphical notation used to describe oo systems 
+      
+    -UML has various types of diagrams:
+
+    1. Use-Case Diagrams:
+        -describes the functionality of a system 
+        from user's point of view
+    
+    2. Structural diagram:
+        -to describe the structure of a system
+    
+    3. Class Diagram:
+        -to describe the structure of a system 
+        in terms of objects, attributes, operations, 
+        and relations
+        
+        -rectangle blocks with three sections
+            1. ClassName:
+                Naming convention: UpeerCamelCase
+                    -ClassName should be a noun in singular
+                    -should start with and uppercase letter
+                    eg. Trip
+                    -if the name consist multiple words
+                    we need to uppercase beginning of each word
+                        eg. OfflinePersistenceManager
+            
+            2. Attributes:
+                -attribute names should be concise
+                Naming convention: lowerCamelCase format
+                    -ie the first letter lowercase and first letter of subsequent words uppercase
+                eg. (Trip has a following attributes)
+                    name: String
+                    createdAt: Date
+                    homeCurrency: String
+                    startsAt: Date
+                    endsAt: Date 
+
+            3. Operation Compartment:
+                -list the class's methods
+                -method names should be verb in lowerCamelCase
+                Naming convention: lowerCamelCase
+                    eg: getName(): String   //<- return type after the parentheses
+                        setName(value: String) //arguments inside parentheses
+                        getEntries(from:Date, to:Date): List   //method with arguments(from,to) and also return type String
+                        save()
+                        delete()
+                        undoChanges()
+            # naming conventions are useful, as we can easily read the codes
+            written by developers from other region, contries, continents.
+            # ie standards are useful    
+    
+    
+        Visibility Rules in UML:
+            > + => public => can be also used by code outside of the object
+            > - => private => can only be accessed within the defining class
+            > # => protected => accessible from defining nd child classes
+            > ~ => package => available within its enclosing package
+              , within package Visibility we make our elements available within its enclosing package  
+
+    
+        # OOPs rule: Expose only as much as needed! and hide everything else.
+        # we should provide public setters nd getters instead of allowing
+        everybody to access our class's data.
+
+
+        Relations are as follows:
+
+        Associations: ("has-a" relationship)
+            -Relations between the classes, 
+            -there r different types of association as -> aggregation and composition, ...etc (below explaind)
+            -represented by solid lines b/w classes
+            -Associations tells us that the classes refer to each other
+            -drawing solid line that ends with an open arrow head,
+             we show that only one of the classes refers to the other
+                eg: ClassA -> ClassB => ClassB is assosiated with ClassA
+                    Trip -> Expense => Expense is assosiated with Trip,
+                                    but the expense class doesnt know anything about the Trip
+                                    ie Expense class can be used independent of Trip as well, but Trip 
+                                    will generally have multiple expenses
+            -the multiplicity of assosiated objects is representated as follows:
+                *: (Trip -*> Expense => a trip may have 0 to multiple expenses)
+                1: (Trip -1> Currency => a trip must have exactly one home currency)
+                0..1: (Trip -0..1>Note => a trip may or maynot have a single note )
+                # these symbols are written above the arrow at edge
+
+        # should try to avoid tight coupling
+
+
+        Generalization: ("is-a" relationship)
+            -shown as solid line with a hollow arrowhead that points to the parent
+            -superclass is a genralized form of subclass
+                > same as subclass is a specialized form of superclass
+
+
+        Dependency: (--->), ("using" relationship)
+            -this relationship means if change in one
+             of the classe may cause change to the other
+            - in UML Dependency is represented as dashed line,
+            that ends with n open arrow head, the arrow points to 
+            the Dependency
+            eg: a person uses credit card for some transaction
+
+        # Associations and Dependency has big difference
+            >Associations indicates a class has an attribute of other classes types
+                eg: 
+                Trip() //a class
+                {
+                    Expenses expense; //expense attribute of class Expenses inside Trip class
+                }
+                Expense{
+                    //
+                }
+            > Dependency is usually created when a class receives a reference to 
+            the other class for instance, through a member function parameter
+                eg:
+                Trip()
+                {
+                    addNote(Note note)
+                    {
+                        //
+                    }
+                }
+                Note{
+                     //   this itself is a class                 
+                }
+
+        
+        Aggregation: ("has-a" relationship)
+            -solid line with hollow diamond at the owner's end
+            -it doesnt own the part class. 
+            eg. library has books (even if lib is destroyed book can be accessible (as we can remove book nd the close lib))
+            eg. (whole)car<-engine(part) 
+
+        Compositon: ("part-of" relationship)
+            -solid line with solid diamond 
+            -strong Association
+            -implies ownership
+            eg. book has pages (if book is destroyed pages will be destroyed)
+            eg: the expenses of the trip cant exist 
+            without trip, if we remove trip its expenses should 
+            also be removed
+
+        Realization: ("implements behavior")
+            -indicates the behaviour specified by another model element
+
+
+
+        4. Sequence Diagram: (represents the dynamic behaviour)
+            -describes the flow of logic in one particular scenario.
+
+        5. Activity Diagrams:
+            -behavioral diagrams used to describe workflow
+    
+        6. Statechart Diagrams:
+            -describes the state(ie new, pending, saved, terminated etc) changes of an object 
+            in response to certain events
+
+
+
+##private memebers of superclass are also inherited into subclass
+its just they are not visible##

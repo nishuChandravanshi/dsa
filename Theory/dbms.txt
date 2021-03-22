@@ -14,6 +14,18 @@ DBMS ARCHITECTURE
 
 
 ***********
+SQL:
+    -Allows statements to be written for DBMS to interpret how 
+    to interact with data.
+        > In this role, SQL is called Data Manipulation Language
+    
+    -Offers features to manage the database itself, 
+    such as creating or modifying tables and managing 
+    access to tables.
+        > In this role SQL is called a DDL and a ​​​​​​​DCL
+        (Data Definition Language and Data Control Language respectively).
+
+
 DDL: 
     -DDL is short name of Data Definition Language, which deals with database schemas and descriptions, 
     of how the data should reside in the database.
@@ -79,11 +91,13 @@ FILE STRUCTURE:
 
     SPANNED/UN-SPANNED MAPPING
         SPANNED:
-            -while storing a record in a block (in disk) if block gets completely filled and half of the records are left 
+            -while storing a record in a block (in disk) if block gets completely filled 
+            and half of the records are left 
             then also we let the half fill into prev block and fill the other half in next block.
                 
             adv: memory utilization
-            disadv: search time increases (as searching a block in disk is more costly then searching a record in a block)
+            disadv: search time increases (as searching a block in
+             disk is more costly then searching a record in a block)
 
         UN-SPANNED:
             -we store a record in a block only if it completely fits into the block
@@ -93,9 +107,15 @@ FILE STRUCTURE:
 
 ********************
 
+##
+    Rdbms proposes following two constraints->
+    1. entity integrity constraints
+    2. referential integrity constraints (foreign key)
+##
 
 --entitity == table
---attribute == column & tuples == rows
+--attribute == column; group of columns = degree of relation
+--tuples == rows; group of tuples = Cardinality
 --a+ => closure of (a)
 
 KEYS
@@ -201,7 +221,8 @@ NORMALIZATION
 different typs of Normal form->
     1NF:	
         A relation is in 1NF if it contains an atomic value, and it must follow 
-            INTEGRITY Constraints(like if attribute is defined integer than all values in that attribute must be integer)
+            INTEGRITY Constraints(like if attribute is defined integer than all values 
+            in that attribute must be integer)
         It states that an attribute of a table cannot hold multiple values. 
             It must hold only single-valued attribute.
         First normal form disallows the multi-valued attribute, composite attribute, and their combinations.
@@ -214,14 +235,16 @@ different typs of Normal form->
         b->c
         => candidate key ={ab} => primary key = ab
         here, b->c {c(non prime attribute) is dependent on b(prime attribute(partial cuz ab is complete cand key))}
-        -->this type of p->np (is np dependent partially on p) is k/as partial dependency. which is removed in 2nf form
+        -->this type of p->np (is np dependent partially on p) is k/as partial dependency. 
+        which is removed in 2nf form
         converting (i) it in 2nf -> by removing partial dependency
         --make separate table for partial dependent attributes and for complete cand key
         ab->d => table1 : R1(abd) (table1 must hold complete candidate keys )
         b->c => table2 : R2(bc)
 
-        -A relation will be in 2NF if it is in 1NF and all non-key attributes are fully functional dependent 
-            on the primary key.
+        -A relation will be in 2NF if it is in 1NF and 
+        all non-key attributes are fully functional dependent 
+        on the primary key.
         -ie for a table to be in 2nf it must be -
         1. in 1nf
         2. there should not be any paritial dependency
@@ -237,9 +260,11 @@ different typs of Normal form->
         tables -> ab, bc, cd 
         candidateKey- {a} 
 
-        here b->d transitive dependency : here b is not a prime key but still its determining d => violation
+        here b->d transitive dependency : 
+        here b is not a prime key but still its determining d => violation
 
-        A relation is in 3NF if at least one of the following condition holds in every non-trivial function dependency X –> Y
+        A relation is in 3NF if at least one of the following condition 
+        holds in every non-trivial function dependency X –> Y
             1. X is a super key.
             2. Y is a prime attribute (each element of Y is part of some candidate key).
 
@@ -289,11 +314,13 @@ DENORMALIZATION:
 OLAP & OLTP 
     OLTP: online transaction processing system
         -faster insert,delete,update operations
+        -uses sql dbs
         
     OLAP: online analytical processing system
         -goal is analysis on historical data 
+        -use mongodb or other Nosql databases
             
-
+#CAP theoram
 
 
 
