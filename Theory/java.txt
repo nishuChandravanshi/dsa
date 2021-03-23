@@ -125,3 +125,102 @@ Packages
     at the same place
     -provides folder structure to organicse classes-interfaces
 
+
+
+Interfaces
+    -It is a blueprint of a class, 
+    specifies what a class must do(not how)    
+    -does not have implementations of methods
+        >ie there r only method declarations
+        >all methods are abstract and public by default
+
+    -Syntax:
+        <modifier> interface InterfaceDemo{
+            public void m1(); //these methods are by default Abstract and Public
+            public void m2();
+        }        
+        >data members inside interface are always static final
+    - keyword "implement" is used to implement the interface inside a class
+        like: 
+            class Test implements InterfaceDemo{
+                @Override //the abstract methods must be implemented in this class 
+                public void m1()
+                {
+
+                }
+                @Override
+                public void m2()
+                {
+
+                }
+            }
+        #ie by implementing an interface it is must that
+        we Override the abstract methods of the interface
+
+        #if we do not want to implement all the methods of the interface 
+        we can also make the class(which is implementing interface) as abstract class
+        , but then we cannot create the object of abstract class,
+        just like that of interfaces
+        like:
+            abstract class Test implements InterfaceDemo{
+                @Override 
+                public void m1()
+                {
+
+                }
+                //since now class Test is itself abstract class
+                //we do not need to Override all the methods here
+            }
+
+    #if every method is Abstract then the interface
+    can be called as "pure abstract class"
+    #Until Java 1.7:
+        interfaces->abstract methods :(called Pure abstract class)
+    #After Java 1.8 
+        interfaces-> abstract, default, static methods
+    
+    #After Java 1.9 
+        Interfaces-> abstract, default, static, private methdos (can also be defined inside interfaces)
+
+
+
+
+Difference b/w Abstract Classes and Interfaces
+
+Abstract classes:
+    -Can extend one abstract class.
+    -Can have abstract methods and concrete methods
+    -'abstract' keyword required in declaration
+    of abstract methods
+    -Can have static, final or static final
+    variables with any access specifier
+
+
+Interfaces:
+    -Can implement any number of interfaces
+    -Can have abstract methods, static, default, private
+    methds. (not concrete methods)
+    -'abstract' keyword not required, as by 
+    default all methds are abstract
+    -Can have only static final variable by default
+
+
+    #Use Interfaces-> when we want to create a service
+    requirement specification(srs) for any class,
+    ie the blueprint of any class to specify what a class
+    must do.
+    #Use Abstract Classes-> to provide a base for subclasses
+    to extend and implement the abstract methods,
+    and use the implemented methods which are defined in abstract
+    class
+
+
+
+
+
+
+
+
+
+
+
