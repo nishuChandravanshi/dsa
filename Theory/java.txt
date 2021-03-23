@@ -1,2 +1,127 @@
+----------------OOPs----------
 
-..
+Class:
+    blurint of object
+
+Variables
+    1. Instance Variables:
+        -defined inside class, but outside methods
+        -scope remains inside the class in any method or block or constuctor
+       -initialized whenever we create an object, and
+        for each object a new copy of this variable is allocated
+
+    2. Local Variables:
+        -defined inside methods/block/constuctor 
+        -scope limited to that particular method/block where being defined
+        -initialized when that method is called
+    3. Static Variables:
+        -defined inside class, outside method but with 
+        'static' keyword
+        -belongs to the whole class, not to the object
+        -scope remains inside the class 
+        -initialized only once at the start of execution
+        -for all the objects only one copy of variable
+        gets allocatedto all the objects
+
+
+# we can use access modifiers with instance Variables
+but not with local Variables as its scope is already defined(
+    ie scope of local variable is only within the mthod/block/.. within
+    which it has been defined
+)
+
+
+Constructors
+    -used to initialize variables at runtime
+    tyeps:
+        1. Default Constructor,
+        2. Parameterised Constructor
+        3. Non-Parameterised Constructor
+    
+    # Constructors cannot be abstract,final or static
+    # static methods are used to access static members
+    
+Modifiers
+    -modifiers se the accessibility of classes
+    or methods or any members
+    
+    1. Access modifiers:
+        -specifies the scope of particular members
+        -the behaviour of class is specified using modifiers
+        types:
+            1. Public:
+                -the class can be accessed anywhere
+            2. Private
+            3. Protected:
+                -can be accessed everywhere within the 
+                same package and its subclasses, but cant 
+                be accessed in other packages except its subclasses
+                (as the subclasses can be anywhere within the 
+                same package or other package)
+                #outside the package it(Protected members) can be 
+                used only with childs reference(ie reference of its child class)
+                , while inside the package it can be accessed by both
+                childs reference or by parents reference
+            4. Default
+                -the scope of Default classes is 
+                within their package
+            
+            #public class can be accessed anywhere 
+            whereas the default class can be accessed 
+            within its package only
+
+    2. Non-Access modifiers:
+        
+        1. Abstract keyword:
+            -abstract modifier is applicable for classes and methods
+            -Abstract method:
+                >doesnt have  implementation (ie no body)
+                >implementation to an abstract method
+                is provided in its child class(ie subclass)
+            -Abstract class:
+                >Not fully implemented
+                >we can not create object of abstract class
+                    >>ie abstract classes cannot be instantiated
+                >we have to create the implementation of abstract class
+                in the child class
+                > We can also create concrete methods in abstract classes,
+                these methods will be available to all its child classes 
+
+                Adv:
+                    1. Code Reusability:
+                        -as a method can be kept in abstract class
+                        then multiple classes can extend and use that method
+                    2. used to achieve abstraction in java
+
+            #to write an abstract method in a class
+            that class must be abstract too
+            #however, it is not mandatory to have atleast one abstract method
+            inside abstract class
+            #we can declare any class as abstract if the implementation
+            is not complete
+
+            # ie when we want a base class which should not be instantiated
+            and have some common functionality for each of its derived class 
+            with different implementations, we use abstract classes and abstract methods         
+        #abstract methods can only be defined in abstract class
+   
+        #public class can be used outside the package in which
+        its defined too
+
+        2. Final Keyword:
+            -Non-access modifier which is applicable for classes, 
+            variables and methods and used to finalising the implementation
+            of them
+        
+
+        3. Static keyword:
+            -applicable for variables and methods,
+            and used to define the class members
+            independent from any instances
+
+Packages
+    -mechanism to keep group of classes, interfaces and
+    sub-packages which has similar functionalitites
+    at the same place
+    -provides folder structure to organicse classes-interfaces
+
