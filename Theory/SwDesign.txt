@@ -1,0 +1,78 @@
+SOLID PRINCIPLE - s/w design principle 
+
+S :Single Responsibility principle
+O :Open-Close principle
+L :Liskov Substitution principle
+I :Interface Segregation principle
+D :dependency injection principle
+
+#SOLID principles are all intertwined and interdependent
+#they are most effective when they are combined together
+
+Single Responsibility Principle (SRP):
+    -Every s/w component (component can be 
+    a class, a method, or a module) should have one 
+    and only one responsibility or
+        >(modified definition):
+            Every s/w component should have 
+            one and only one reason to change
+    -Aims for High Cohesion
+    -Aims for Loose Coupling
+
+
+    Cohesion:
+        -It is the degree to which the various 
+        parts of a s/w components are related
+        -Higher Cohesion helps attain better 
+        adherence to the Single Responsibility Principle
+            >we should always aim for a higher Cohesion
+            within a component(ie class,..)
+
+    Coupling:
+        -Coupling is defined as the level of inter
+        dependency b/w various s/w components
+        -Loose Coupling helps attain better adherence to 
+        the Single Responsibility Principle(SRP)
+
+        #Tight-Coupling is bad in s/w
+
+
+Open-Closed Principle (OCP):
+    -s/w components should be Closed for modification,
+    but open for extension
+        >closed for modification:
+            >>New features getting added to the s/w
+             component should NOT have to modify existing code
+
+        >Open for extension:
+            >>A s/w component should be extendable 
+            to add a new feature or to add a new
+            behavior to it
+    
+    adv:
+        -Ease of adding new features
+        -Leads to minimal cost of developing 
+        and testing s/w
+        -Open closed principle often requires
+        decoupling, which, in turn, automatically
+        follows the SRP 
+        -we get robust design that are easy to 
+        implement in future (by following ocp)
+    
+    Caution:
+        -Do not follow open closed principle blindly
+        -you will end up with a huge number of classes that
+        can complicate your overall design
+
+
+Liskov Substitution Principle(LSP):
+    -Objects should be replacable with their subtypes 
+    without affecting the correctness of the program
+
+
+
+
+
+
+
+
