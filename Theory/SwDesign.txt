@@ -68,7 +68,42 @@ Open-Closed Principle (OCP):
 Liskov Substitution Principle(LSP):
     -Objects should be replacable with their subtypes 
     without affecting the correctness of the program
+    -(inheritence used)
 
+    Solutions to 2 different patterns:
+        >1. Break the hierarchy(car->racing car exampls)
+        >2. Tell, dont ask (product->inhouse product problem ex)
+
+    #Change the 'Is-A' (relation) way of thinking
+    # "if it looks like a duck and quacks like a duck but
+    it needs batteries, you probably have the wr ong abstraction!"
+
+
+Interface Segregation Principle(ISP)
+    -No client should be forced to depend on methods
+    it does not use
+
+    Techniques to Identify Violations of ISP:
+        1. Fat Interfaces:
+            Interfaces with high number of methods
+
+        2. Interfaces with Low Cohesion:
+        
+        3. Empty Method implementations
+
+
+
+#"SOLID principles complement each other, and work 
+together in unison, to achieve the common
+purpose of well-designed s/w"
+
+
+
+Dependency Inversion Principle(DIP)
+    -"High-level modules should not depend on low-level
+    modules. Both should depend on abstractions."
+    -"Abstractions should not depend on details.
+    Details should depend on abstractions"
 
 
 
