@@ -214,13 +214,51 @@ Interfaces:
     and use the implemented methods which are defined in abstract
     class
 
+******************************************
+
+Wrapper Classes:
+    -A wrapper class wraps(encloses) around a data
+    type and gives it an object appearance 
+    -Wrapper classes are final and immutables
+
+    Types:
+        1. Wrapper: Boolean, Byte, Character, Double, Float, Integer, Long, Short
+        2. Primitive: boolean, byte, char, double, float, int, long, short
+
+    #In java there are corresponding classes for 
+    each of these primitive data types, called as 
+    Wrapper classes
+    
+Why Wrapper Classes?
+    -Creation from other data types
+
+    Integer hundred = Integer.valueOf("100");
+    Boolean value = Boolean.valueOf("True");
 
 
+#We should use "valueOf" instead of using "new"
+in wrapper classes
 
 
+********************************************
 
+Auto-Boxing:
 
+****************************************
+Java 8 brings date time classes as follows->
 
+1. LocalDate:
+    -can hold a date eg. 30-03-2021
+    -immutable(all three of these are immutables)
+    eg:
+        import java.time.LocalDate
+        LocalDate now = LocalDate.now();
+        o/p-> 2021-03-30 (current date)
 
+2. LocalDateTime
+    -represents both date and time
+3. LocalTime
 
+    #these are inside a package called java.time
 
+    # /imports -> lists few default imports
