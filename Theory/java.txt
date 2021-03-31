@@ -262,3 +262,38 @@ Java 8 brings date time classes as follows->
     #these are inside a package called java.time
 
     # /imports -> lists few default imports
+
+**********************************************
+
+Array and ArrayList
+
+Array
+    -Syntax:
+        int []marks = new marks[5]  //size must be declared in definition side(ie right side)
+        //declaration  //definition side 
+        //side
+        - int[] marks = {2, 3, 4, 5, 9}; 
+    
+    #By default array is init-ialized with 0,
+    # in case of Array of objects default value is 'null'
+
+    -to print all the elements of array with system.out.print
+        
+        -System.out.print(Arrays.toString(marks)); 
+            >o/p [2,3,4,5,9] 
+        
+        #System.out.println(marks) -> will return the base address of array
+
+
+
+    -Changing content of an array: 
+        
+        Arrays.fill(marks,100); //all array values will be set to 100,
+                                //modify in bulk
+
+    -Compare Arrays
+        Arrays.equals(array1,array2);
+        >o/p: true/false 
+
+    -Sort Array
+        Arrays.sort(arr1);
