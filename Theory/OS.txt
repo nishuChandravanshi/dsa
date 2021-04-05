@@ -41,6 +41,10 @@ PROCESS
         -Inside this table, every process is listed along with the resources the processes is using 
         and the current state of the process.
 
+    ##A process control block (PCB) contains information about the process, 
+    i.e. registers, quantum, priority, etc. The process table is an array of PCB’s, 
+    that means logically contains a PCB for all of the current processes in the system
+
     PROCESS CONTROL BLOCK(PCB)
         -ds which stores the info about a particular process. this info is reqd by the cpu while executing the process
         -each process is identified by its own pcb, is also known as CONTEXT OF THE PROCESS
