@@ -297,3 +297,44 @@ Array
 
     -Sort Array
         Arrays.sort(arr1);
+
+Variable Number of Arguments:
+    -say we dont know the number of Arguments to pass in a function
+    we can pass it like ->(int... values) //now wtever
+    number of Arguments passed in values will be considered
+    in the form of list as->
+
+    void print(int... values)
+    {
+        System.out.println(Arrays.toString(values));
+    }
+    >o/p: list of int values being passed in print
+
+    #variable argument should be the last argument
+
+
+
+## The problem with array is that we cannot directly delete or insert 
+new elements into it onces its created
+->inorder to do that we need to make a new array 
+of size greater than previous(incase of insertion)
+or size less than previous(incase of deletion), and 
+then copy the reqd elements into this new array from
+the previous one
+
+    --> here comes ArrayList
+
+ArrayList
+    >provide features to add and remove elements
+    from array dynamically
+
+    -syntax for instance creation:
+
+        > ArrayList arrayList = new ArrayList(); // can store mixed data type valuse eg ["a", "bcd", 1, 2.3]
+        > ArrayList<String> arrayList = new ArrayList(); //can store only string type values
+    -functions:
+        >arrayList.add("a"); //can add any datatype
+        >arrayList.remove("a"); //or arrayList.remove(0); -> ie can specify index as well
+
+
+********************
