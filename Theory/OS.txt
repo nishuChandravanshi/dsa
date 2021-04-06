@@ -89,6 +89,8 @@ PROCESS
             3->4(or 4->2): mts - performs swapping (main memory <-> secondary memory)
         
         #DISPATCHER : responsible for saving the context of one process and loading the context of other process
+        #The scheduler selects from among the processes in memory that are 
+        ready to execute and allocates the CPU to one of them
 
 SCHEDULING
     -The responsibility of determining how to allocate processor time among all the ready processes is known as scheduling
