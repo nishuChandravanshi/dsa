@@ -1,7 +1,7 @@
 ----------------OOPs----------
 
 Class:
-    blurint of object
+    blueprint of object
 
 Variables
     1. Instance Variables:
@@ -219,6 +219,7 @@ Interfaces:
 Wrapper Classes:
     -A wrapper class wraps(encloses) around a data
     type and gives it an object appearance 
+        >used to give primitive data types object appearance
     -Wrapper classes are final and immutables
 
     Types:
@@ -338,3 +339,143 @@ ArrayList
 
 
 ********************
+
+Inheritence
+    
+    # by default every class inherits Object class in java implicitly
+    ie its(Object class) is the root of the class hierarchy
+        eg. class Person{ //-->same as -> class Person extends Object //since every class by default inherits Object class
+            private String name;
+            //...
+        }
+        class Student extends Person{  // here we see we're inheriting Person class into Student class, and in Person class already inherits Object class => it also contains Object class features
+            private collegeName;
+            //...
+        }
+
+    # whenever we create an object of a subclass-> super class constructor is 
+    automatically called
+
+    # we can have a superclass reference variable
+    that can hold a subclass variable
+    but, the vice versa is not allowed
+        eg.
+        class Animal{
+            //....
+        }
+        class Dog extends Animal{
+            //...
+        }
+
+        class Runner{
+            Animal animal = new Dog(); //valid
+        }
+
+***************************************
+Abstract Class
+
+    -while we create a method inside a
+    class we provide its implementation
+    - Abstract class provide a feature using
+    which we dont need to provide implementations
+    of a few methods.
+
+    eg. 
+    1. class AbstractAnimal{
+        public void bark(); //left unimplemented
+    }
+    >o/p: Error: missing method  body, or declare abstract
+
+    2. class AbstractAnimal{
+        abstract public void bark(); //abstract method
+    }  
+    >o/p: Error: AbstractAnimal is not abstract and
+    does not override abstract method bark() in AbstractAnimal
+
+    3. abstract class AbstractAnimal{ 
+        abstract public void bark(); 
+    }
+    >o/p: created class AbstractAnimal
+        #here we created abstract class with bark 
+        method without providing its implementation
+        , implemention will be provided by the subclass(es)
+
+    4. class Dog extends AbstractAnimal{
+
+    }
+    >o/p: Error: Dog is not abstract and does not override 
+    method bark() in AbstractAnimal
+
+        ##inorder to extend abstract class
+        , the subclass need to provide implemention 
+        of its abstract methods
+
+    5. class Dog extends AbstractAnimal{
+        public  void bark()
+        {
+            System.out.println("bhaw bhaw");
+        }
+    }
+    >o/p: created class Dog
+
+    6. Dog dog = new dog;
+    dog.bark();
+    >op: bhaw bhaw
+
+    #we cant create instance of abstract class
+    ie eg. 
+        AbstractAnimal animal = new AbstractAnimal(); // not allowed
+        >op: Error: //... AbstractAnimal is abstract: cant be instantiated
+
+    #abstract class can have non abstract methods as well
+
+    eg. 
+    abstract class AbstractDemo { // Abstract class
+        private int i = 0;
+        public void display() { // non-abstract method
+            System.out.print("Welcome to Tutorials Point");
+        }
+    }
+    public class InheritedClassDemo extends AbstractDemo {
+        public static void main(String args[]) {
+            AbstractDemo demo = new InheritedClassDemo();
+            demo.display();
+        }
+    }
+    #For an abstract class, 
+    we are not able to create an object directly.
+    But Indirectly we can create 
+    an object using the subclass object.
+    
+    #Declaring a class as abstract with no abstract 
+    methods means that we don't 
+    allow it to be instantiated on its own
+    
+    #An abstract class used in Java signifies that 
+    we can't create an object of the class directly.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
