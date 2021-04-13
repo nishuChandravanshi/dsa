@@ -82,7 +82,9 @@ FILE STRUCTURE:
             -can be sorted only acg to one attribute(search key)
             -searching fast
             -fast searching (O(log(n)))
-            -insertion difficult -> as we'll first search location for key to be inserted and then make place to store it(by shifting all values in and after its location)
+            -insertion difficult -> 
+            as we'll first search location for key to be inserted 
+            and then make place to store it(by shifting all values in and after its location)
         
         ii. Unsorted File:
             -stored in random order ie any record can be placed anywhere
@@ -108,6 +110,7 @@ FILE STRUCTURE:
 ********************
 
 ##
+--https://www.geeksforgeeks.org/constraints-on-relational-database-model/#:~:text=Mainly%20Constraints%20on%20the%20relational%20database%20are%20of%204%20types%3A&text=Key%20constraints,Referential%20integrity%20constraints
     Rdbms proposes following two constraints->
     1. entity integrity constraints
     2. referential integrity constraints (foreign key)
@@ -488,6 +491,7 @@ STATES OF TRANSACTION
     Failed -(Roll back)-> aborted
     aborted-> terminated
 
+    #(r/w op => read/write operations
 
     1. Active:  When a transaction is executing
     2. Partially committed: Whatever changes that transaction has done are properly executed but they are still stored in the 

@@ -460,20 +460,132 @@ Abstract Class
 
 
 
+******************************************
+Collections : (List, Set, Queue, Map,...)
+    -the underlying data structures are very complex(Arrays etc)
+    , even inserting/deleting a simple thing into array
+    involves writing a lot of code.
+    -Java provides implementations of these data structures
+    called Collections
+
+    #as array size once allocated cant be changed dynamically
 
 
+    List:
+        -Cares about which position each object is in
+        -Elements can be added in by specifying position-
+        where should be it added in 
+        -If element is added without specifying position-
+        it is added at the end
+        eg:
+
+        //java9
+        List<String> words = List.of("Apple","Bat","Cat");
+        words.size() //in array or like that we have length, but in Collections we have size()
+        >3
+
+        words.isEmpty();
+        >false
+        
+        words.get(0)
+        >Apple
+        
+        words.contains("Dog")
+        >false
+
+        words.indexOf("Cat")
+        >2
+
+        words.indexOf("Dog")
+        >-1
+
+    #anything created using of function(eg List.of("..")) is immutable
+
+        words.add("Dog")
+        >UnsupportedOperationException
 
 
+    ##ie inorder to create a MUTABLE list following
+    are the choices-->
+        ArrayList, LinkedList, Vector
+
+    eg. 
+    List<String> wordsArrayList = new ArrayList<String>(words)
+    wordsArrayList.add("Dog")
+    >true  //wordsArrayList-> ("Apple","Bat","Cat", "Dog")
+
+    List<String> wordsLinkedList = new LinkedList<String>(words);
+
+    List<String> wordsVector = new Vector<String>(words)
 
 
+    ArrayList:
+        -iteration faster(ie search faster) than LinkedList 
+        -insert, delete slower than LinkedList
+        -underlying data structure -> Array
+    
+    LinkedList:
+        -underlying data structures -> doubly LinkedList
+
+    ##if we gotta access the elements based on their positions
+    go for ArrayList,
+    ##if there're number of insertion and deletions,
+    go for LinkedList
 
 
+    Vector vs ArrayList:
+        class Vector implements List<E>{
+            //Thread safe - Synchronized methods
+            //almost constant time - access
+        }
+        -use vector in situation where data is shared
+        b/w multiple threads
+
+        -ArrayList is not thread safe
+
+        #unless we need thread safety-> go for ArrayList
 
 
+***********************************************
+HASHING:
+    -improvement of Direct Access Table
+    -provides O(1) time on average for insert, 
+    search and delete
+
+Hash Function:
+    -maps a big number or a string to a small 
+    integer that can be used as index in 
+    hash table
+    eg. h(x)  = x mod n;
+    where, x -> our input number 
+           
+Good h(x) should be->
+    -should compute efficiently
+    -should uniformly distribute the keys
 
 
+Collision:
+    -same key for different values
 
 
+Collision Handling/ Collision Resolution
+
+Chaining/ Open Chaining 
+    -the idea is to make each cell of hash table
+    point to a linked list of records that have same 
+    hash function
+    -linked list,
+    disadv:
+        -extra space
+
+Closed Chaining / Open Addressing:
+    -All elements are stored in hash table itself
+    1. Linear Probing (h(x)+i)
+    2. Quadratic probing (h(x)+i^2)
+    3. Double Hashing
+
+    where i = number of probes (or number 
+    of attempts in search of a particular key)
 
 
 
