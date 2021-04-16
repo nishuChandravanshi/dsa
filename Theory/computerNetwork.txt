@@ -1,0 +1,108 @@
+##https://fcit.usf.edu/network/chap2/chap2.htm
+
+Network:
+    -A n/w consist of two or more computers that are
+    linked together in order to share resources(such
+    as printers, CDs), exchange files, or allow electronic
+    communications. The computers on a network may be 
+    linked through cables, telephone lines, radio waves, 
+    satellites, or infrared light beams.
+
+    Two common types of networs are ->
+    1. LAN (Local Area Network)
+        A Local Area Network (LAN) is a network that is
+        confined to a relatively small area. 
+        It is generally limited to a geographic 
+        area such as a writing lab, school, or building.
+    2. WAN (Wide Area Network)    
+        Wide Area Networks (WANs) connect networks 
+        in larger geographic areas, such as Florida, 
+        the United States, or the world. 
+        Dedicated transoceanic cabling or satellite 
+        uplinks may be used to connect this type of global network.
+
+Protocol:
+    -a set of rules that governs the communications 
+    b/w computers on a network. 
+    -Inorder for two computers to talk to each other
+    they must be speaking the same language. 
+    Many different types of network protocols and
+    standards are required to ensure that your computer
+    (no matter which operating system, network card, or application you are using)
+    can communicate with another computer located on the 
+    next desk or half-way around the world.
+
+OSI -> Open System Interconnection Reference model 
+    -defines seven layers of networking protocols.
+    
+OSI Layer	Name	        Common Protocols
+7	        Application	    HTTP | FTP | SMTP | DNS | Telnet
+6	        Presentation	
+5	        Session	
+4	        Transport	    TCP | SPX
+3	        Network	        IP | IPX
+2	        Data Link	    Ethernet
+1	        Physical        Ethernet
+
+
+
+
+##Layers: https://fcit.usf.edu/network/chap2/chap2.htm
+
+
+
+
+@ravindraBabuRavula
+
+IP address = Network ID + Host ID
+    >use NID to reach the target n/w
+    >use HID to reach the target host
+
+    #and inorder to reach the target process ->
+    Port number is reqd
+
+    #for web servives (eg www.google.com), 
+    using http, port number is 80(globally known)
+
+Flow ->
+www.google.com in my computer --> reaching google say at california
+
+    flow:
+    domain name(www.google.com) -> IP addrss(NID+HID)
+    ->reaching target Network with the help of NID->
+    reaching target Host with the help of HID ->
+    port number reqd to reach the target process 
+
+    #Convertime Domain Name into IP address: 
+        >the ISP(internet service provider) provides
+        DNS (Domain Name services) 
+        >So initially we contact DNS(aka DNS overhead) which gives 
+        the IP address of the domain we want, then 
+        our computers saves the IP address of that domain
+        for some time so as when we need it next time
+        we dont have to contact DNS again. 
+
+
+    #most of the port numbers are already predefined and
+    are fixed for the well known services
+
+
+
+Ip address = n bits => k + (n-k)) -->(=>NID+HID)
+                    =>2^k no. of networks
+                    and also 
+                    => 2^(n-k) size of each n/w
+                    (ie total number of hosts in that n/w)
+                    (since hostId is n-k bits => 2^(n-k) different hosts)
+
+eg:
+n = 32 bit -> 8+24 (nid + hid)
+    =>2^8 = 256 networks
+    and 2^24 = 16*2^20 = 16 million (=>is huge) ip addresses are present in each n/w
+    ---> this type of partition of hid nd nid is 
+    not scalable and hence is not used generally 
+
+
+#dotted decimal representation of ip address ->
+dividing the 32 bits into 4 parts of each 8 bit
+->then writing each parts decimal with dots
