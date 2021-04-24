@@ -546,6 +546,61 @@ Collections : (List, Set, Queue, Map,...)
         #unless we need thread safety-> go for ArrayList
 
 
+**************************
+List
+    -implements collection interface
+    -cares about which position each object is in
+    -Elements can be added in by specifying position-
+    where should it be added in
+    -If element is added without specifying position
+    ,it is added at the end
+
+    List Interface->
+
+    interface List<E> extends Collection<E>{
+        //.........
+        get()
+        set()
+        add()
+        remove()
+        indexOf()
+        lastIndexOf()
+        ...//etc etc
+    }
+##different implementations of list
+    1. ArrayList
+    class ArrayList implements List<E>{
+        //uses array as underlying ds
+        //insertion and deletion are slower compared to LinkedList
+        //almost const time -access
+    }
+
+    2. LinkedList
+    class LinkedList implements List<E>{
+        //uses doubly linked list as underlying ds
+        //Faster insertion and deletion 
+        //Iteration slower than ArrayList
+    }
+
+    3. Vector
+    class LinkedList implements List<E>{
+        //Tread Safe - achieves thread safety by using Synchronized methdos
+        //all the methods in vectors are Synchronized
+        //almost const time -access
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 ***********************************************
 HASHING:
     -improvement of Direct Access Table

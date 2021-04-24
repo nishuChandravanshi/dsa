@@ -18,7 +18,22 @@ Oops-
 
 advantages-
     -simplicity : as obj model real world objs,complexity reduced and clear prog structure
-    ??-modularity : 
+    -modularity : Modularity is the principle of separating tasks so that
+      different parts of a program (modules) perform these separate tasks.
+      Modules should interact with each other only if one module requires another module to complete a task.
+      The benefits of modularity include that code can be easily reused for other tasks,
+      or new code can easily be added to increase functionality
+      Its a good technique to use, particularly if you are developing in a group,
+      so that each partner can work on a different part of the code.
+      >A good example of modularity is the model-view-controller pattern (Model–view–controller)
+       which separates an application into 3 components.
+       The controller sends commands to its associated view to change
+       the presentation of the model based on user input.
+       A view represents the necessary information stored in a model, 
+       and a model is a hidden representation of the state of a program.
+       Each component works on a different module in a program but they 
+       interact in order to respond to a user request, 
+       separating the tasks necessary for function.
     -modifiability : easy to make minor changes, changees inside class do not affect any other part of prog,since
     the only public interfase that the external world has to a class is through the use of methods.
     -extensibility : adding new features easily 
@@ -50,8 +65,10 @@ no life outside prog exec
 
 
 DIFF B/W PRIVATE AND PROTECTED access modifiers
-    private: Only the member functions or the friend functions are allowed to access the private data members of a class.	
-    protected: The class member declared as Protected are inaccessible outside the class but they can be accessed by any subclass(derived class) of that class.
+    private: Only the member functions or the friend functions are allowed to access the
+     private data members of a class.	
+    protected: The class member declared as Protected are inaccessible outside the class but they
+     can be accessed by any subclass(derived class) of that class.
 
 
 PROBLEMS WITH OOPS 
@@ -63,7 +80,7 @@ PROBLEMS WITH OOPS
 //object-
     -entity that has state(data) and behavior(functionality) (eg. chair,pen,bike,keyboard etc)
     -runtime entity (as it is assigned memory dynamically during runtime, although class is compiled during compile time)
-    -Creating obj-> of student class using s1 referenve variable
+    -Creating obj-> of student class using s1 reference variable
 
     Student s1; //Student is the type and s1 is the reference that refers to the instance of Student class
     
@@ -170,8 +187,8 @@ PROBLEMS WITH OOPS
     -generally used to initialize data members of new object
     -malloc(c) doesnt call contructor, while new(c++) does!
         -similarly free(c) doesnt call destructor while delete(cpp feature) does
-    *shallow copy :obj1=obj2 => obj2 will point to location of obj1
-    *deep copy :obj1=obj2 => obj2 will point to other memory location with obj1's values copied.
+    *shallow copy :obj1=obj2 => obj1 will point to location of obj2
+    *deep copy :obj1=obj2 => obj1 will point to other memory location with obj2's values copied.
 
 
 //1.Default constructor
@@ -911,39 +928,6 @@ generate('', n);
 sort(s.begin(), s.end());
 return s[diff]+reverse 
 
-
-//PROJECT
-#model -> database schema
-#views-> we write the api or fucn
-#url wwhere map urlpattern wrt views
-
-sms api->msg91
-
-class Person(models.model):
-    name = models.charfield(max_lenght=30)
-    contact = models.charField...
-
-def getPerson(request):
-    persons = Person.objects.all()
-    return JsonResponse({'success':True, 'data':persons})
-
-urlpatterns = [
-    url('getPerson/', views.getPerson)
-]
-
-cyberbullying-> tweets from twitter for a given subject 
-tweepy with twitter api ->messages
-
-ml model run -> 5 classes ->good, bad, threat
-
-web dashboard->threat, abusive % of tweets bad
-
-model-> some classifier
-
-every 5 min me update
-
-
-******************************
 
 
 

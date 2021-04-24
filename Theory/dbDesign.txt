@@ -427,7 +427,41 @@ def grainUpload(request): //grainId, quantity, quality, price
 
  #returning data in JSON(JavaScript Object Notation) format (which is implemented as dictionary objects in Python)
 
-***
+************************************
+
+//PROJECT
+#model -> database schema
+#views-> we write the api or fucn
+#url wwhere map urlpattern wrt views
+
+sms api->msg91
+
+class Person(models.model):
+    name = models.charfield(max_lenght=30)
+    contact = models.charField...
+
+def getPerson(request):
+    persons = Person.objects.all()
+    return JsonResponse({'success':True, 'data':persons})
+
+urlpatterns = [
+    url('getPerson/', views.getPerson)
+]
+
+cyberbullying-> tweets from twitter for a given subject 
+tweepy with twitter api ->messages
+
+ml model run -> 5 classes ->good, bad, threat
+
+web dashboard->threat, abusive % of tweets bad
+
+model-> some classifier
+
+every 5 min me update
+
+
+******************************
+
 
 JSON : --https://beginnersbook.com/2015/04/json-tutorial/
     JSON stands for JavaScript Object Notation. JSON objects are used for transferring data between server and client, 
@@ -453,7 +487,9 @@ JSON : --https://beginnersbook.com/2015/04/json-tutorial/
                 "age" : "28",
                 "website" : "beginnersbook"
             };
-            The above text creates an object that we can access using the variable chaitanya. Inside an object we can have any number of key-value pairs like we have above. We can access the information out of a JSON object like this:
+            The above text creates an object that we can access using the variable chaitanya. 
+            Inside an object we can have any number of key-value pairs like we have above. 
+            We can access the information out of a JSON object like this:
             document.writeln("The name is:  " +chaitanya.name);
        
         2) JSON objects in array
@@ -490,7 +526,7 @@ JSON : --https://beginnersbook.com/2015/04/json-tutorial/
         document.writln(students.steve.age); //output: 29
 
 
-******
+**************************
 
 DJANGO
     -server side web application development framework written in python
