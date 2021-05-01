@@ -645,4 +645,28 @@ Closed Chaining / Open Addressing:
 
 
 
+******************************************************************
+Java Interview Questions
+
+1. In Java, the java file name should be always the same as a public class name, why?
+    -While writing a java program first it is saved
+     as a ".java" file, when it is compiled it forms 
+     byte code which is a ".class" file as such that
+     if we made our program file similar to the class 
+     it will be comfortable for us to understand without 
+     any ambiguity. We are allowed to use any name for a 
+     filename only when class is not public. In the case 
+     of a public class, we can’t use a different file name.
+    -The filename must have the same name as the public 
+    class name in that file, which is the way to tell 
+    the JVM that this is an entry point.
+    -Suppose when we create a program in which more than
+     one class resides and after compiling a java source
+     file, it will generate the same number of the 
+     .class file as classes reside in our program. 
+     In this condition, we will not able to easily 
+     identify which class need to interpret by java 
+     interpreter and which class containing 
+     Entry point for the program
+
 
