@@ -1,0 +1,134 @@
+API (Application Programmable Interface)
+    -Documented way in which external consumers
+    can understand how they can interact with your 
+    code (not how your code works but how they 
+    can interact with your code to get their work done)
+
+    or
+    -An API is a software contract which defines the
+    expectations and interactions of a piece of code
+    exposed to external users. This includes the parameters, 
+    response, errors and API name
+
+
+****
+@javabrainsYoutube
+----------------RESTful APIs with JAX-RS---------------
+
+1. REST concepts: (REpresentational State Transfer)
+    While designing rest apis keep following in mind
+    >Resource based URIs : use these
+    >HTTP methods: use suitable http method
+    >HTTP Status Codes: response need to return the 
+    right http status codes
+    >Message header: all req and resp need to have right headers
+
+Web Service:
+    -services that are exposed to the internet 
+    for programmatic access, their online apis 
+    we can call from our code
+    
+    Characteristics:
+        -the exchange of data happens over the web/http
+        -the client sends http request and the server
+        sends back the http response
+            >the client then have its own logic to 
+            present the data to the user in the presentable
+            format.
+        -protocol =>message format in which client 
+            and server communicates 
+         Rest services can send the message in any format
+         json/xml/text wtever as long as the client and 
+         server understands each other, theres no fixed protocol
+
+        -method need to used :->methods can be exchanged 
+         on any or all http methods, there r few guidelines defined
+         but there aint any specific fixed method
+
+        -Service Definition: definiton of the service, 
+        the type of input/parameters/outputs etc -->
+        theres no such formal service definition available
+        in the restful web services
+
+    #REST is inspired by lot of the concepts of http 
+    (hyper text transfer protocol)
+
+HTTP specifications or rules:
+    -hyper text transfer protocol
+    -the stuff we exchange and transfer in http is 
+    called hypertext
+    Hypertext:
+        -structured form of text 
+        with interesting property as follows->
+        it contains logical links to other texts
+            >this links are called hyper links
+
+        -a common and very popular way to write 
+        hypertext is HTML(Hyper Text Markup language)
+
+    Adrress:
+        -URIs
+            1. Instance Resource based URIs -> messages/messageId/comments/commentId  
+            2. Collection Resource URIs -> /messages or /commnets <- lists collection of messages or comments respectively
+
+    HTTP Methods:
+        -verbs that are used to interact with the servers
+        -get, post, put, delete
+    
+        #IDEMPOTENCE is the property of certain 
+        operations, that can be applied multiple times 
+        without changing the result beyond the initial application
+        (ie no changes after first change, even when called multiple times)
+
+        GET, PUT, DELETE -> idempotent methods
+        POST -> non-idempotent method
+
+        #http specifications(rules) requires it, ie get, put, delete 
+        methods to be idempotent ie the client need not to worry 
+        about making duplicate requests. 
+        But if they are making post request they can not make
+        any duplicate post request without making any change on the 
+        server 
+
+        eg-> post -> message/ --> create a new message(message inside the post body) with id say 21 and will respond this id 
+            now again if the same post request is made (ie for same message)
+            post -> message/  --> then this time it'll again post this msg with other message id say 22  ie now this time duplicate message got created
+
+
+
+    #a good  restful api makes good use of all these
+    http methods
+    
+    Metadata: 
+        HTTP Status Code: the number that shows up on 
+        the very first line of the http response, 
+        it indicates if the response was successful 
+        or there was an errors. 
+
+        status code-> 
+            200 - Success
+            500 - Server Error
+            404 - Not found
+
+    Header value:
+        -contains metadata/headers in every http req and response
+            >meta data about the message (like the content type/formats the msgs r in)
+        -there r some standard predefined content type values like -> 
+            text/xml - for xml content
+            application/json - for json content
+    
+    #a message thats send with the right content type is easily 
+    readable by the server and the client, because 
+    they actually examine the header and checks the format and 
+    then parse it accordingly
+
+
+#URI -> uniform resource identifier
+#URL is a special type of URI 
+
+#while designing restful APIs we need to have 
+Resource basesd URIs
+
+
+
+
