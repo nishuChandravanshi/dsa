@@ -1,7 +1,270 @@
+Introduction:
+
+
+//https://www.guru99.com/java-virtual-machine-jvm.html  #awesom explanation
+JVM (Java Virtual Machine):
+    -a engine that provides runtime environment 
+    to drive the Java Code or applications. 
+    -It converts Java bytecode into machines language.
+    -JVM in java is responsible for allocating
+    memory space.
+    -it resides on RAM
+    -it is a part of JRE(Java Run Environment)
+
+
+    How it works: 
+        >javacode -(compiler)-> bytecode -(this bytecode gets
+        interpreted on different machines)
+        >JVM workflow: (jvm architecture contains-->)
+            class loader --> Byte Code Verifier --> Execution Engine
+    
+        #b/n host system and java source, Bytecode is an intermediary language.
+
+    C code compilation and execution process:
+        .c files -(compiler)-> respective .obj files -(linker)->
+        .exe file -(loader)->loads exe file into RAM for execution
+        
+        #linker combines all the object files (.obj) together
+        and produces .exe file
+
+    JAVA Code Compilation and Execution in JVM:
+        .java files -(compiler)-> corresponding .class files
+        -> during execution these class files are loaded into RAM
+        by class loader ->these class files ie bytecode are then verified
+        for security breach -->execution engine converts bytecode into Native Machine code***
+        -->which is then executed
+
+        *** this is JIT (just in time compilling)
+            >this is one of the main reason y java is comparitively slow
+        #No linking is done
+        #.class consists of BYTE code
+        #JVM resides on the RAM
+        #JIT is a part of JVM
+
+
+#In other programming languages, 
+  the compiler produces machine code for a particular system.
+  However, Java compiler produces code for a 
+  Virtual Machine known as Java Virtual Machine.
+
+
 ----------------OOPs----------
 
 Class:
     blueprint of object
+
+
+Packages
+    -mechanism to keep group of classes, interfaces and
+    sub-packages which has similar functionalitites
+    at the same place
+    -provides folder structure to organise classes-interfaces
+
+
+Interfaces
+    -It is a blueprint of a class, 
+    specifies what a class must do(not how)    
+    -does not have implementations of methods
+        >ie there r only method declarations
+        >all methods are abstract and public by default
+
+    -Syntax:
+        <modifier> interface InterfaceDemo{
+            public void m1(); //these methods are by default Abstract and Public
+            public void m2();
+        }        
+        >data members inside interface are always static final
+    - keyword "implement" is used to implement the interface inside a class
+        like: 
+            class Test implements InterfaceDemo{
+                @Override //the abstract methods must be implemented in this class 
+                public void m1()
+                {
+
+                }
+                @Override
+                public void m2()
+                {
+
+                }
+            }
+        #ie by implementing an interface it is must that
+        we Override the abstract methods of the interface
+
+        #if we do not want to implement all the methods of the interface 
+        we can also make the class(which is implementing interface) as abstract class
+        , but then we cannot create the object of abstract class,
+        just like that of interfaces
+        like:
+            abstract class Test implements InterfaceDemo{
+                @Override 
+                public void m1()
+                {
+
+                }
+                //since now class Test is itself abstract class
+                //we do not need to Override all the methods here
+            }
+
+    #if every method is Abstract then the interface
+    can be called as "pure abstract class"
+    #Until Java 1.7:
+        interfaces->abstract methods :(called Pure abstract class)
+    #After Java 1.8 
+        interfaces-> abstract, default, static methods
+    
+    #After Java 1.9 
+        Interfaces-> abstract, default, static, private methdos (can also be defined inside interfaces)
+
+
+Difference b/w Abstract Classes and Interfaces
+    Abstract classes:
+        -Can extend one abstract class.
+        -Can have abstract methods and concrete methods
+        -'abstract' keyword required in declaration
+        of abstract methods
+        -Can have static, final or static final
+        variables with any access specifier
+
+
+    Interfaces:
+        -Can implement any number of interfaces
+        -Can have abstract methods, static, default, private
+        methds. (not concrete methods)
+        -'abstract' keyword not required, as by 
+        default all methds are abstract
+        -Can have only static final variable by default
+
+
+    #Use Interfaces-> when we want to create a service
+    requirement specification(srs) for any class,
+    ie the blueprint of any class to specify what a class
+    must do.
+    #Use Abstract Classes-> to provide a base for subclasses
+    to extend and implement the abstract methods,
+    and use the implemented methods which are defined in abstract
+    class
+
+
+
+Abstract Class
+    -while we create a method inside a
+    class we provide its implementation
+    - Abstract class provide a feature using
+    which we dont need to provide implementations
+    of a few methods.
+
+    eg. 
+    1. class AbstractAnimal{
+        public void bark(); //left unimplemented
+    }
+    >o/p: Error: missing method  body, or declare abstract
+
+    2. class AbstractAnimal{
+        abstract public void bark(); //abstract method
+    }  
+    >o/p: Error: AbstractAnimal is not abstract and
+    does not override abstract method bark() in AbstractAnimal
+
+    3. abstract class AbstractAnimal{ 
+        abstract public void bark(); 
+    }
+    >o/p: created class AbstractAnimal
+        #here we created abstract class with bark 
+        method without providing its implementation
+        , implemention will be provided by the subclass(es)
+
+    4. class Dog extends AbstractAnimal{
+
+    }
+    >o/p: Error: Dog is not abstract and does not override 
+    method bark() in AbstractAnimal
+
+        ##inorder to extend abstract class
+        , the subclass need to provide implemention 
+        of its abstract methods
+
+    5. class Dog extends AbstractAnimal{
+        public  void bark()
+        {
+            System.out.println("bhaw bhaw");
+        }
+    }
+    >o/p: created class Dog
+
+    6. Dog dog = new dog;
+    dog.bark();
+    >op: bhaw bhaw
+
+    #we cant create instance of abstract class
+    ie eg. 
+        AbstractAnimal animal = new AbstractAnimal(); // not allowed
+        >op: Error: //... AbstractAnimal is abstract: cant be instantiated
+
+    #abstract class can have non abstract methods as well
+
+    eg. 
+    abstract class AbstractDemo { // Abstract class
+        private int i = 0;
+        public void display() { // non-abstract method
+            System.out.print("Welcome to Tutorials Point");
+        }
+    }
+    public class InheritedClassDemo extends AbstractDemo {
+        public static void main(String args[]) {
+            AbstractDemo demo = new InheritedClassDemo();
+            demo.display();
+        }
+    }
+    #For an abstract class, 
+    we are not able to create an object directly.
+    But Indirectly we can create 
+    an object using the subclass object.
+    
+    #Declaring a class as abstract with no abstract 
+    methods means that we don't 
+    allow it to be instantiated on its own
+    
+    #An abstract class used in Java signifies that 
+    we can't create an object of the class directly.
+
+
+
+
+Inheritence
+    # by default every class inherits Object class in java implicitly
+    ie its(Object class) is the root of the class hierarchy
+        eg. class Person{ //-->same as -> class Person extends Object //since every class by default inherits Object class
+            private String name;
+            //...
+        }
+        class Student extends Person{  // here we see we're inheriting Person class into Student class, and in Person class already inherits Object class => it also contains Object class features
+            private collegeName;
+            //...
+        }
+
+    # whenever we create an object of a subclass-> super class constructor is 
+    automatically called
+
+    # we can have a superclass reference variable
+    that can hold a subclass variable
+    but, the vice versa is not allowed
+        eg.
+        class Animal{
+            //....
+        }
+        class Dog extends Animal{
+            //...
+        }
+
+        class Runner{
+            Animal animal = new Dog(); //valid
+        }
+
+
+
+
+*********************************************
 
 Variables
     1. Instance Variables:
@@ -119,103 +382,7 @@ Modifiers
             and used to define the class members
             independent from any instances
 
-Packages
-    -mechanism to keep group of classes, interfaces and
-    sub-packages which has similar functionalitites
-    at the same place
-    -provides folder structure to organicse classes-interfaces
-
-
-
-Interfaces
-    -It is a blueprint of a class, 
-    specifies what a class must do(not how)    
-    -does not have implementations of methods
-        >ie there r only method declarations
-        >all methods are abstract and public by default
-
-    -Syntax:
-        <modifier> interface InterfaceDemo{
-            public void m1(); //these methods are by default Abstract and Public
-            public void m2();
-        }        
-        >data members inside interface are always static final
-    - keyword "implement" is used to implement the interface inside a class
-        like: 
-            class Test implements InterfaceDemo{
-                @Override //the abstract methods must be implemented in this class 
-                public void m1()
-                {
-
-                }
-                @Override
-                public void m2()
-                {
-
-                }
-            }
-        #ie by implementing an interface it is must that
-        we Override the abstract methods of the interface
-
-        #if we do not want to implement all the methods of the interface 
-        we can also make the class(which is implementing interface) as abstract class
-        , but then we cannot create the object of abstract class,
-        just like that of interfaces
-        like:
-            abstract class Test implements InterfaceDemo{
-                @Override 
-                public void m1()
-                {
-
-                }
-                //since now class Test is itself abstract class
-                //we do not need to Override all the methods here
-            }
-
-    #if every method is Abstract then the interface
-    can be called as "pure abstract class"
-    #Until Java 1.7:
-        interfaces->abstract methods :(called Pure abstract class)
-    #After Java 1.8 
-        interfaces-> abstract, default, static methods
-    
-    #After Java 1.9 
-        Interfaces-> abstract, default, static, private methdos (can also be defined inside interfaces)
-
-
-
-
-Difference b/w Abstract Classes and Interfaces
-
-Abstract classes:
-    -Can extend one abstract class.
-    -Can have abstract methods and concrete methods
-    -'abstract' keyword required in declaration
-    of abstract methods
-    -Can have static, final or static final
-    variables with any access specifier
-
-
-Interfaces:
-    -Can implement any number of interfaces
-    -Can have abstract methods, static, default, private
-    methds. (not concrete methods)
-    -'abstract' keyword not required, as by 
-    default all methds are abstract
-    -Can have only static final variable by default
-
-
-    #Use Interfaces-> when we want to create a service
-    requirement specification(srs) for any class,
-    ie the blueprint of any class to specify what a class
-    must do.
-    #Use Abstract Classes-> to provide a base for subclasses
-    to extend and implement the abstract methods,
-    and use the implemented methods which are defined in abstract
-    class
-
-******************************************
-
+*****************************
 Wrapper Classes:
     -A wrapper class wraps(encloses) around a data
     type and gives it an object appearance 
@@ -336,126 +503,6 @@ ArrayList
     -functions:
         >arrayList.add("a"); //can add any datatype
         >arrayList.remove("a"); //or arrayList.remove(0); -> ie can specify index as well
-
-
-********************
-
-Inheritence
-    
-    # by default every class inherits Object class in java implicitly
-    ie its(Object class) is the root of the class hierarchy
-        eg. class Person{ //-->same as -> class Person extends Object //since every class by default inherits Object class
-            private String name;
-            //...
-        }
-        class Student extends Person{  // here we see we're inheriting Person class into Student class, and in Person class already inherits Object class => it also contains Object class features
-            private collegeName;
-            //...
-        }
-
-    # whenever we create an object of a subclass-> super class constructor is 
-    automatically called
-
-    # we can have a superclass reference variable
-    that can hold a subclass variable
-    but, the vice versa is not allowed
-        eg.
-        class Animal{
-            //....
-        }
-        class Dog extends Animal{
-            //...
-        }
-
-        class Runner{
-            Animal animal = new Dog(); //valid
-        }
-
-***************************************
-Abstract Class
-
-    -while we create a method inside a
-    class we provide its implementation
-    - Abstract class provide a feature using
-    which we dont need to provide implementations
-    of a few methods.
-
-    eg. 
-    1. class AbstractAnimal{
-        public void bark(); //left unimplemented
-    }
-    >o/p: Error: missing method  body, or declare abstract
-
-    2. class AbstractAnimal{
-        abstract public void bark(); //abstract method
-    }  
-    >o/p: Error: AbstractAnimal is not abstract and
-    does not override abstract method bark() in AbstractAnimal
-
-    3. abstract class AbstractAnimal{ 
-        abstract public void bark(); 
-    }
-    >o/p: created class AbstractAnimal
-        #here we created abstract class with bark 
-        method without providing its implementation
-        , implemention will be provided by the subclass(es)
-
-    4. class Dog extends AbstractAnimal{
-
-    }
-    >o/p: Error: Dog is not abstract and does not override 
-    method bark() in AbstractAnimal
-
-        ##inorder to extend abstract class
-        , the subclass need to provide implemention 
-        of its abstract methods
-
-    5. class Dog extends AbstractAnimal{
-        public  void bark()
-        {
-            System.out.println("bhaw bhaw");
-        }
-    }
-    >o/p: created class Dog
-
-    6. Dog dog = new dog;
-    dog.bark();
-    >op: bhaw bhaw
-
-    #we cant create instance of abstract class
-    ie eg. 
-        AbstractAnimal animal = new AbstractAnimal(); // not allowed
-        >op: Error: //... AbstractAnimal is abstract: cant be instantiated
-
-    #abstract class can have non abstract methods as well
-
-    eg. 
-    abstract class AbstractDemo { // Abstract class
-        private int i = 0;
-        public void display() { // non-abstract method
-            System.out.print("Welcome to Tutorials Point");
-        }
-    }
-    public class InheritedClassDemo extends AbstractDemo {
-        public static void main(String args[]) {
-            AbstractDemo demo = new InheritedClassDemo();
-            demo.display();
-        }
-    }
-    #For an abstract class, 
-    we are not able to create an object directly.
-    But Indirectly we can create 
-    an object using the subclass object.
-    
-    #Declaring a class as abstract with no abstract 
-    methods means that we don't 
-    allow it to be instantiated on its own
-    
-    #An abstract class used in Java signifies that 
-    we can't create an object of the class directly.
-
-
-
 
 
 
@@ -668,5 +715,8 @@ Java Interview Questions
      identify which class need to interpret by java 
      interpreter and which class containing 
      Entry point for the program
+
+
+2. OOPs Design:
 
 
