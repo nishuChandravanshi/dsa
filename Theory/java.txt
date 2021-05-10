@@ -1,5 +1,10 @@
-Introduction:
+**********************************
+Reference in28minutes.com @Udemy:
+https://github.com/nishuChandravanshi/java-tutorial-for-beginners
+**********************************
 
+
+Introduction:
 
 //https://www.guru99.com/java-virtual-machine-jvm.html  #awesom explanation
 JVM (Java Virtual Machine):
@@ -638,14 +643,65 @@ List
     }
 
 
+************************************************
+Exception Hierarchy
+
+//Pre-defined Java Classes
+class Error extends Throwable{}
+class Exception extends Throwable{}
+class InterruptedException extends Exception{}
+class RuntimeException extends Exception{}
+class NullPointerException extends RuntimeException{}
 
 
+#Errors can not be handled by the programmer. 
+#ie you can prevent Errors but not handle them.
+#Exception are things which programmers may be able to handle
+
+Exception types-
+    1. Unchecked Exceptions: Runtime Exceptions and its subclasses
+    2. Checked Exceptions : exceptions which are under exceptions but not 
+     runtime exceptions(ie exception which are subclasses of Exception but not of RuntimeException)
+        eg. InterruptedException
+        #InterrruptedException and any of its subclass
+        will be called CheckedException. 
+
+    #when any method throws CheckedException calling method
+    should either handle it or throw it as well
 
 
+ *********
+ Java Modularization:
+    -Introduced in Java8
+    Goals:
+        >Modularize JDK(IMPORTANT)
+            >>rt.jar gre to 60+MB by java8 (which was much lesser earlier)
+        >Modularize applications 
+    
+    Modularizing JDK: 
+        >java --list-modules  //command 
+            >>java.base
+            >>java.logging
+            >>java.sql
+            >>java.xml
+            >>jdk.compiler
+            >>jdk.jartool
+            >>jdk.shell 
+            etc...
 
+        #can see all the modules with name starting with 
+        java are the modules related with programming, 
+        all the modules which starts with jdk are some kind
+        of tool eg jdk.compiler is used to compile the programming, 
+        jdk.jartool used to build the jar file, jdk.shell is the
+        module for jshell
 
-
-
+    >java -d java.sql //command
+        >>exports java.sql
+        >>exports javax.sql
+        >>requires java.logging transitive 
+        >>requires java.base mandated 
+        etc etc...
 
 
 ***********************************************
@@ -719,4 +775,19 @@ Java Interview Questions
 
 2. OOPs Design:
 
+
+------------------------ADVANCE JAVA-------------------------------------------------
+
+//https://www.youtube.com/watch?v=twBe8SQHGTc&list=PLX9Zi6XTqOKR9OnWzkGUI0howsUruEe45&index=2
+JDBC - Java DataBase Connectivity
+    -The JDBC API defines interfaces and 
+    classes for writing db applications in Java 
+    by making db connections
+    
+    #Application data refers to set of information
+    which comes in the scope of application.
+    eg. say ATM m/c needs data like a/c number, 
+    a/c details etc etc (ie in the scope of its application).
+    It doesnt care about the Data such as whos 
+    the prime minister of india. lol:D  
 

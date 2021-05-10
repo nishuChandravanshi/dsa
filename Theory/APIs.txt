@@ -132,3 +132,29 @@ Resource basesd URIs
 
 
 
+Returning XML Response steps-
+1. Create the necessary model and service classes
+2. Ensure the model classes have no-argument constructor
+    ##u need the framework to be able to create new instances
+    of class 
+    eg. suppose we have constructor like -
+    public Message(long id, String message, String author) {
+		super();
+		this.id = id;
+		this.message = message;
+		this.created = new Date();
+		this.author = author;
+	}
+    
+    then make sure to add -->
+    public Message(){
+    
+    }
+
+3. Call the service from MessageResource and return response.
+4. Update the @Produces annotation to XML format
+5. Annotate Model class with @XmlRootElement
+
+
+
+
