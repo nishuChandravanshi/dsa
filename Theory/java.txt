@@ -7,7 +7,7 @@ https://github.com/nishuChandravanshi/java-tutorial-for-beginners
 Introduction:
 
 //https://www.guru99.com/java-virtual-machine-jvm.html  #awesom explanation
-JVM (Java Virtual Machine):
+JVM (Java Virtual Machine): JVM runs your program bytecode
     -a engine that provides runtime environment 
     to drive the Java Code or applications. 
     -It converts Java bytecode into machines language.
@@ -15,6 +15,16 @@ JVM (Java Virtual Machine):
     memory space.
     -it resides on RAM
     -it is a part of JRE(Java Run Environment)
+
+    JRE = JVM + Libraries + Other Components
+    JDK = JRE + Compilers + Debuggers
+
+    #JDK is needed to Compile and Run Java programs
+    #JRE is needed to Run Java Programs
+    #JVM is needed to Run Bytecode generated from Java programs
+    In summary
+        Application Developers need ==> JDK
+        Application Users need ==> JRE
 
 
     How it works: 
@@ -790,4 +800,118 @@ JDBC - Java DataBase Connectivity
     a/c details etc etc (ie in the scope of its application).
     It doesnt care about the Data such as whos 
     the prime minister of india. lol:D  
+
+    Architecture- 
+
+    Java Application<--->JDBC API--->JDBC Driver Manager
+    -->Driver-->Oracle/sql/others--->Database 
+
+    #we use api provided by jdbc (ie jdbc api -(provides)-> ie the class/interfaces/functions etc, ie we can make an object of the class provided by jdbc api to call the function inorder to send the data to the db)
+    in our java app to connect with the database. 
+    #jdbc api further communicates with the jdbc driver manager
+    to get the required driver to connect with 
+    the target db management s/w(like mysql/oracle/mongodb etc) 
+    which then manages to get the data into database.
+
+    # import java.sql.* <-- to import jdbc apiss
+
+    JDBC Driver: 
+        -A s/w componenet enabling a Java application 
+        to interact with a db.
+        -Driver handles the communications with 
+        the db server(like oracle).
+        -You'll interact direclty with Driver objects
+        very rarely 
+        -Instead, you use DriverManager objects, which manages objects of this type. 
+        -It also abstracts the details assosiated with working
+        with Driver objects
+
+    JDBC DriverManager:
+        -manages a list of db drivers. 
+        -It matches connection requests from the java 
+        application with the proper db driver
+        using communication sub-protocol.
+        -The first driver that recognizes a certain 
+        sub-protocol under JDBC will be used to 
+        establish a db connection
+
+    Connection:  (an interface)
+        -Connection interface has all methods for contacting
+        a db.
+        -The connection object represents communication 
+        context ie all communication with db is through
+        connection object only.
+
+    PreparedStatement:
+        -It is an iterface for representing
+        SQL statements
+        -A sql statement is precompiled and stored
+        in a PreparedStatement object
+        -This object can then be used to efficiently
+        execute this statement multiple times.
+
+    ResultSet:
+        -It is an interface to represent a db table
+        -these objects hold data retrieved from a db
+        after you execute a sql query using statement objects
+        -It acts as an iterator ot allow you to move through 
+        its data
+
+    #Here, objects of interfaces => objects of the class which implemented them
+
+    SQLException: 
+        -It is a sub-class of Exception class in java
+        -it is an exception that provides information 
+        on a db access error or other errors in jdbc 
+
+
+    // https://www.youtube.com/watch?v=hiGaZaNdue0&list=PLX9Zi6XTqOKR9OnWzkGUI0howsUruEe45&index=8
+    Steps for Connection:
+
+        1. Loading Driver  -->(not in standard java libraries, we gotta install these, save in proper folder or set path)
+            -A program can also explicitly load JDBC 
+            drivers at any time 
+            eg. my.sql.Driver can be loaded as follows->
+                Class.forName("my.sql.Driver") //string arg(which is name of the driver class like packages.packages...className) passed inside forName        
+        
+        2. Establishing Connection 
+            -When getConnection is called the DriverManager
+            will attempt to locate a suitable driver from 
+            amongst those loaded at initialization and those
+            loaded explicitly.
+
+            DriverManager.getConnection(url, user, password) //all args passed as string //returns Connection class object
+            //Connection con = DriverManager.getConnection(url, user, password) //all args passed as string
+           
+            #url: database url
+            #getConnection method returns Connection Object on 
+            success otherwise null
+
+        3. Preparing Statement
+            -Connection object has a method to 
+            prepare a statement(sql statement)
+
+            ps = con.PreparedStatement(query_string) //ps->PreparedStatement's object
+            -PrepareStatement method return object of
+            PreparedStatement
+
+        4. Executing Statements 
+            -PreparedStatement has several methods 
+            to execute query.
+            execute()  
+            executeQuery() //for select query call executeQuery() f unc query, 
+                    //because among these three only this one returns ResultSet object
+            executeUpdate()
+
+
+        5. Getting Results
+            -ResultSet object can be obtatined as a returned 
+            object by executeQuery method of PreparedStatement 
+            -ResultSet object when not null or not emty, can be iterate over that object and get results. 
+
+        6. Closing Database Connection
+            -Connection object has a method called close()
+            to close the connection.
+
+            con.close()
 
