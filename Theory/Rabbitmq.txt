@@ -1,0 +1,154 @@
+RabbitMQ--> 
+    -RabbitMQ is a message broker: 
+    it accepts and forwards messages. 
+    You can think about it as a post office: 
+    when you put the mail that you want posting in a post box, 
+    you can be sure that Mr. or Ms. Mailperson will eventually 
+    deliver the mail to your recipient. 
+    In this analogy, RabbitMQ is a post box, a post office and a postman.
+
+    -The major difference between RabbitMQ and the post office 
+    is that it doesn't deal with paper, 
+    instead it accepts, 
+    stores and forwards binary blobs of data ‒ messages.
+
+    -RabbitMQ, and messaging in general, uses some jargon.
+
+    -RabbitMQ allows multiple connection channels inside 
+     a single tcp connections to the message broker
+
+Producer:
+    Producing means nothing more than sending. 
+    A program that sends messages is a producer:
+
+Queue:
+    A queue is the name for a post box which lives inside RabbitMQ. 
+    Although messages flow through RabbitMQ and your applications, 
+    they can only be stored inside a queue. 
+    A queue is only bound by the host's memory & disk limits, 
+    it's essentially a large message buffer. 
+    Many producers can send messages that go to one queue, 
+    and many consumers can try to receive data from one queue. 
+
+Consumer:
+    Consuming has a similar meaning to receiving. A
+    consumer is a program that mostly waits to receive messages.
+
+    #Note that the producer, consumer, and broker 
+    do not have to reside on the same host; 
+    indeed in most applications they don't. 
+    An application can be both a producer and consumer, too.
+
+
+AMQP: Advanced Message Queuing Protocol
+
+    vendor A(java application)        vendor B (.net application)
+                    vendor c (AMQP 1.0 Broker)
+    -with the help of amqp protocol (implemented properly)
+    we can communicate with different systems and different 
+    applications.
+    -Its a protocol for creating and handling 
+    message queues
+    -Interoperable, easy to swap
+    -born from banking domain(JP Morgan, Barclays, Goldman Sachs etc)
+    -In general very suitable protocol for 
+    implementing all kinds of Even-Driven Microservices.
+
+    -all amqp clients interoperate with all amqp servers
+
+    #transaction => messages exchanges
+
+
+    Architecture- 
+    
+    Publisher -(Publishes messages to the exchange)-> 
+    Exchange -(receives messages and direct the to the correct queue(binding))->
+    Queues --> different Conusmers                
+    
+    #Message Broker = Exchange + Queues
+    #RabbitMQ is the implementation of 
+    Message Broker part of AMPQ (written in Erlang)
+
+
+    Use Cases: (amqp solves these)
+        -Want a real time feed of constantly updating information?
+        -want an encrypted assured transaction?
+        -want your message to be delivered when the destination comes online?
+        -want to send enormous message while still receiving
+        status updates over the same n/w connection?
+        -want things to work on all popular operating systems
+        and languages? 
+
+        #AMQP solves the technical part of connecting diverse applications altogether
+
+
+    4 Actors of messaging with RabbitMQ
+
+    Produces -(sends msg)->Exchange -(routes)->Queue
+    -(deliver)->Consumer
+
+    #msgs are piled up in queues to be sent to consumers
+    #Consumer can be any application(.java,net or any cmd line application)
+    waiting for the msg, which receivs the msg at the end.
+
+    Exchanges:
+        -Actual amqp elements where messages are sent at first
+        -takes a message and routes it into one or more queues
+        -routing algorithm decides where to send messages from exchange
+        -routing algorithm depends on the exchange type and 
+        rules called "bindings".
+        -bindings are simply used to "bind exchanges to queues"
+        for message delivery 
+
+    Four Exchange Types:
+        1. Direct Exchange: (Empty string) and amq.direct
+        2. Fanout Exchange: amq.fanout 
+        3. Topic Exchange: amq.topic 
+        4. Headers Exchange: amq.match(and amq.header in RabbitMQ)
+    
+
+    Queues: 
+        -Messages are routed to queues from exchanges
+        -Queues are final destinations in RabbitMQ before 
+        being received by subscriber
+
+        Properties:
+            1. Name- name of the queue
+            2. Durable- either persist the queue to the disk or not
+            3. Exclusive- Delete the queue if not used anymore
+            4. Auto-Delete- Delete the queue when consumer unsubscribes 
+
+    Topics: 
+        -topics are the "subject" part of the messages
+        -defined as routing_key for message grouping
+        -Special formatting for better use:
+            >app.logs.error
+        -Optional parameter for message exchange
+        -you can send and receive messages without 
+        any topic information
+        -Topic exchanges are defined using Topics for 
+        message delivery
+
+    Bindings:
+        -Rules that exchanges use to route messages to queues
+        -To instruct an exchange E to route messages to 
+        a queue K, K has to be bound to E!
+        -May have an optional routing key attribute used by some exchange
+        types.
+        -So the routing key acts like a filter
+        
+        #If message cannot be routed to any queue(there are no bindings)
+        for the exchange it was published to) it is either 
+        dropped or returned to the publisher, depending
+        on message attributes the publisher has set.
+
+
+
+
+
+
+
+
+
+
+

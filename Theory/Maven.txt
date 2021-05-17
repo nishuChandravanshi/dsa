@@ -38,3 +38,24 @@ Maven Default Directories
              |_resources    :(................................/resources)
       |_target              :(Project Base Folder/target)    
         
+
+POM 
+    -Object-based representation of a build 
+    -Project meta data
+        >Coordinates(Group, Artifact,version)
+        POM defines all the project Meta data 
+        like project name, date when it was started, version 
+    -Dependencies
+    -Build settings
+    -Inheritence/super pom
+
+
+
+
+
+
+
+
+
+
+
