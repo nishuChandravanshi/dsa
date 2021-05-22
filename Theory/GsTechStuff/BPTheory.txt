@@ -1,0 +1,41 @@
+getClass()
+    The java.lang.Object.getClass() method returns the runtime class of an object. That Class object is the object that is locked by static synchronized methods of the represented class.
+        // create a new Integer
+        Integer i = new Integer(5);
+        System.out.println("" + i);
+        // print the class of i
+        System.out.println("" + i.getClass());
+    o/p→ 
+    5
+    class java.lang.Integer
+
+@Target
+    @Target tag is used to specify at which type, the annotation is used.
+    @Target({ElementType.TYPE, ElementType.FIELD, ElementType.METHOD})  =>
+
+    Ele Type        where the annotation can be used 
+    TYPE→ 	class, interface or enumeration
+    FIELD→ 	fields
+    METHOD→ 	method
+    etc...
+    When you write .class after a class name, it references the class literal - java.lang.Class object that represents information about given class.
+
+.class 
+    When you write .class after a class name, it references the class literal - java.lang.Class object that represents information about given class. 
+    For example, if your class is Print, then Print.class is an object that represents the class Print on runtime. It is the same object that is returned by the getClass() method of any (direct) instance of Print.
+    Print myPrint = new Print();
+    System.out.println(Print.class.getName());
+    System.out.println(myPrint.getClass().getName());
+
+
+Serialization 
+    is a mechanism of converting the state of an object into a byte stream. 
+Deserialization 
+    is the reverse process where the byte stream is used to recreate the actual Java object in memory. 
+    This mechanism is used to persist the object.
+
+
+the server calls a service of the client to report the feedback after it has finished processing (callback)
+Synchronous/Asynchronous calls → 
+https://docs.plm.automation.siemens.com/content/pl4x/18.1/T4EA/en_US/Teamcenter_Gateway-Technical_Connectivity_Guide/synchronous_vs_asynchronous.html
+
