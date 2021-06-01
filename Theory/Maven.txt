@@ -51,11 +51,123 @@ POM
 
 
 
+Lifecycle, Phases and Goals, and Plugins:
+
+    -maven has 3 main groups of actions for executing builds or other tasks
+    
+    1. Goals
+        - Tasks that do the work
+        - defined by plugins
+        -it is the combination of maven plugin name and 
+        a specific goal name on that plugin
+        eg. 
+            mvn compiler:compile (<- compile goal which is the part of the compiler plugin)
+
+        
+
+    2. Phases:
+        -phases maps to one or many goals and is
+        related to the grater Lifecycle
+        -part of Lifecycle
+        eg. 
+            mvn compile (<-the compile phase may call compiler:compile goal for jar projects)
 
 
+    3. Lifecycle:
+        -combination of related phases 
+        -Lifecycle contains phases, phases map to goal
+        -different based on packaging type
+        -Executes all phases up to specific phase 
+        eg:
+            package  phase contains jar:jar(maven goal)
+
+        -when we specify a phase within a Lifecycle
+        all phases leading upto that phase are executed.
+        eg: if we call the "package" phase  the "compile", "test"
+        and several other phases are executed first
 
 
+    4. Plugins:
+        -nearly everything is a plugin 
+        -provides more functionality that can be executed during a built
+        -extend maven
+        -adds more goals that can be executed within a maven built
+        -plugins are also Dependencies that need to be downloaded before used
+
+    
+
+Maven Life-cycles 
 
 
+                        Jar Build Lifecycle         Maven Goals 
+                        
+                        compile                     compiler:compile 
+Maven   )               test                        surefire: test 
+Lifecycle )==>          package  ==>                jar:jar 
+Phases )                install                     install:install 
+                        deploy                      deploy:deploy 
+        
+        #if a specific phase is executed all the phases above it will be
+        executed first eg package follows compile and test before it 
 
+
+Commands:
+
+    # > ./maven-tools/start.sh mavenProjectName 
+        -this creates a new maven project named mavenProjectName 
+
+    1. > mvn package ->  to build 
+        #package is the name of the phase we want to target 
+        after this ->
+        > ls -> a new target directory formed 
+        > cd target
+        > ls -> maven archiver yourProject.jar 
+    
+    2. > mvn clean   (deletes the target directory formed by earlier build) -> clean is the clean phase thats part of the clean Lifecycle
+        after this cmd 
+        > ls -> target directory will be removed ie back to original source of our projet that was there before build 
+        
+        > mkdir -p src/main/java 
+            => -p creates all the directory to the lowest level and then the full path where we need to go
+
+        > jar -tf fileName.jar ==> shows the content of the specified jar file 
+
+
+    3.  we can specify multiple goals or phases in the cmd line 
+
+        > mvn clean package 
+            (runs clean phase within the clean Lifecycle and then package phase within the default Lifecycle)
+
+        > .gitingnore file 
+            -format -> one expression per line
+            -files or directories specified in this file will not be committed to git repo 
+        
+        > ls -l
+            -list files & directories with details 
+
+    #maven compiles the source file(eg java source) and then 
+    at the end puts it(ie compiled file abc.class) into a jar file 
+    
+    #jar is the default packaging of maven. 
+
+    # > jar -tf fileName.jar --> list the content of jar file 
+
+
+        >ls -al -> all files and folders including . files/folders 
+        
+    4. mvn clean install -> smtg related to maintaining versions 
+        -cd /.m2/repository -->see 
+
+        >git add -A 
+            -add everything recursively 
+            eg src/main/java/sample <- this will be added recursively like src folder then main then java and so on ..
+
+        > git log --oneline  
+            -see commits of the project in formatted oneline manner 
+
+
+    ## Maven Central contains all libraries (Dependencies) of maven 
+       can browse maven central and look for any Dependencies if reqd so. 
+
+        
 
