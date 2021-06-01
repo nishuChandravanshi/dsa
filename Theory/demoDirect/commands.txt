@@ -1,0 +1,38 @@
+Commands 
+
+scp stands for Secure Copy Protocol. It is a secure file transfer protocol that copies files to and from hosts. It uses Secure Shell (SSH) to keep the files protected while in transit. scp is a command line utility, meaning you will have to use Terminal (Mac) or Command Prompt 
+ssh: The ssh command provides a secure encrypted connection between two hosts over an insecure network. This connection can also be used for terminal access, file transfers, and for tunneling other applications. Graphical X11 applications can also be run securely over SSH from a remote location 
+		>ssh nishu.chandravanshi@10.80.11.50
+sudo is a program for Unix-like computer operating systems that allows users to run programs with the security privileges of another user. Its name is a concatenation of "su" and "do", or take action. Unlike the su command, users typically supply their own password to sudo rather than the root password.
+	
+The sudo command allows you to run programs with the security privileges of another user (by default, as the superuser). It prompts you for your personal password and confirms your request to execute a command by checking a file, called sudoers , which the system administrator configures.
+
+tail has two special command line option -f and -F (follow) that allows a file to be monitored. Instead of just displaying the last few lines and exiting, tail displays the lines and then monitors the file. As new lines are added to the file by another process, tail updates the display.
+cat(concatenate) command is very frequently used in Linux. It reads data from the file and gives their content as output. It helps us to create, view, concatenate files
+
+To view a single file:
+$cat filename → It will show content of given filename 
+ To view multiple files
+$cat file1 file2 → This will show the content of file1 and file2. 
+ To view contents of a file preceding with line numbers.
+$cat -n filename → 
+
+Create new file
+$cat >newfile → Will create and a file named newfile
+
+ Cat command can display content in reverse order using tac command.
+$tac filename → Will display content in reverse order 
+
+ Cat command to write in an already existing file. 
+$cat >> geeks.txt
+The newly added text. 
+ → Will append the text "The newly added text." to the end of the file.
+
+
+
+/opt
+This directory is reserved for all the software and add-on packages that are not part of the default installation.
+
+
+An SSH key is an access credential for the SSH (secure shell) network protocol. This authenticated and encrypted secure network protocol is used for remote communication between machines on an unsecured open network. SSH is used for remote file transfer, network management, and remote operating system access.
+
