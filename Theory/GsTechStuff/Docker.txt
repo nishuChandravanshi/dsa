@@ -1,3 +1,6 @@
+https://www.youtube.com/watch?v=rOTqprHv1YE&t=191s
+****
+
 DOCKER:
     -docker is a tool used to automate the deployment of applications
     in lightweight containers so that applications can work efficiently
@@ -27,7 +30,46 @@ DOCKER:
             containers
 
     Components of Docker:
-        1. Docker Client and Service
-        2. Docker Images
-        3. Docker Containers
-        4. Docker Registry
+        1. Docker Client and Service:
+            -Docker client is accessed from the terminal and docker
+            host runs the docker daemon and registry
+            -a user can build docker images and run docker containers
+            by passing commands from docker client to docker server
+        2. Docker Images:
+            -docker image is a template with instructions, which is
+            used for creating docker containers.
+            -docker image is build using the file called Docker File.
+            -docker image is stored in a docker hub or in a repository
+            (like registry.hub.Docker.com)
+
+            Syntax of creating Docker Container using Docker Image:
+
+                >Docker container create [OPTIONS] IMAGE [COMMAND][ARG....]
+
+        3. Docker Containers:
+            -standalone executable s/w package which includes applications
+            and their dependencies.
+            -numerous docker containers run on the same infrastructure
+            and share operating system with its other containers
+            -here, each application run in isolation
+        4. Docker Registry:
+            -docker registry is an open-source server-side service
+            used for hosting and distributing images
+            -docker also has its own default registry called dockr hub
+            -here images can be stored in either public or private repository
+            -Pull and Push are the commands used by users in order to
+            interact with a docker registry
+                SYNTAX:
+                    > Docker pull <image>:<tag>: pulls an image from DTR (docker repository)
+                    > Docker push <image>:<tag>: pushes an image to DTR
+
+            #public repositories can be used to host docker images which
+            can be used by everyone
+
+        #summary:
+            -docker file creates a docker image using the build command
+            -a docker image contains all the project's code
+            -Using docker image any user can run the code in order to
+            create docker containers
+            -once a docker image is built, its uploaded in registry or dockr hub
+            -from docker hub users can get docker image and build new containers.
