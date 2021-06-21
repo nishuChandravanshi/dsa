@@ -160,40 +160,6 @@ Returning XML Response steps-
 
 
 
-**********
-DOCKER:
-    -docker is a tool used to automate the deployment of applications
-    in lightweight containers so that applications can work efficiently
-    in different environments.
-    -multiple containers run on the same hardware
-    -maintains isolated applications
-    -highly productive
-    -quick and easy configuration
-
-    #Container: is a s/w package that consists of all the dependencies
-    required to run an application.
-
-    How does it work:
-        flow:
-        Docker engine [
-            Client (Docker CLI) <-> Rest API <-> Server (docker daemon) //these are all inside docker engine
-        ]
-        -Docker engine or docker is the base engine installed on your host m/c
-        to build and run containers using Docker components and services
-        -It uses client-server architecture
-        -Docker client and server communicate using Rest API.
-            -Docker client is a service which runs a command.
-            -The command is translated using REST api and is sent
-            to the docker daemon(server)
-            -Then, the docker daemon checks the client request
-            and interacts with the os in order to create or manage
-            containers
-
-    Components of Docker:
-        1. Docker Client and Service
-        2. Docker Images
-        3. Docker Containers
-        4. Docker Registry
 
 
 

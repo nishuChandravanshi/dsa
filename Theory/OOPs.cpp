@@ -145,7 +145,7 @@ PROBLEMS WITH OOPS
     {
         Student s1,s2;
         s1.insert(1,"nish");
-        s2.insert(2,"roos");
+        s2.insert(2,"nish2");
 
         s1.display();
         s2.display();
@@ -236,14 +236,14 @@ PROBLEMS WITH OOPS
     int main()
     {
         Employee e1(1,"nish",5000000);
-        Employee e1(2,"roos",5000000);
+        Employee e1(2,"nish2",5000000);
 
         e1.display();
         e2.display();
         return 0;
     }
     // op- 1,"nish",5000000
-    //     2,"roos",5000000
+    //     2,"nish2",5000000
 
 //3.copy constructor
     // imp--> 'const and &(ie arg passed by constant reference)' used while defining copy constructor.

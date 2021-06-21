@@ -275,7 +275,7 @@ Learnings:
    
 Challenges:
     -we had to think of something to support sms services (twilio provides api (for sending farmers sms to server) but it is paid 
-      -> we used dummy app on which we'll get farmers sms -> then this app will generate sms/.. api and it to the server {see the image roos's send!})
+      -> we used dummy app on which we'll get farmers sms -> then this app will generate sms/.. api and it to the server {refer flow image})
         (from server we are sending success msg directly to the user using api provided by msg91, as we had free-credits for the same)
     -completing product in time was a big challenge, 
         every sub module is a big thing so we tried to model it with real world as good as possible

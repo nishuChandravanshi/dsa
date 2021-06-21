@@ -351,7 +351,7 @@ PROCESS SYNCHRONIZATION
             ///continue lec [5.6,  ]
 
 
-@rooos
+@~sr
 A solution to the critical section problem must satisfy the following three conditions:
     i) Mutual Exclusion. Out of a group of cooperating processes, only one process can be in its critical section at a given point of time.
     ii) Progress. ...
