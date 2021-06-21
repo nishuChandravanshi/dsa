@@ -4,7 +4,7 @@ class Comp implements Comparator<Integer>{
     Map<Integer, Integer> mp;
     public int compare(Integer p1, Integer p2)
     {
-        mp = PokerTest.toComp;
+        mp = PokerGame.toComp;
         if(mp.get(p1)>mp.get(p2)) return -1;
         else if(mp.get(p1)<mp.get(p2)) return 1;
         return p2-p1;
@@ -12,7 +12,7 @@ class Comp implements Comparator<Integer>{
 }
 
 
-public class PokerTest {
+public class PokerGame {
     public static final String PLAYER1_WINNER = "Hand 1 wins";
     public static final String PLAYER2_WINNER = "Hand 2 wins";
     public static final String DRAW = "Draw";
@@ -285,7 +285,7 @@ public class PokerTest {
             if(type.equals("compare")) {
                 // System.out.println(new PokerTest().compare(args[1], args[2]));
             
-                int res = new PokerTest().compare(args[1], args[2]);
+                int res = new PokerGame().compare(args[1], args[2]);
                 if(res > 0)
                     System.out.println(PLAYER1_WINNER);
                 if(res < 0)

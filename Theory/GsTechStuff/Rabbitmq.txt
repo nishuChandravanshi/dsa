@@ -145,6 +145,17 @@ AMQP: Advanced Message Queuing Protocol
 
 
 
+***
+Publishing message to queue steps:
+    1. making connection to rmq server  ->     ConnectionFactory factory = new ConnectionFactory();
+    2. getting a new connection         ->     Connection connection = factory.newConnection();
+    3. Creating a channel as everything
+        passes through a channel        ->     Channel channel = connection.createChannel();
+
+    4. Declaring queue                  ->      channel.queueDeclare(queue: "queueName", durable: true/false, exclusive:t/f, autoDelete: t/f, arguments:null);
+    5. publishing message to queue      ->      channel.basicPublish(exchange:"", routingKey: "queueName", mandatory:t/f, props:null, payload.getBytes)
+                                                //last arg-> message to be seng in byte format, payload.getByte->converting String payload to byte
+    
 
 
 
