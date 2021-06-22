@@ -160,6 +160,54 @@ Publishing message to queue steps:
 
 
 
+**************************************ZOOKEEPER******************************************************
+
+#while running a distributed system every client has to have the consistent picture of
+who the master node is that its writing through, if you have more than one master
+responding at a time you can get very inconsistent behaviour in your database. So, if
+you're building a system where you care about consistency, you need to have some sort
+of a system outside your system that's keeping track of all of these things. So,
+In addition to
+    >which node is master server,
+    >what tasks are assigned to which workers,
+    so if a worker fails how do i know where to pick up from when i redistribute that work,
+    >which workers are currently available
+
+    #so basically its an external tool that applications like HBase can use to recover
+    from partial failures in your cluster
+
+Zookeeper:
+    -It keeps track of information that must be synchronized across your cluster
+        >which node is the master?
+        >what task are assigned to which workers?
+        >which workers are currently available?
+    -Its a tool that applications can use to recover from partial failures in your cluster
+    -An integral part of HBase, High-Availability(HA) MapReduce, Drill, Storm, Solr and much more.
+
+    Failure Modes:
+        1. Master Crashes, needs to fail over to a backup
+            -Zookeeper can keep track of who the current master is and if that master goes down
+            automatically detect that it's no longer responsive and let these other masters try to
+            make themselves a new master but only allow one to actually win that race
+
+
+        2. Worker crashes- its work needs to be redistributed
+            -zookeeper can keep track of this type of failure as well, like
+            if it does not respond for a while it can detect it and know there's
+            something wrong with this worker might be disconnected or something
+            and then it can notify your application that that happened and then your
+            application can redistribute the work accordingly
+
+        3. Network trouble- part of your cluster cant see the rest of it.
+            -can detect different sorts of failures of communication.
+            (can be between different nodes)
+
+
+    Primitive operations in a distributed System:
+        1. Master Election:
+        2. Crash Detection:
+        3. Group Management:
+        4. Metadata:
 
 
 
