@@ -1,0 +1,25 @@
+							DOJ Gs:3.5.21
+
+**rating -> :3 bydef, else specified
+=====================================================================
+2021
+
+May-June_21
+	1. Kik Channel Integration #42  -> release-
+		- BP+SM (sm minor changes as code was already there, BP coded all)
+		-release-21.6.4
+	2. Kik Migration (migration of bots in old platform(teamchat) to new(bot-platform) - wrote migration code
+	2. Passthrough Channel Integration #29
+		-BP + SM
+		-release-21.7.1
+
+July_21
+	1. Dialogflow cx type bot support integration #117
+		-multiple agent supported,
+		-agentId, regionId extra fields reqd from user compared to dialogflowEs type.
+		-release-21.7.3
+	2. rasa url Authentication
+		-no changes in BP,
+		-one change in SM <-added field for auth token
+		which we are just storing as of now, not used anywhere as messages can be send to rasa
+		without tokens as well.
