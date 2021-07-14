@@ -1,4 +1,5 @@
 https://www.youtube.com/watch?v=rOTqprHv1YE&t=191s
+https://www.youtube.com/watch?v=JSLpG_spOBM
 ****
 
 DOCKER:
@@ -73,3 +74,65 @@ DOCKER:
             create docker containers
             -once a docker image is built, its uploaded in registry or dockr hub
             -from docker hub users can get docker image and build new containers.
+
+===========>
+// https://www.youtube.com/watch?v=gAkwW2tuIqE
+Docker :
+	- Its a way to package s/w so that it can run on any hardware.
+
+DockerFile:
+	-A blueprint for building a docker image
+	-FROM : from required imageName
+	-WORKDIR : add our source code to the image,
+	 it is like when you cd into a directory, now any subsequent instruction
+	 in the docker file will start from this directory
+	 -COPY :
+	 -RUN :
+	 -ENV :
+	 -EXPOSE :
+	 -CMD [" ", " "] : how to run the actual application
+
+	 #Every instruction in the dockerfile is considered its own step or layer
+Images:
+	-A template for running docker containers.
+Containers:
+	-A running process
+
+
+##Docker Compose: tool for running multiple docker containers at the same time
+
+
+
+Docker CheatSheet
+
+
+1. Build your image
+					docker build -t my-node-img .
+2. Show specific image
+					docker image ls my-node-img
+3. To see all images on your machine
+					docker image ls
+4. Create a container with the tiny package, a name, and port
+					docker create --init --name my-app -p 3000:3000 my-node-img
+5. Show newly created container
+					docker ps -a --filter "name=my-app"
+6. Start your container
+					docker start my-app
+7. Attach to container (not recommended)
+					docker attach my-app
+8. See containers logs (recommended)
+					docker logs -f my-app
+9. Access container's system
+					docker exec -it my-app bash
+10. Using the run shortcut
+					docker run --name my-app -p 3000:3000 -d --init --rm my-node-img
+11. Stop a running container
+					docker stop my-app
+12. Remove a non-running container
+					docker rm my-app
+13. see all running containers
+					docker ps
+14. stop all running containers
+					docker stop $(docker ps -q)
+15. Check version of linux for container
+					docker run node:12-slim cat /etc/issue
